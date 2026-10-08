@@ -2,7 +2,7 @@
 // Copy the SAME publishable (anon) key you put in the dashboard's config.js.
 // NEVER put the service_role / secret key in this file.
 export const SUPABASE_URL = 'https://cxklgxwuncazqweqthih.supabase.co';
-export const SUPABASE_KEY = 'cxklgxwuncazqweqthih';
+export const SUPABASE_KEY = 'sb_publishable_Zl-bScNm3F10aiNb5jnsPg_1ic4WM5g';
 
 // Every booking request is also emailed here (via FormSubmit).
 export const NOTIFY_EMAIL = 'info@glazstudios.com';
