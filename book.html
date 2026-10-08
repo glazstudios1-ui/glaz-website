@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book your date — Glaz Studios</title>
+<meta name="description" content="Glaz Studios — wedding photography, cinematography, full rec, crane, media coverage and photo booth in Egypt. Send a booking request.">
+<meta name="theme-color" content="#121212">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<header class="top">
+  <a class="logo" href="/" aria-label="Glaz Studios">GLAZ<span>STUDIOS</span></a>
+  <button class="lang" id="lang" type="button">English</button>
+</header>
+
+<main class="wrap">
+  <section class="intro">
+    <p class="eyebrow" data-i18n="eyebrow">احجز معادك</p>
+    <h1 data-i18n="title">خلّينا نحفظ يومك<br>زي ما عشته بالظبط</h1>
+    <p class="lead" data-i18n="lead">ابعتلنا تفاصيل المناسبة، وفريقنا هيتواصل معاك على واتساب يأكد التاريخ ويساعدك تختار البكدج المناسبة.</p>
+
+    <ol class="steps">
+      <li><span>01</span><div><b data-i18n="s1t">ابعت الطلب</b><p data-i18n="s1d">املا الفورم في دقيقة.</p></div></li>
+      <li><span>02</span><div><b data-i18n="s2t">نأكد معاك</b><p data-i18n="s2d">نتواصل على واتساب ونتفق على التاريخ والبكدج.</p></div></li>
+      <li><span>03</span><div><b data-i18n="s3t">نثبّت اليوم</b><p data-i18n="s3d">العربون عن طريق InstaPay بيثبّت التاريخ، والباقي يوم المناسبة.</p></div></li>
+    </ol>
+
+    <ul class="services" aria-label="Services">
+      <li data-i18n="sv1">تصوير فوتوغرافي</li>
+      <li data-i18n="sv2">سينماتوجرافي</li>
+      <li data-i18n="sv3">Full Rec</li>
+      <li data-i18n="sv4">كرين</li>
+      <li data-i18n="sv5">ميديا كوفريدج</li>
+      <li data-i18n="sv6">فوتو بوث</li>
+    </ul>
+  </section>
+
+  <section class="card" aria-labelledby="form-title">
+    <form id="booking" novalidate>
+      <h2 id="form-title" data-i18n="formTitle">طلب حجز</h2>
+
+      <div class="grid">
+        <label class="field full">
+          <span data-i18n="fName">الاسم بالكامل</span> <em>*</em>
+          <input name="full_name" autocomplete="name" required maxlength="80">
+          <small class="err" data-err="full_name"></small>
+        </label>
+
+        <label class="field">
+          <span data-i18n="fPhone">موبايل (واتساب)</span> <em>*</em>
+          <input name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="01X XXXX XXXX" required maxlength="20">
+          <small class="err" data-err="phone"></small>
+        </label>
+
+        <label class="field">
+          <span data-i18n="fEmail">الإيميل</span> <i data-i18n="optional">(اختياري)</i>
+          <input name="email" type="email" autocomplete="email" dir="ltr" maxlength="120">
+          <small class="err" data-err="email"></small>
+        </label>
+
+        <label class="field">
+          <span data-i18n="fType">نوع المناسبة</span> <em>*</em>
+          <select name="event_type" required>
+            <option value="Wedding" data-i18n="tWedding">فرح</option>
+            <option value="Engagement" data-i18n="tEngagement">خطوبة</option>
+            <option value="Katb Ketab" data-i18n="tKatb">كتب كتاب</option>
+            <option value="Session" data-i18n="tSession">سيشن</option>
+            <option value="Other" data-i18n="tOther">حاجة تانية</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span data-i18n="fDate">تاريخ المناسبة</span> <em>*</em>
+          <input name="event_date" type="date" required>
+          <small class="err" data-err="event_date"></small>
+        </label>
+
+        <label class="field">
+          <span data-i18n="fVenue">المكان / المنطقة</span>
+          <input name="venue" maxlength="120" data-i18n-ph="phVenue" placeholder="مثلاً: قاعة … – التجمع الخامس">
+        </label>
+
+        <label class="field">
+          <span data-i18n="fPackage">البكدج اللي مهتم بيها</span>
+          <select name="package_interest" id="packages">
+            <option value="" data-i18n="pkgUnsure">لسه مش متأكد</option>
+          </select>
+        </label>
+
+        <label class="field full">
+          <span data-i18n="fSource">عرفتنا منين؟</span>
+          <select name="source">
+            <option value="" data-i18n="choose">اختار</option>
+            <option value="Instagram">Instagram</option>
+            <option value="Facebook">Facebook</option>
+            <option value="TikTok">TikTok</option>
+            <option value="Friend" data-i18n="srcFriend">من حد أعرفه</option>
+            <option value="Google">Google</option>
+            <option value="Other" data-i18n="tOther">حاجة تانية</option>
+          </select>
+        </label>
+
+        <label class="field full">
+          <span data-i18n="fMsg">أي تفاصيل تانية</span> <i data-i18n="optional">(اختياري)</i>
+          <textarea name="message" rows="4" maxlength="1500" data-i18n-ph="phMsg" placeholder="عدد ساعات، خدمات معينة، أي حاجة حابب نعرفها"></textarea>
+        </label>
+
+        <!-- spam trap: real people never see or fill this -->
+        <label class="hp" aria-hidden="true">Company<input name="company" tabindex="-1" autocomplete="off"></label>
+      </div>
+
+      <button class="btn" type="submit" id="submit"><span data-i18n="send">ابعت طلب الحجز</span></button>
+      <p class="note" data-i18n="note">إرسال الطلب مش معناه إن التاريخ اتحجز. التاريخ بيتثبّت بعد ما نأكد معاك ويوصل العربون.</p>
+      <p class="msg" id="msg" role="alert"></p>
+    </form>
+
+    <div class="done" id="done" hidden>
+      <div class="tick" aria-hidden="true">✓</div>
+      <h2 data-i18n="doneTitle">وصلنا طلبك</h2>
+      <p data-i18n="doneText">شكراً! هنتواصل معاك على واتساب قريب علشان نأكد التاريخ والتفاصيل.</p>
+      <a class="btn ghost" id="wa" hidden target="_blank" rel="noopener"><span data-i18n="waBtn">كلّمنا على واتساب</span></a>
+      <button class="link" type="button" id="again" data-i18n="again">ابعت طلب تاني</button>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <span>© <span id="yr"></span> Glaz Studios</span>
+  <a href="mailto:info@glazstudios.com" dir="ltr">info@glazstudios.com</a>
+</footer>
+
+<script type="module" src="book.js"></script>
+</body>
+</html>
