@@ -8,6 +8,7 @@ const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const form = $('#booking');
 const msg = $('#msg');
+const loadedAt = Date.now();
 
 // ---------- Language ----------
 const EN = {
@@ -126,7 +127,8 @@ form.addEventListener('submit', async (e) => {
   msg.textContent = ''; msg.className = 'msg';
   const v = validate();
   if (!v) { form.querySelector('.invalid')?.focus(); return; }
-  if (v.company) return showDone(v); // spam bot filled the hidden field: pretend success, send nothing
+  // spam trap: only bots fill this hidden field, or submit in under 2 seconds
+  if (v.gz_hp_x9 || Date.now() - loadedAt < 2000) { console.warn('[spam trap] request not sent'); return showDone(v); }
 
   const btn = $('#submit');
   btn.disabled = true; btn.firstElementChild.textContent = t('sending');
