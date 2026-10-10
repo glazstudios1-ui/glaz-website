@@ -1,5 +1,15 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-import { SUPABASE_URL, SUPABASE_KEY, NOTIFY_EMAIL, WHATSAPP_NUMBER } from './config.js';
+import * as CFG from './config.js';
+
+// Read settings this way so an older config.js (missing a line) never breaks the page.
+const { SUPABASE_URL, SUPABASE_KEY } = CFG;
+const NOTIFY_EMAIL = CFG.NOTIFY_EMAIL || 'info@glazstudios.com';
+const WHATSAPP_NUMBER = CFG.WHATSAPP_NUMBER || '';
+// FormSubmit's private code for info@ (hides the real address from spammers).
+const FORM_ID = CFG.FORM_ID || '614ae13f91cbeabd6e04a3e3819c5ae7';
+// Everyone else who should get a copy of each request.
+const NOTIFY_CC = CFG.NOTIFY_CC || 'peter@glazstudios.com';
+const DASHBOARD_URL = 'https://glaz-dashboard.vercel.app/#/leads';
 
 const DEMO = !SUPABASE_KEY || SUPABASE_KEY.startsWith('PASTE_');
 const sb = DEMO ? null : createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -17,21 +27,27 @@ const EN = {
   lead: 'Send us the details of your event and our team will reach you on WhatsApp to confirm the date and help you choose the right package.',
   s1t: 'Send your request', s1d: 'Fill in the form in a minute.',
   s2t: 'We confirm with you', s2d: 'We talk on WhatsApp and agree on the date and package.',
-  s3t: 'We lock the day', s3d: 'A deposit via InstaPay secures your date; the balance is due on the event day.',
+  s3t: 'We lock the day', s3d: 'A 30% deposit secures your date; the balance is due on the event day.',
   sv1: 'Photography', sv2: 'Cinematography', sv3: 'Full Rec', sv4: 'Crane', sv5: 'Media coverage', sv6: 'Photo booth',
   formTitle: 'Booking request',
-  fName: 'Full name', fPhone: 'Mobile (WhatsApp)', fEmail: 'Email', optional: '(optional)',
-  fType: 'Event type', tWedding: 'Wedding', tEngagement: 'Engagement', tKatb: 'Katb Ketab', tSession: 'Session', tOther: 'Other',
-  fDate: 'Event date', fVenue: 'Venue / area', phVenue: 'e.g. … Hall – New Cairo',
+  fName: 'Groom & Bride', phName: 'e.g. Ahmed & Sara', fPhone: 'Mobile (WhatsApp)', fPhone2: 'Second mobile', fEmail: 'Email', fInsta: 'Instagram account', optional: '(optional)',
+  fType: 'Event type', tWedding: 'Wedding', tEngagement: 'Engagement', tReligious: 'Religious Event', tDestination: 'Destination Event', tOther: 'Other',
+  fDate: 'Event date', fVenue: 'Venue', phVenue: 'Hall, church or place – and the area',
   fPackage: 'Package you are interested in', pkgUnsure: 'Not sure yet',
   fSource: 'How did you hear about us?', choose: 'Choose', srcFriend: 'Someone I know',
   fMsg: 'Anything else', phMsg: 'Hours, specific services, anything you would like us to know',
   send: 'Send booking request', sending: 'Sending…',
-  note: 'Sending a request does not book the date. The date is secured once we confirm with you and receive the deposit.',
+  notesTitle: 'Important notes',
+  n1: 'A <b>30%</b> deposit is required to secure your date.',
+  n2: 'The date is only confirmed once the deposit is received.',
+  n3: 'All photos will be delivered via a private <b>Online Gallery</b>.',
+  n4: 'The photographer reserves the right to feature selected images on social media and portfolio.',
+  agree: 'I have read and agree to the notes above',
+  eAgree: 'Please confirm you agree to the notes.', eType: 'Please choose the event type.', eVenue: 'Please write the venue.',
   doneTitle: 'We got your request', doneText: 'Thank you! We will reach you on WhatsApp soon to confirm the date and details.',
   waBtn: 'Message us on WhatsApp', again: 'Send another request',
-  eName: 'Please write your name.', ePhone: 'Please write a valid mobile number, e.g. 01012345678.',
-  eEmail: 'This email does not look right.', eDate: 'Please choose a date from today onward.',
+  eName: 'Please write the groom & bride names.', ePhone: 'Please write a valid mobile number, e.g. 01012345678.',
+  eEmail: 'Please write a valid email.', eDate: 'Please choose a date from today onward.',
   eSend: 'Something went wrong and the request was not sent. Please try again, or email us at ',
   langBtn: 'العربية',
 };
@@ -41,7 +57,9 @@ $$('[data-i18n-ph]').forEach((el) => { AR[el.dataset.i18nPh] = el.placeholder; }
 Object.assign(AR, {
   sending: 'جاري الإرسال…',
   eName: 'اكتب اسمك من فضلك.', ePhone: 'اكتب رقم موبايل صحيح، مثلاً 01012345678.',
-  eEmail: 'الإيميل ده شكله مش مظبوط.', eDate: 'اختار تاريخ من النهارده وانت طالع.',
+  eEmail: 'اكتب إيميل صحيح.', eDate: 'اختار تاريخ من النهارده وانت طالع.',
+  eAgree: 'لازم توافق على الملاحظات علشان تبعت الطلب.', eType: 'اختار نوع المناسبة.', eVenue: 'اكتب مكان المناسبة.',
+  eName: 'اكتب اسم العريس والعروسة.',
   eSend: 'حصلت مشكلة والطلب متبعتش. جرّب تاني، أو ابعتلنا على ',
   langBtn: 'English',
 });
@@ -104,7 +122,13 @@ function setErr(name, key) {
   const box = $(`[data-err="${name}"]`);
   const input = form.elements[name];
   if (box) { box.dataset.key = key || ''; box.textContent = key ? t(key) : ''; }
-  input?.classList.toggle('invalid', !!key);
+  (input?.closest?.('.agree') || input)?.classList.toggle('invalid', !!key);
+}
+
+function normInsta(raw) {
+  const u = String(raw || '').trim()
+    .replace(/^https?:\/\/(www\.)?instagram\.com\//i, '').replace(/[/?#].*$/, '').replace(/^@+/, '');
+  return u ? '@' + u : '';
 }
 
 function validate() {
@@ -112,14 +136,24 @@ function validate() {
   let ok = true;
   const name = v.full_name.trim();
   if (name.length < 2) { setErr('full_name', 'eName'); ok = false; } else setErr('full_name');
+  if (!v.event_type) { setErr('event_type', 'eType'); ok = false; } else setErr('event_type');
+  if (!v.event_date || v.event_date < todayStr) { setErr('event_date', 'eDate'); ok = false; } else setErr('event_date');
+  const venue = v.venue.trim();
+  if (venue.length < 2) { setErr('venue', 'eVenue'); ok = false; } else setErr('venue');
   const phone = normPhone(v.phone);
   if (!phone) { setErr('phone', 'ePhone'); ok = false; } else setErr('phone');
+  const phone2 = v.phone2.trim() ? normPhone(v.phone2) : '';
+  if (phone2 === null) { setErr('phone2', 'ePhone'); ok = false; } else setErr('phone2');
   const email = v.email.trim();
-  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { setErr('email', 'eEmail'); ok = false; } else setErr('email');
-  if (!v.event_date || v.event_date < todayStr) { setErr('event_date', 'eDate'); ok = false; } else setErr('event_date');
-  return ok ? { ...v, full_name: name, phone, email } : null;
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { setErr('email', 'eEmail'); ok = false; } else setErr('email');
+  if (!form.agree.checked) { setErr('agree', 'eAgree'); ok = false; } else setErr('agree');
+  return ok ? { ...v, full_name: name, venue, phone, phone2, email, instagram: normInsta(v.instagram) } : null;
 }
-form.addEventListener('input', (e) => { if (e.target.classList.contains('invalid')) setErr(e.target.name); });
+form.addEventListener('input', (e) => {
+  const box = e.target.closest('.agree') || e.target;
+  if (box.classList.contains('invalid')) setErr(e.target.name);
+});
+form.addEventListener('change', (e) => { if (e.target.name === 'agree' && e.target.checked) setErr('agree'); });
 
 // ---------- Submit ----------
 form.addEventListener('submit', async (e) => {
@@ -133,15 +167,22 @@ form.addEventListener('submit', async (e) => {
   const btn = $('#submit');
   btn.disabled = true; btn.firstElementChild.textContent = t('sending');
 
-  const extra = [v.message.trim(), v.source && `— Heard via: ${v.source}`, lang === 'en' && '— Prefers English']
-    .filter(Boolean).join('\n');
+  const extra = [
+    v.phone2 && `Phone 2: ${v.phone2}`,
+    v.instagram && `Instagram: ${v.instagram}`,
+    v.message.trim(),
+    v.source && `— Heard via: ${v.source}`,
+    lang === 'en' && '— Prefers English',
+  ].filter(Boolean).join('\n');
   const lead = {
     full_name: v.full_name,
     phone: v.phone,
-    email: v.email || null,
+    phone2: v.phone2 || null,
+    instagram: v.instagram || null,
+    email: v.email,
     event_date: v.event_date,
     event_type: v.event_type,
-    venue: v.venue.trim() || null,
+    venue: v.venue,
     package_interest: v.package_interest || null,
     message: extra || null,
   };
@@ -153,16 +194,36 @@ form.addEventListener('submit', async (e) => {
     saved = true;
   } else {
     const [db, mail] = await Promise.allSettled([
-      sb.from('leads').insert(lead),
-      fetch(`https://formsubmit.co/ajax/${NOTIFY_EMAIL}`, {
+      sb.from('leads').insert(lead).then((r) => {
+        // If 06_leads_extra.sql hasn't been run yet, save without the new columns (they're still in the message)
+        if (r.error && /phone2|instagram|column/i.test(r.error.message || '')) {
+          const { phone2, instagram, ...rest } = lead;
+          return sb.from('leads').insert(rest);
+        }
+        return r;
+      }),
+      fetch(`https://formsubmit.co/ajax/${FORM_ID}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
-          _subject: `New booking request — ${lead.full_name} — ${lead.event_date}`,
+          _subject: `حجز جديد — ${lead.full_name} — ${lead.event_date}`,
           _template: 'table', _captcha: 'false',
-          Name: lead.full_name, Mobile: lead.phone, Email: lead.email || '—',
-          'Event type': lead.event_type, 'Event date': lead.event_date, Venue: lead.venue || '—',
-          Package: lead.package_interest || 'Not sure', Message: lead.message || '—',
+          _cc: NOTIFY_CC,
+          ...(lead.email ? { _replyto: lead.email } : {}),
+          'الاسم': lead.full_name,
+          'الموبايل': lead.phone,
+          'موبايل تاني': lead.phone2 || '—',
+          'إنستجرام': lead.instagram ? `https://instagram.com/${lead.instagram.slice(1)}` : '—',
+          'واتساب العميل': `https://wa.me/${lead.phone.replace(/^0/, '20').replace(/^\+/, '')}`,
+          'نوع المناسبة': lead.event_type,
+          'تاريخ المناسبة': lead.event_date,
+          'المكان': lead.venue || '—',
+          'البكدج': lead.package_interest || 'لسه مش متأكد',
+          'وافق على الملاحظات': 'نعم ✓ (عربون 30% – Online Gallery – عرض الصور)',
+          'الإيميل': lead.email || '—',
+          'تفاصيل': v.message.trim() || '—',
+          'عرفنا منين': v.source || '—',
+          'افتح الطلب في الداشبورد': DASHBOARD_URL,
         }),
       }).then((r) => r.ok),
     ]);

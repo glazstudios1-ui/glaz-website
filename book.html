@@ -27,7 +27,7 @@
     <ol class="steps">
       <li><span>01</span><div><b data-i18n="s1t">ابعت الطلب</b><p data-i18n="s1d">املا الفورم في دقيقة.</p></div></li>
       <li><span>02</span><div><b data-i18n="s2t">نأكد معاك</b><p data-i18n="s2d">نتواصل على واتساب ونتفق على التاريخ والبكدج.</p></div></li>
-      <li><span>03</span><div><b data-i18n="s3t">نثبّت اليوم</b><p data-i18n="s3d">العربون عن طريق InstaPay بيثبّت التاريخ، والباقي يوم المناسبة.</p></div></li>
+      <li><span>03</span><div><b data-i18n="s3t">نثبّت اليوم</b><p data-i18n="s3d">عربون 30% بيثبّت التاريخ، والباقي يوم المناسبة.</p></div></li>
     </ol>
 
     <ul class="services" aria-label="Services">
@@ -46,32 +46,21 @@
 
       <div class="grid">
         <label class="field full">
-          <span data-i18n="fName">الاسم بالكامل</span> <em>*</em>
-          <input name="full_name" autocomplete="name" required maxlength="80">
+          <span data-i18n="fName">اسم العريس والعروسة</span> <em>*</em>
+          <input name="full_name" autocomplete="off" required maxlength="100" data-i18n-ph="phName" placeholder="مثلاً: أحمد و سارة">
           <small class="err" data-err="full_name"></small>
-        </label>
-
-        <label class="field">
-          <span data-i18n="fPhone">موبايل (واتساب)</span> <em>*</em>
-          <input name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="01X XXXX XXXX" required maxlength="20">
-          <small class="err" data-err="phone"></small>
-        </label>
-
-        <label class="field">
-          <span data-i18n="fEmail">الإيميل</span> <i data-i18n="optional">(اختياري)</i>
-          <input name="email" type="email" autocomplete="email" dir="ltr" maxlength="120">
-          <small class="err" data-err="email"></small>
         </label>
 
         <label class="field">
           <span data-i18n="fType">نوع المناسبة</span> <em>*</em>
           <select name="event_type" required>
+            <option value="" data-i18n="choose">اختار</option>
             <option value="Wedding" data-i18n="tWedding">فرح</option>
             <option value="Engagement" data-i18n="tEngagement">خطوبة</option>
-            <option value="Katb Ketab" data-i18n="tKatb">كتب كتاب</option>
-            <option value="Session" data-i18n="tSession">سيشن</option>
-            <option value="Other" data-i18n="tOther">حاجة تانية</option>
+            <option value="Religious Event" data-i18n="tReligious">مناسبة دينية (كتب كتاب / إكليل)</option>
+            <option value="Destination Event" data-i18n="tDestination">مناسبة خارج القاهرة / Destination</option>
           </select>
+          <small class="err" data-err="event_type"></small>
         </label>
 
         <label class="field">
@@ -80,9 +69,33 @@
           <small class="err" data-err="event_date"></small>
         </label>
 
+        <label class="field full">
+          <span data-i18n="fVenue">المكان</span> <em>*</em>
+          <input name="venue" maxlength="150" required data-i18n-ph="phVenue" placeholder="اسم القاعة أو الكنيسة أو المكان – والمنطقة">
+          <small class="err" data-err="venue"></small>
+        </label>
+
         <label class="field">
-          <span data-i18n="fVenue">المكان / المنطقة</span>
-          <input name="venue" maxlength="120" data-i18n-ph="phVenue" placeholder="مثلاً: قاعة … – التجمع الخامس">
+          <span data-i18n="fPhone">رقم الموبايل (واتساب)</span> <em>*</em>
+          <input name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="01X XXXX XXXX" required maxlength="20">
+          <small class="err" data-err="phone"></small>
+        </label>
+
+        <label class="field">
+          <span data-i18n="fPhone2">رقم موبايل تاني</span> <i data-i18n="optional">(اختياري)</i>
+          <input name="phone2" type="tel" inputmode="tel" dir="ltr" placeholder="01X XXXX XXXX" maxlength="20">
+          <small class="err" data-err="phone2"></small>
+        </label>
+
+        <label class="field">
+          <span data-i18n="fEmail">الإيميل</span> <em>*</em>
+          <input name="email" type="email" autocomplete="email" dir="ltr" required maxlength="120" placeholder="name@email.com">
+          <small class="err" data-err="email"></small>
+        </label>
+
+        <label class="field">
+          <span data-i18n="fInsta">حساب إنستجرام</span> <i data-i18n="optional">(اختياري)</i>
+          <input name="instagram" dir="ltr" maxlength="60" placeholder="@username" autocapitalize="off" autocorrect="off" spellcheck="false">
         </label>
 
         <label class="field">
@@ -92,7 +105,7 @@
           </select>
         </label>
 
-        <label class="field full">
+        <label class="field">
           <span data-i18n="fSource">عرفتنا منين؟</span>
           <select name="source">
             <option value="" data-i18n="choose">اختار</option>
@@ -107,15 +120,29 @@
 
         <label class="field full">
           <span data-i18n="fMsg">أي تفاصيل تانية</span> <i data-i18n="optional">(اختياري)</i>
-          <textarea name="message" rows="4" maxlength="1500" data-i18n-ph="phMsg" placeholder="عدد ساعات، خدمات معينة، أي حاجة حابب نعرفها"></textarea>
+          <textarea name="message" rows="3" maxlength="1500" data-i18n-ph="phMsg" placeholder="عدد ساعات، خدمات معينة، أي حاجة حابب نعرفها"></textarea>
         </label>
 
         <!-- spam trap: real people never see or fill this -->
         <div class="hp" aria-hidden="true"><input name="gz_hp_x9" tabindex="-1" autocomplete="new-password" data-lpignore="true" data-1p-ignore></div>
       </div>
 
+      <div class="notes" aria-labelledby="notes-title">
+        <h3 id="notes-title" data-i18n="notesTitle">ملاحظات مهمة</h3>
+        <ul>
+          <li data-i18n="n1">لتثبيت التاريخ مطلوب عربون <b>30%</b> من قيمة الحجز.</li>
+          <li data-i18n="n2">التاريخ مش بيتثبّت غير بعد ما العربون يوصل.</li>
+          <li data-i18n="n3">كل الصور بتتسلّم على <b>Online Gallery</b> خاص بيكم.</li>
+          <li data-i18n="n4">من حق الاستوديو يعرض صور مختارة على السوشيال ميديا والبورتفوليو.</li>
+        </ul>
+        <label class="agree">
+          <input type="checkbox" name="agree" required>
+          <span data-i18n="agree">قريت الملاحظات وموافق عليها</span>
+        </label>
+        <small class="err" data-err="agree"></small>
+      </div>
+
       <button class="btn" type="submit" id="submit"><span data-i18n="send">ابعت طلب الحجز</span></button>
-      <p class="note" data-i18n="note">إرسال الطلب مش معناه إن التاريخ اتحجز. التاريخ بيتثبّت بعد ما نأكد معاك ويوصل العربون.</p>
       <p class="msg" id="msg" role="alert"></p>
     </form>
 
