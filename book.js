@@ -42,6 +42,11 @@ const EN = {
   n2: 'The date is only confirmed once the deposit is received.',
   n3: 'All photos will be delivered via a private <b>Online Gallery</b>.',
   n4: 'The photographer reserves the right to feature selected images on social media and portfolio.',
+  n5: 'Events outside Cairo include a <b>transportation fee</b>, calculated based on the location.',
+  eDepAmount: 'Please write the deposit amount you transferred.',
+  eDepFile: 'Please upload the transfer screenshot.',
+  eDepType: 'Please upload an image or a PDF.',
+  eDepSize: 'The file is too large (max 5 MB).',
   agree: 'I have read and agree to the notes above',
   eAgree: 'Please confirm you agree to the notes.', eType: 'Please choose the event type.', eVenue: 'Please write the venue.',
   doneTitle: 'We got your request', doneText: 'Thank you! We will reach you on WhatsApp soon to confirm the date and details.',
@@ -49,39 +54,19 @@ const EN = {
   eName: 'Please write the groom & bride names.', ePhone: 'Please write a valid mobile number, e.g. 01012345678.',
   eEmail: 'Please write a valid email.', eDate: 'Please choose a date from today onward.',
   eSend: 'Something went wrong and the request was not sent. Please try again, or email us at ',
-  langBtn: 'العربية',
 };
-const AR = {};
-$$('[data-i18n]').forEach((el) => { AR[el.dataset.i18n] = el.innerHTML.trim(); });
-$$('[data-i18n-ph]').forEach((el) => { AR[el.dataset.i18nPh] = el.placeholder; });
-Object.assign(AR, {
-  sending: 'جاري الإرسال…',
-  eName: 'اكتب اسمك من فضلك.', ePhone: 'اكتب رقم موبايل صحيح، مثلاً 01012345678.',
-  eEmail: 'اكتب إيميل صحيح.', eDate: 'اختار تاريخ من النهارده وانت طالع.',
-  eAgree: 'لازم توافق على الملاحظات علشان تبعت الطلب.', eType: 'اختار نوع المناسبة.', eVenue: 'اكتب مكان المناسبة.',
-  eName: 'اكتب اسم العريس والعروسة.',
-  eSend: 'حصلت مشكلة والطلب متبعتش. جرّب تاني، أو ابعتلنا على ',
-  langBtn: 'English',
-});
 
-let lang = 'ar';
-try { lang = localStorage.getItem('glaz-lang') || 'ar'; } catch { /* storage blocked: keep Arabic */ }
-const t = (k) => (lang === 'en' ? EN : AR)[k] ?? k;
+// The website is English only.
+const lang = 'en';
+const t = (k) => EN[k] ?? k;
+document.documentElement.lang = 'en';
+document.documentElement.dir = 'ltr';
+document.title = 'Book your date — Glaz Studios';
 
-function applyLang() {
-  document.documentElement.lang = lang;
-  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-  $$('[data-i18n]').forEach((el) => { el.innerHTML = t(el.dataset.i18n); });
-  $$('[data-i18n-ph]').forEach((el) => { el.placeholder = t(el.dataset.i18nPh); });
-  $('#lang').textContent = t('langBtn');
-  document.title = lang === 'ar' ? 'احجز معادك — Glaz Studios' : 'Book your date — Glaz Studios';
-  $$('.err').forEach((e) => { if (e.dataset.key) e.textContent = t(e.dataset.key); });
-}
-$('#lang').addEventListener('click', () => {
-  lang = lang === 'ar' ? 'en' : 'ar';
-  try { localStorage.setItem('glaz-lang', lang); } catch { /* ignore */ }
-  applyLang();
-});
+// ---------- Transportation hint ----------
+const travelHint = $('#travel-hint');
+const syncTravel = () => { travelHint.hidden = form.event_type.value !== 'Destination Event'; };
+form.event_type.addEventListener('change', syncTravel);
 
 // ---------- Setup ----------
 const pad = (n) => String(n).padStart(2, '0');
@@ -147,7 +132,15 @@ function validate() {
   const email = v.email.trim();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { setErr('email', 'eEmail'); ok = false; } else setErr('email');
   if (!form.agree.checked) { setErr('agree', 'eAgree'); ok = false; } else setErr('agree');
-  return ok ? { ...v, full_name: name, venue, phone, phone2, email, instagram: normInsta(v.instagram) } : null;
+  const depAmount = v.deposit_amount ? Math.round(Number(v.deposit_amount)) : 0;
+  const depFile = form.deposit_file.files[0] || null;
+  setErr('deposit_amount'); setErr('deposit_file');
+  if (depFile) {
+    if (!/^image\/|^application\/pdf$/.test(depFile.type || '') && !/\.(heic|heif|jpe?g|png|webp|pdf)$/i.test(depFile.name)) { setErr('deposit_file', 'eDepType'); ok = false; }
+    else if (depFile.size > 5 * 1024 * 1024) { setErr('deposit_file', 'eDepSize'); ok = false; }
+    if (!(depAmount > 0)) { setErr('deposit_amount', 'eDepAmount'); ok = false; }
+  } else if (depAmount > 0) { setErr('deposit_file', 'eDepFile'); ok = false; }
+  return ok ? { ...v, full_name: name, venue, phone, phone2, email, instagram: normInsta(v.instagram), depAmount, depFile } : null;
 }
 form.addEventListener('input', (e) => {
   const box = e.target.closest('.agree') || e.target;
@@ -167,12 +160,26 @@ form.addEventListener('submit', async (e) => {
   const btn = $('#submit');
   btn.disabled = true; btn.firstElementChild.textContent = t('sending');
 
+  // Upload the deposit screenshot first (private folder — only admins can open it)
+  let depPath = null, depUploadFailed = false;
+  if (v.depFile && !DEMO) {
+    const ext = ((v.depFile.name.match(/\.([a-z0-9]+)$/i) || [])[1] || 'jpg').toLowerCase();
+    const path = `${v.event_date}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}.${ext}`;
+    const up = await sb.storage.from('deposits').upload(path, v.depFile, { contentType: v.depFile.type || undefined, upsert: false });
+    if (up.error) { depUploadFailed = true; console.error('Deposit upload failed', up.error); } else depPath = path;
+  }
+  const depLine = v.depAmount > 0
+    ? `Deposit: ${v.depAmount.toLocaleString('en-US')} EGP — ${depPath ? 'screenshot uploaded' : depUploadFailed ? 'screenshot upload FAILED, ask client to resend' : 'screenshot attached'}`
+    : '';
+  const travel = v.event_type === 'Destination Event';
+
   const extra = [
+    depLine,
+    travel && '🚗 Outside Cairo — add transportation',
     v.phone2 && `Phone 2: ${v.phone2}`,
     v.instagram && `Instagram: ${v.instagram}`,
     v.message.trim(),
     v.source && `— Heard via: ${v.source}`,
-    lang === 'en' && '— Prefers English',
   ].filter(Boolean).join('\n');
   const lead = {
     full_name: v.full_name,
@@ -184,6 +191,8 @@ form.addEventListener('submit', async (e) => {
     event_type: v.event_type,
     venue: v.venue,
     package_interest: v.package_interest || null,
+    deposit_amount: v.depAmount > 0 ? v.depAmount : null,
+    deposit_screenshot: depPath,
     message: extra || null,
   };
 
@@ -196,8 +205,8 @@ form.addEventListener('submit', async (e) => {
     const [db, mail] = await Promise.allSettled([
       sb.from('leads').insert(lead).then((r) => {
         // If 06_leads_extra.sql hasn't been run yet, save without the new columns (they're still in the message)
-        if (r.error && /phone2|instagram|column/i.test(r.error.message || '')) {
-          const { phone2, instagram, ...rest } = lead;
+        if (r.error && /phone2|instagram|deposit|column/i.test(r.error.message || '')) {
+          const { phone2, instagram, deposit_amount, deposit_screenshot, ...rest } = lead;
           return sb.from('leads').insert(rest);
         }
         return r;
@@ -206,24 +215,26 @@ form.addEventListener('submit', async (e) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
-          _subject: `حجز جديد — ${lead.full_name} — ${lead.event_date}`,
+          _subject: `New booking request — ${lead.full_name} — ${lead.event_date}`,
           _template: 'table', _captcha: 'false',
           _cc: NOTIFY_CC,
           ...(lead.email ? { _replyto: lead.email } : {}),
-          'الاسم': lead.full_name,
-          'الموبايل': lead.phone,
-          'موبايل تاني': lead.phone2 || '—',
-          'إنستجرام': lead.instagram ? `https://instagram.com/${lead.instagram.slice(1)}` : '—',
-          'واتساب العميل': `https://wa.me/${lead.phone.replace(/^0/, '20').replace(/^\+/, '')}`,
-          'نوع المناسبة': lead.event_type,
-          'تاريخ المناسبة': lead.event_date,
-          'المكان': lead.venue || '—',
-          'البكدج': lead.package_interest || 'لسه مش متأكد',
-          'وافق على الملاحظات': 'نعم ✓ (عربون 30% – Online Gallery – عرض الصور)',
-          'الإيميل': lead.email || '—',
-          'تفاصيل': v.message.trim() || '—',
-          'عرفنا منين': v.source || '—',
-          'افتح الطلب في الداشبورد': DASHBOARD_URL,
+          'Groom & Bride': lead.full_name,
+          'Mobile': lead.phone,
+          'Mobile 2': lead.phone2 || '—',
+          'Instagram': lead.instagram ? `https://instagram.com/${lead.instagram.slice(1)}` : '—',
+          'WhatsApp client': `https://wa.me/${lead.phone.replace(/^0/, '20').replace(/^\+/, '')}`,
+          'Event type': lead.event_type,
+          'Event date': lead.event_date,
+          'Venue': lead.venue || '—',
+          'Package': lead.package_interest || 'Not sure yet',
+          'Deposit': depLine ? depLine.replace(/^Deposit: /, '') : 'Not paid yet',
+          'Transportation': travel ? 'YES — event outside Cairo' : '—',
+          'Agreed to notes': 'Yes ✓ (30% deposit – Online Gallery – social media use)',
+          'Email': lead.email || '—',
+          'Details': v.message.trim() || '—',
+          'Heard about us via': v.source || '—',
+          'Open in dashboard': DASHBOARD_URL,
         }),
       }).then((r) => r.ok),
     ]);
@@ -240,9 +251,7 @@ form.addEventListener('submit', async (e) => {
 
 function showDone(lead) {
   if (WHATSAPP_NUMBER) {
-    const text = lang === 'ar'
-      ? `أهلاً Glaz Studios، أنا ${lead.full_name} وبعت طلب حجز ليوم ${lead.event_date}.`
-      : `Hi Glaz Studios, I'm ${lead.full_name} and I just sent a booking request for ${lead.event_date}.`;
+    const text = `Hi Glaz Studios, this is ${lead.full_name}. I just sent a booking request for ${lead.event_date}.`;
     $('#wa').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
   }
   form.hidden = true;
@@ -252,9 +261,9 @@ function showDone(lead) {
 
 $('#again').addEventListener('click', () => {
   form.reset();
+  syncTravel();
   $('#done').hidden = true;
   form.hidden = false;
 });
 
-applyLang();
 loadPackages();

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,150 +8,168 @@
 <meta name="theme-color" content="#121212">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500;600&display=swap">
 <link rel="stylesheet" href="site.css">
 </head>
 <body>
 
 <header class="top">
   <a class="logo" href="/" aria-label="Glaz Studios">GLAZ<span>STUDIOS</span></a>
-  <button class="lang" id="lang" type="button">English</button>
 </header>
 
 <main class="wrap">
   <section class="intro">
-    <p class="eyebrow" data-i18n="eyebrow">احجز معادك</p>
-    <h1 data-i18n="title">خلّينا نحفظ يومك<br>زي ما عشته بالظبط</h1>
-    <p class="lead" data-i18n="lead">ابعتلنا تفاصيل المناسبة، وفريقنا هيتواصل معاك على واتساب يأكد التاريخ ويساعدك تختار البكدج المناسبة.</p>
+    <p class="eyebrow" data-i18n="eyebrow">Book your date</p>
+    <h1 data-i18n="title">Let us keep your day<br>exactly as you lived it</h1>
+    <p class="lead" data-i18n="lead">Send us the details of your event and our team will reach you on WhatsApp to confirm the date and help you choose the right package.</p>
 
     <ol class="steps">
-      <li><span>01</span><div><b data-i18n="s1t">ابعت الطلب</b><p data-i18n="s1d">املا الفورم في دقيقة.</p></div></li>
-      <li><span>02</span><div><b data-i18n="s2t">نأكد معاك</b><p data-i18n="s2d">نتواصل على واتساب ونتفق على التاريخ والبكدج.</p></div></li>
-      <li><span>03</span><div><b data-i18n="s3t">نثبّت اليوم</b><p data-i18n="s3d">عربون 30% بيثبّت التاريخ، والباقي يوم المناسبة.</p></div></li>
+      <li><span>01</span><div><b data-i18n="s1t">Send your request</b><p data-i18n="s1d">Fill in the form in a minute.</p></div></li>
+      <li><span>02</span><div><b data-i18n="s2t">We confirm with you</b><p data-i18n="s2d">We talk on WhatsApp and agree on the date and package.</p></div></li>
+      <li><span>03</span><div><b data-i18n="s3t">We lock the day</b><p data-i18n="s3d">A 30% deposit secures your date; the balance is due on the event day.</p></div></li>
     </ol>
 
     <ul class="services" aria-label="Services">
-      <li data-i18n="sv1">تصوير فوتوغرافي</li>
-      <li data-i18n="sv2">سينماتوجرافي</li>
+      <li data-i18n="sv1">Photography</li>
+      <li data-i18n="sv2">Cinematography</li>
       <li data-i18n="sv3">Full Rec</li>
-      <li data-i18n="sv4">كرين</li>
-      <li data-i18n="sv5">ميديا كوفريدج</li>
-      <li data-i18n="sv6">فوتو بوث</li>
+      <li data-i18n="sv4">Crane</li>
+      <li data-i18n="sv5">Media coverage</li>
+      <li data-i18n="sv6">Photo booth</li>
     </ul>
   </section>
 
   <section class="card" aria-labelledby="form-title">
     <form id="booking" novalidate>
-      <h2 id="form-title" data-i18n="formTitle">طلب حجز</h2>
+      <h2 id="form-title" data-i18n="formTitle">Booking request</h2>
 
       <div class="grid">
         <label class="field full">
-          <span data-i18n="fName">اسم العريس والعروسة</span> <em>*</em>
-          <input name="full_name" autocomplete="off" required maxlength="100" data-i18n-ph="phName" placeholder="مثلاً: أحمد و سارة">
+          <span data-i18n="fName">Groom & Bride</span> <em>*</em>
+          <input name="full_name" autocomplete="off" required maxlength="100" data-i18n-ph="phName" placeholder="e.g. Ahmed & Sara">
           <small class="err" data-err="full_name"></small>
         </label>
 
         <label class="field">
-          <span data-i18n="fType">نوع المناسبة</span> <em>*</em>
+          <span data-i18n="fType">Event type</span> <em>*</em>
           <select name="event_type" required>
-            <option value="" data-i18n="choose">اختار</option>
-            <option value="Wedding" data-i18n="tWedding">فرح</option>
-            <option value="Engagement" data-i18n="tEngagement">خطوبة</option>
-            <option value="Religious Event" data-i18n="tReligious">مناسبة دينية (كتب كتاب / إكليل)</option>
-            <option value="Destination Event" data-i18n="tDestination">مناسبة خارج القاهرة / Destination</option>
+            <option value="" data-i18n="choose">Choose</option>
+            <option value="Wedding" data-i18n="tWedding">Wedding</option>
+            <option value="Engagement" data-i18n="tEngagement">Engagement</option>
+            <option value="Religious Event" data-i18n="tReligious">Religious Event</option>
+            <option value="Destination Event" data-i18n="tDestination">Destination Event</option>
           </select>
           <small class="err" data-err="event_type"></small>
+          <small class="hint" id="travel-hint" hidden>🚗 Events outside Cairo include a <b>transportation fee</b> based on the location. We will confirm it with you.</small>
         </label>
 
         <label class="field">
-          <span data-i18n="fDate">تاريخ المناسبة</span> <em>*</em>
+          <span data-i18n="fDate">Event date</span> <em>*</em>
           <input name="event_date" type="date" required>
           <small class="err" data-err="event_date"></small>
         </label>
 
         <label class="field full">
-          <span data-i18n="fVenue">المكان</span> <em>*</em>
-          <input name="venue" maxlength="150" required data-i18n-ph="phVenue" placeholder="اسم القاعة أو الكنيسة أو المكان – والمنطقة">
+          <span data-i18n="fVenue">Venue</span> <em>*</em>
+          <input name="venue" maxlength="150" required data-i18n-ph="phVenue" placeholder="Hall, church or place – and the area">
           <small class="err" data-err="venue"></small>
         </label>
 
         <label class="field">
-          <span data-i18n="fPhone">رقم الموبايل (واتساب)</span> <em>*</em>
+          <span data-i18n="fPhone">Mobile (WhatsApp)</span> <em>*</em>
           <input name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="01X XXXX XXXX" required maxlength="20">
           <small class="err" data-err="phone"></small>
         </label>
 
         <label class="field">
-          <span data-i18n="fPhone2">رقم موبايل تاني</span> <i data-i18n="optional">(اختياري)</i>
+          <span data-i18n="fPhone2">Second mobile</span> <i data-i18n="optional">(optional)</i>
           <input name="phone2" type="tel" inputmode="tel" dir="ltr" placeholder="01X XXXX XXXX" maxlength="20">
           <small class="err" data-err="phone2"></small>
         </label>
 
         <label class="field">
-          <span data-i18n="fEmail">الإيميل</span> <em>*</em>
+          <span data-i18n="fEmail">Email</span> <em>*</em>
           <input name="email" type="email" autocomplete="email" dir="ltr" required maxlength="120" placeholder="name@email.com">
           <small class="err" data-err="email"></small>
         </label>
 
         <label class="field">
-          <span data-i18n="fInsta">حساب إنستجرام</span> <i data-i18n="optional">(اختياري)</i>
+          <span data-i18n="fInsta">Instagram account</span> <i data-i18n="optional">(optional)</i>
           <input name="instagram" dir="ltr" maxlength="60" placeholder="@username" autocapitalize="off" autocorrect="off" spellcheck="false">
         </label>
 
         <label class="field">
-          <span data-i18n="fPackage">البكدج اللي مهتم بيها</span>
+          <span data-i18n="fPackage">Package you are interested in</span>
           <select name="package_interest" id="packages">
-            <option value="" data-i18n="pkgUnsure">لسه مش متأكد</option>
+            <option value="" data-i18n="pkgUnsure">Not sure yet</option>
           </select>
         </label>
 
         <label class="field">
-          <span data-i18n="fSource">عرفتنا منين؟</span>
+          <span data-i18n="fSource">How did you hear about us?</span>
           <select name="source">
-            <option value="" data-i18n="choose">اختار</option>
+            <option value="" data-i18n="choose">Choose</option>
             <option value="Instagram">Instagram</option>
             <option value="Facebook">Facebook</option>
             <option value="TikTok">TikTok</option>
-            <option value="Friend" data-i18n="srcFriend">من حد أعرفه</option>
+            <option value="Friend" data-i18n="srcFriend">Someone I know</option>
             <option value="Google">Google</option>
-            <option value="Other" data-i18n="tOther">حاجة تانية</option>
+            <option value="Other" data-i18n="tOther">Other</option>
           </select>
         </label>
 
         <label class="field full">
-          <span data-i18n="fMsg">أي تفاصيل تانية</span> <i data-i18n="optional">(اختياري)</i>
-          <textarea name="message" rows="3" maxlength="1500" data-i18n-ph="phMsg" placeholder="عدد ساعات، خدمات معينة، أي حاجة حابب نعرفها"></textarea>
+          <span data-i18n="fMsg">Anything else</span> <i data-i18n="optional">(optional)</i>
+          <textarea name="message" rows="3" maxlength="1500" data-i18n-ph="phMsg" placeholder="Hours, specific services, anything you would like us to know"></textarea>
         </label>
 
         <!-- spam trap: real people never see or fill this -->
         <div class="hp" aria-hidden="true"><input name="gz_hp_x9" tabindex="-1" autocomplete="new-password" data-lpignore="true" data-1p-ignore></div>
       </div>
 
+      <div class="deposit" aria-labelledby="deposit-title">
+        <h3 id="deposit-title">Deposit <i>(optional)</i></h3>
+        <p>Already transferred the deposit? Add the amount and upload the transfer screenshot so we can confirm your date faster.</p>
+        <div class="grid">
+          <label class="field">
+            <span>Deposit amount (EGP)</span>
+            <input name="deposit_amount" type="number" inputmode="numeric" min="1" step="1" placeholder="e.g. 6000" dir="ltr">
+            <small class="err" data-err="deposit_amount"></small>
+          </label>
+          <label class="field">
+            <span>Transfer screenshot</span>
+            <input name="deposit_file" type="file" accept="image/*,application/pdf">
+            <small class="err" data-err="deposit_file"></small>
+          </label>
+        </div>
+      </div>
+
       <div class="notes" aria-labelledby="notes-title">
-        <h3 id="notes-title" data-i18n="notesTitle">ملاحظات مهمة</h3>
+        <h3 id="notes-title" data-i18n="notesTitle">Important notes</h3>
         <ul>
-          <li data-i18n="n1">لتثبيت التاريخ مطلوب عربون <b>30%</b> من قيمة الحجز.</li>
-          <li data-i18n="n2">التاريخ مش بيتثبّت غير بعد ما العربون يوصل.</li>
-          <li data-i18n="n3">كل الصور بتتسلّم على <b>Online Gallery</b> خاص بيكم.</li>
-          <li data-i18n="n4">من حق الاستوديو يعرض صور مختارة على السوشيال ميديا والبورتفوليو.</li>
+          <li data-i18n="n1">A <b>30%</b> deposit is required to secure your date.</li>
+          <li data-i18n="n2">The date is only confirmed once the deposit is received.</li>
+          <li data-i18n="n3">All photos will be delivered via a private <b>Online Gallery</b>.</li>
+          <li data-i18n="n4">The photographer reserves the right to feature selected images on social media and portfolio.</li>
+          <li data-i18n="n5">Events outside Cairo include a <b>transportation fee</b>, calculated based on the location.</li>
         </ul>
         <label class="agree">
           <input type="checkbox" name="agree" required>
-          <span data-i18n="agree">قريت الملاحظات وموافق عليها</span>
+          <span data-i18n="agree">I have read and agree to the notes above</span>
         </label>
         <small class="err" data-err="agree"></small>
       </div>
 
-      <button class="btn" type="submit" id="submit"><span data-i18n="send">ابعت طلب الحجز</span></button>
+      <button class="btn" type="submit" id="submit"><span data-i18n="send">Send booking request</span></button>
       <p class="msg" id="msg" role="alert"></p>
     </form>
 
     <div class="done" id="done" hidden>
       <div class="tick" aria-hidden="true">✓</div>
-      <h2 data-i18n="doneTitle">وصلنا طلبك</h2>
-      <p data-i18n="doneText">شكراً! هنتواصل معاك على واتساب قريب علشان نأكد التاريخ والتفاصيل.</p>
-      <a class="btn ghost" id="wa" hidden target="_blank" rel="noopener"><span data-i18n="waBtn">كلّمنا على واتساب</span></a>
-      <button class="link" type="button" id="again" data-i18n="again">ابعت طلب تاني</button>
+      <h2 data-i18n="doneTitle">We got your request</h2>
+      <p data-i18n="doneText">Thank you! We will reach you on WhatsApp soon to confirm the date and details.</p>
+      <a class="btn ghost" id="wa" hidden target="_blank" rel="noopener"><span data-i18n="waBtn">Message us on WhatsApp</span></a>
+      <button class="link" type="button" id="again" data-i18n="again">Send another request</button>
     </div>
   </section>
 </main>

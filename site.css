@@ -109,3 +109,18 @@ html[dir="ltr"] select { background-position: right 14px center; padding-left: 1
 .agree.invalid span { color: var(--bad); }
 .notes .err { display: block; margin-top: 6px; }
 .notes .err:empty { display: none; }
+
+/* ---------- Transportation hint ---------- */
+.hint { grid-column: 1 / -1; display: block; margin-top: 4px; padding: 10px 12px; border-radius: 8px;
+  background: rgba(201,169,110,.10); border: 1px solid rgba(201,169,110,.35); color: var(--text); font-size: 13px; line-height: 1.5; }
+.hint b { color: var(--gold); font-weight: 600; }
+
+/* ---------- Deposit ---------- */
+.deposit { margin-top: 24px; padding: 18px 20px; border: 1px dashed rgba(201,169,110,.45); border-radius: 12px; }
+.deposit h3 { margin: 0 0 4px; font-size: 15px; font-weight: 600; color: var(--gold); }
+.deposit h3 i { color: var(--muted); font-style: normal; font-weight: 400; font-size: 12px; }
+.deposit p { margin: 0 0 14px; color: var(--muted); font-size: 13.5px; line-height: 1.6; }
+input[type="file"] { padding: 9px 10px; color: var(--muted); font-size: 13px; cursor: pointer; }
+input[type="file"]::file-selector-button { margin-inline-end: 10px; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--gold);
+  background: transparent; color: var(--gold); font: inherit; font-size: 13px; cursor: pointer; }
+input[type=number]::-webkit-inner-spin-button { opacity: .4; }
