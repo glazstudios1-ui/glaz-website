@@ -25,7 +25,7 @@
 
     <ol class="steps">
       <li><span>01</span><div><b data-i18n="s1t">Send your request</b><p data-i18n="s1d">Fill in the form in a minute.</p></div></li>
-      <li><span>02</span><div><b data-i18n="s2t">We confirm with you</b><p data-i18n="s2d">We talk on WhatsApp and agree on the date and package.</p></div></li>
+      <li><span>02</span><div><b data-i18n="s2t">We confirm with you</b><p data-i18n="s2d">Our team contacts you on WhatsApp within 24 hours to confirm the date and package.</p></div></li>
       <li><span>03</span><div><b data-i18n="s3t">We lock the day</b><p data-i18n="s3d">A 30% deposit secures your date; the balance is due on the event day.</p></div></li>
     </ol>
 
@@ -94,18 +94,13 @@
         </label>
 
         <label class="field">
-          <span data-i18n="fInsta">Instagram account</span> <i data-i18n="optional">(optional)</i>
-          <input name="instagram" dir="ltr" maxlength="60" placeholder="@username" autocapitalize="off" autocorrect="off" spellcheck="false">
-        </label>
-
-        <label class="field">
           <span data-i18n="fPackage">Package you are interested in</span>
           <select name="package_interest" id="packages">
             <option value="" data-i18n="pkgUnsure">Not sure yet</option>
           </select>
         </label>
 
-        <label class="field">
+        <label class="field full">
           <span data-i18n="fSource">How did you hear about us?</span>
           <select name="source">
             <option value="" data-i18n="choose">Choose</option>
@@ -130,6 +125,7 @@
       <div class="deposit" aria-labelledby="deposit-title">
         <h3 id="deposit-title">Deposit <i>(optional)</i></h3>
         <p>Already transferred the deposit? Add the amount and upload the transfer screenshot so we can confirm your date faster.</p>
+        <a class="btn ghost pay-btn" id="instapay" hidden target="_blank" rel="noopener">Pay the deposit with InstaPay ↗</a>
         <div class="grid">
           <label class="field">
             <span>Deposit amount (EGP)</span>
@@ -167,7 +163,13 @@
     <div class="done" id="done" hidden>
       <div class="tick" aria-hidden="true">✓</div>
       <h2 data-i18n="doneTitle">We got your request</h2>
-      <p data-i18n="doneText">Thank you! We will reach you on WhatsApp soon to confirm the date and details.</p>
+      <p data-i18n="doneText">Thank you! Our team will contact you on <b>WhatsApp within 24 hours</b> to confirm your date.</p>
+      <ol class="next-steps">
+        <li><b>Within 24 hours</b> — we message you on WhatsApp. Please keep your phone close.</li>
+        <li><b>Event-day sheet &amp; agreement</b> — we send you a short sheet to fill (timings, Instagram accounts) and our simple agreement.</li>
+        <li><b>Deposit</b> — once the 30% deposit is received, your date is confirmed.</li>
+      </ol>
+      <a class="btn ghost pay-btn" id="instapay-done" hidden target="_blank" rel="noopener">Pay the deposit with InstaPay ↗</a>
       <a class="btn ghost" id="wa" hidden target="_blank" rel="noopener"><span data-i18n="waBtn">Message us on WhatsApp</span></a>
       <button class="link" type="button" id="again" data-i18n="again">Send another request</button>
     </div>

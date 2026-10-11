@@ -124,3 +124,10 @@ input[type="file"] { padding: 9px 10px; color: var(--muted); font-size: 13px; cu
 input[type="file"]::file-selector-button { margin-inline-end: 10px; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--gold);
   background: transparent; color: var(--gold); font: inherit; font-size: 13px; cursor: pointer; }
 input[type=number]::-webkit-inner-spin-button { opacity: .4; }
+
+/* ---------- After sending ---------- */
+.next-steps { text-align: start; max-width: 440px; margin: 20px auto 6px; padding-inline-start: 20px; color: var(--muted); font-size: 14px; line-height: 1.6; display: grid; gap: 8px; }
+.next-steps b, .done p b { color: var(--text); font-weight: 600; }
+.pay-btn { width: auto; margin-top: 0; padding: 0 18px; min-height: 44px; font-size: 14px; }
+.deposit .pay-btn { margin-bottom: 14px; }
+.done .pay-btn { margin: 14px auto 0; }

@@ -5,6 +5,8 @@ import * as CFG from './config.js';
 const { SUPABASE_URL, SUPABASE_KEY } = CFG;
 const NOTIFY_EMAIL = CFG.NOTIFY_EMAIL || 'info@glazstudios.com';
 const WHATSAPP_NUMBER = CFG.WHATSAPP_NUMBER || '';
+// InstaPay payment link (temporary until online card payment). Put it in config.js as INSTAPAY_LINK.
+const INSTAPAY_LINK = CFG.INSTAPAY_LINK || '';
 // FormSubmit's private code for info@ (hides the real address from spammers).
 const FORM_ID = CFG.FORM_ID || '614ae13f91cbeabd6e04a3e3819c5ae7';
 // Everyone else who should get a copy of each request.
@@ -26,7 +28,7 @@ const EN = {
   title: 'Let us keep your day<br>exactly as you lived it',
   lead: 'Send us the details of your event and our team will reach you on WhatsApp to confirm the date and help you choose the right package.',
   s1t: 'Send your request', s1d: 'Fill in the form in a minute.',
-  s2t: 'We confirm with you', s2d: 'We talk on WhatsApp and agree on the date and package.',
+  s2t: 'We confirm with you', s2d: 'Our team contacts you on WhatsApp within 24 hours to confirm the date and package.',
   s3t: 'We lock the day', s3d: 'A 30% deposit secures your date; the balance is due on the event day.',
   sv1: 'Photography', sv2: 'Cinematography', sv3: 'Full Rec', sv4: 'Crane', sv5: 'Media coverage', sv6: 'Photo booth',
   formTitle: 'Booking request',
@@ -49,7 +51,7 @@ const EN = {
   eDepSize: 'The file is too large (max 5 MB).',
   agree: 'I have read and agree to the notes above',
   eAgree: 'Please confirm you agree to the notes.', eType: 'Please choose the event type.', eVenue: 'Please write the venue.',
-  doneTitle: 'We got your request', doneText: 'Thank you! We will reach you on WhatsApp soon to confirm the date and details.',
+  doneTitle: 'We got your request', doneText: 'Thank you! Our team will contact you on <b>WhatsApp within 24 hours</b> to confirm your date.',
   waBtn: 'Message us on WhatsApp', again: 'Send another request',
   eName: 'Please write the groom & bride names.', ePhone: 'Please write a valid mobile number, e.g. 01012345678.',
   eEmail: 'Please write a valid email.', eDate: 'Please choose a date from today onward.',
@@ -62,6 +64,9 @@ const t = (k) => EN[k] ?? k;
 document.documentElement.lang = 'en';
 document.documentElement.dir = 'ltr';
 document.title = 'Book your date — Glaz Studios';
+
+// ---------- InstaPay ----------
+if (INSTAPAY_LINK) ['#instapay', '#instapay-done'].forEach((id) => { const a = $(id); a.href = INSTAPAY_LINK; a.hidden = false; });
 
 // ---------- Transportation hint ----------
 const travelHint = $('#travel-hint');
@@ -222,7 +227,6 @@ form.addEventListener('submit', async (e) => {
           'Groom & Bride': lead.full_name,
           'Mobile': lead.phone,
           'Mobile 2': lead.phone2 || '—',
-          'Instagram': lead.instagram ? `https://instagram.com/${lead.instagram.slice(1)}` : '—',
           'WhatsApp client': `https://wa.me/${lead.phone.replace(/^0/, '20').replace(/^\+/, '')}`,
           'Event type': lead.event_type,
           'Event date': lead.event_date,
