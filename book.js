@@ -6,7 +6,7 @@ const { SUPABASE_URL, SUPABASE_KEY } = CFG;
 const NOTIFY_EMAIL = CFG.NOTIFY_EMAIL || 'info@glazstudios.com';
 const WHATSAPP_NUMBER = CFG.WHATSAPP_NUMBER || '';
 // InstaPay payment link (temporary until online card payment). Put it in config.js as INSTAPAY_LINK.
-const INSTAPAY_LINK = CFG.INSTAPAY_LINK || '';
+const INSTAPAY_LINK = CFG.INSTAPAY_LINK || 'https://ipn.eg/S/johnemadph/instapay/44muDC';
 // FormSubmit's private code for info@ (hides the real address from spammers).
 const FORM_ID = CFG.FORM_ID || '614ae13f91cbeabd6e04a3e3819c5ae7';
 // Everyone else who should get a copy of each request.
