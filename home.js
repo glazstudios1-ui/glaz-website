@@ -1,92 +1,67 @@
-import { HERO, WEDDINGS, FILMS, PLANNERS_PHOTO, KIND_WORDS, LINKS } from './home-media.js';
+import { HERO_PRINTS, DAY, FILMS, PLANNERS_PHOTO, CLOSING_PHOTO, KIND_WORDS, LINKS } from './home-media.js';
 import * as CFG from './config.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const safeUrl = (u) => (/^(https?:|mailto:|\/|media\/)/i.test(String(u || '')) ? String(u) : '');
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const root = document.documentElement;
-
-// ---------- The eye opening (first visit of the session only) ----------
-if (root.classList.contains('opening')) {
-  setTimeout(() => {
-    root.classList.remove('opening');
-    try { sessionStorage.setItem('glaz-eye', '1'); } catch (e) { /* private mode */ }
-  }, 3200);
-}
-
-// ---------- Hero film ----------
-const hero = $('.hero');
-const film = $('#hero-film');
-const toggle = $('#film-toggle');
-hero.style.backgroundImage = `url("${HERO.poster}")`;
-film.poster = HERO.poster;
-if (HERO.video && !reduced) {
-  film.src = HERO.video;
-  film.addEventListener('playing', () => { toggle.hidden = false; }, { once: true });
-  film.addEventListener('error', () => film.remove());
-} else {
-  film.removeAttribute('autoplay');
-}
-toggle.addEventListener('click', () => {
-  if (film.paused) { film.play(); toggle.classList.remove('paused'); toggle.setAttribute('aria-label', 'Pause the film'); }
-  else { film.pause(); toggle.classList.add('paused'); toggle.setAttribute('aria-label', 'Play the film'); }
-});
-// Don't spend battery on a film nobody is looking at
-new IntersectionObserver(([e]) => {
-  if (!film.isConnected || toggle.classList.contains('paused')) return;
-  e.isIntersecting ? film.play().catch(() => {}) : film.pause();
-}).observe(hero);
 
 // ---------- Navigation ----------
 const nav = $('#nav');
-new IntersectionObserver(([e]) => nav.classList.toggle('solid', !e.isIntersecting), { rootMargin: '-80px 0px 0px 0px' }).observe(hero);
+addEventListener('scroll', () => nav.classList.toggle('lifted', scrollY > 10), { passive: true });
 const menuBtn = $('#menu-btn'), menu = $('#menu');
 const setMenu = (open) => { menu.classList.toggle('open', open); menuBtn.setAttribute('aria-expanded', String(open)); document.body.style.overflow = open ? 'hidden' : ''; };
 menuBtn.addEventListener('click', () => setMenu(!menu.classList.contains('open')));
 menu.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
 addEventListener('keydown', (e) => { if (e.key === 'Escape' && menu.classList.contains('open')) setMenu(false); });
 
-// A photo that is not uploaded yet shows a quiet striped frame instead of a broken image
-const markMissing = (img, label) => {
-  const box = img.parentElement;
-  img.addEventListener('error', () => { box.classList.add('missing'); box.dataset.missing = label; }, { once: true });
-};
+// ---------- The prints on the table ----------
+$('#prints').innerHTML = HERO_PRINTS.slice(0, 5).map((p, i) => {
+  const media = i === 0 && p.video && !reduced
+    ? `<video src="${esc(safeUrl(p.video))}" poster="${esc(safeUrl(p.src))}" autoplay muted loop playsinline aria-label="${esc(p.alt)}"></video>`
+    : `<img src="${esc(safeUrl(p.src))}" alt="${esc(p.alt)}" ${i < 3 ? 'fetchpriority="high"' : 'loading="lazy"'}>`;
+  return `<figure class="print p${i}">${media}</figure>`;
+}).join('');
 
-// ---------- Recent weddings ----------
-const mosaic = $('#mosaic');
-mosaic.innerHTML = WEDDINGS.slice(0, 6).map((w, i) => `
-  <button class="tile t${i + 1}" data-w="${i}" aria-label="Open the wedding of ${esc(w.names)}">
-    <img src="${esc(safeUrl(w.cover))}" alt="${esc(w.names)}, ${esc(w.place)}" loading="${i < 2 ? 'eager' : 'lazy'}" decoding="async">
-    <span class="cap"><strong>${esc(w.names)}</strong><span>${esc(w.place)}, ${esc(w.year)}</span></span>
-  </button>`).join('');
-mosaic.querySelectorAll('img').forEach((img) => markMissing(img, 'Photo coming soon'));
-mosaic.addEventListener('click', (e) => { const t = e.target.closest('[data-w]'); if (t) openStory(WEDDINGS[t.dataset.w], t); });
+// ---------- A wedding day, in chapters ----------
+const all = []; // every photo of the day, in order, for the viewer
+$('#chapters').innerHTML = DAY.map((ch) => `
+  <article class="chapter">
+    <div class="ch-text"><h3>${esc(ch.title)}</h3><p>${esc(ch.line)}</p></div>
+    <div class="ch-photos">${ch.photos.map((p, i) => {
+      const n = all.push({ ...p, chapter: ch.title }) - 1;
+      return `<button class="ph ${p.shape === 'tall' ? 'tall' : 'wide'} ${i === 0 ? 'lead' : ''}" data-ph="${n}" aria-label="Open photo: ${esc(p.alt)}">
+        <img src="${esc(safeUrl(p.src))}" alt="${esc(p.alt)}" loading="lazy" decoding="async"></button>`;
+    }).join('')}</div>
+  </article>`).join('');
+$('#chapters').addEventListener('click', (e) => { const b = e.target.closest('[data-ph]'); if (b) openViewer(Number(b.dataset.ph), b); });
 
-// ---------- One wedding, full screen ----------
-const story = $('#story'), track = $('#story-track'), count = $('#story-count');
+// ---------- Photo viewer ----------
+const viewer = $('#viewer'), track = $('#viewer-track'), count = $('#viewer-count'), vTitle = $('#viewer-title');
 let opener = null;
-function openStory(w, from) {
-  opener = from;
-  const photos = [w.cover, ...(w.photos || [])].map(safeUrl).filter(Boolean);
-  $('#story-title').textContent = w.names;
-  $('#story-place').textContent = `${w.place}, ${w.year}`;
-  track.innerHTML = photos.map((p, i) => `<figure><img src="${esc(p)}" alt="${esc(w.names)}, photo ${i + 1} of ${photos.length}" loading="${i < 2 ? 'eager' : 'lazy'}"></figure>`).join('');
-  track.querySelectorAll('img').forEach((img) => img.addEventListener('error', () => { img.closest('figure')?.remove(); updateCount(); }, { once: true }));
-  story.showModal();
-  track.scrollLeft = 0;
-  track.focus({ preventScroll: true });
-  updateCount();
+track.innerHTML = all.map((p, i) => `<figure><img data-src="${esc(safeUrl(p.src))}" alt="${esc(p.alt)}"></figure>`).join('');
+const figs = [...track.children];
+const current = () => Math.round(track.scrollLeft / Math.max(track.clientWidth, 1));
+function show(i) {
+  // load this photo and its neighbours only
+  [i - 1, i, i + 1].forEach((k) => { const img = figs[k]?.querySelector('img'); if (img && !img.src) img.src = img.dataset.src; });
+  count.textContent = `${i + 1} / ${all.length}`;
+  vTitle.textContent = all[i]?.chapter || '';
 }
-const current = () => Math.round(track.scrollLeft / track.clientWidth);
-function updateCount() { const n = track.children.length; count.textContent = n ? `${Math.min(current() + 1, n)} / ${n}` : ''; }
-const go = (d) => track.scrollTo({ left: (current() + d) * track.clientWidth, behavior: reduced ? 'auto' : 'smooth' });
-track.addEventListener('scroll', () => requestAnimationFrame(updateCount), { passive: true });
-$('#story-prev').addEventListener('click', () => go(-1));
-$('#story-next').addEventListener('click', () => go(1));
-story.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') go(1); if (e.key === 'ArrowLeft') go(-1); });
-story.querySelector('[data-close]').addEventListener('click', () => story.close());
-story.addEventListener('close', () => { track.innerHTML = ''; opener?.focus(); });
+function openViewer(i, from) {
+  opener = from;
+  viewer.showModal();
+  track.scrollLeft = i * track.clientWidth;
+  show(i);
+  track.focus({ preventScroll: true });
+}
+const go = (d) => track.scrollTo({ left: Math.max(0, Math.min(all.length - 1, current() + d)) * track.clientWidth, behavior: reduced ? 'auto' : 'smooth' });
+track.addEventListener('scroll', () => requestAnimationFrame(() => show(current())), { passive: true });
+$('#viewer-prev').addEventListener('click', () => go(-1));
+$('#viewer-next').addEventListener('click', () => go(1));
+viewer.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') go(1); if (e.key === 'ArrowLeft') go(-1); });
+viewer.querySelector('[data-close]').addEventListener('click', () => viewer.close());
+viewer.addEventListener('close', () => opener?.focus());
 
 // ---------- Films (YouTube loads only when someone presses play) ----------
 const filmGrid = $('#film-grid');
@@ -97,21 +72,17 @@ filmGrid.innerHTML = FILMS.slice(0, 3).map((f, i) => {
   const poster = safeUrl(f.poster) || (id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : '');
   return `<div class="film">
     ${poster ? `<img src="${esc(poster)}" alt="" loading="lazy">` : ''}
-    ${id ? '' : '<span class="soon">Film coming soon</span>'}
     <button data-film="${i}" ${id ? '' : 'disabled'} aria-label="Play ${esc(f.title)}, ${esc(f.couple)}">
       <span class="play">${playIcon}</span>
       <span class="label"><strong>${esc(f.couple)}</strong><span>${esc(f.title)}</span></span>
     </button></div>`;
 }).join('');
-filmGrid.querySelectorAll('.film img').forEach((img) => markMissing(img, ''));
 filmGrid.addEventListener('click', (e) => {
   const b = e.target.closest('[data-film]');
   if (!b || b.disabled) return;
-  const id = ytId(FILMS[b.dataset.film].youtube);
-  const box = b.parentElement;
-  box.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1" title="${esc(FILMS[b.dataset.film].title)}"
+  const f = FILMS[b.dataset.film];
+  b.parentElement.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${ytId(f.youtube)}?autoplay=1&rel=0&modestbranding=1&playsinline=1" title="${esc(f.title)}"
     allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
-  if (!film.paused) { film.pause(); }
 });
 
 // ---------- Kind words (only real ones) ----------
@@ -121,15 +92,17 @@ if (KIND_WORDS.length) {
   words.hidden = false;
 }
 
-// ---------- Planners & venues ----------
-const pImg = $('#planners-img');
-pImg.src = safeUrl(PLANNERS_PHOTO);
-markMissing(pImg, '');
+// ---------- Planners & closing photos ----------
+$('#planners-img').src = safeUrl(PLANNERS_PHOTO);
+if (safeUrl(CLOSING_PHOTO)) {
+  const closing = $('#closing');
+  new IntersectionObserver(([e], obs) => { if (e.isIntersecting) { closing.style.backgroundImage = `url("${CLOSING_PHOTO}")`; obs.disconnect(); } }, { rootMargin: '400px' }).observe(closing);
+}
 const wa = String(CFG.WHATSAPP_NUMBER || '').replace(/\D/g, '');
 const waText = encodeURIComponent('Hello Glaz Studios, I would like to talk about working together.');
 $('#planners-cta').innerHTML = [
-  wa ? `<a class="btn gold" href="https://wa.me/${wa}?text=${waText}" target="_blank" rel="noopener">Message us on WhatsApp</a>` : '',
-  LINKS.email ? `<a class="btn ${wa ? 'ghost' : 'gold'}" href="mailto:${esc(LINKS.email)}?subject=${encodeURIComponent('Working together')}">Email ${esc(LINKS.email)}</a>` : '',
+  wa ? `<a class="btn solid" href="https://wa.me/${wa}?text=${waText}" target="_blank" rel="noopener">Message us on WhatsApp</a>` : '',
+  LINKS.email ? `<a class="btn ${wa ? 'line' : 'solid'}" href="mailto:${esc(LINKS.email)}?subject=${encodeURIComponent('Working together')}">Email ${esc(LINKS.email)}</a>` : '',
 ].join('');
 
 // ---------- Footer ----------

@@ -1,47 +1,76 @@
 // =========================================================
 // Glaz Studios — what the home page shows.
-// Change this file only: add your photos, films and links here.
-// Photos go in the "media" folder on GitHub (see the paths below).
+// Change this file only: photos, films and links all live here.
+// Photos go in the "media" folder on GitHub.
+// Size: about 1600 px on the long side, under 400 KB each.
+//
+// ⚠️ The photos in media/temp are TEMPORARY stand-ins for the design.
+//    Replace every one of them with your own work before launch.
 // =========================================================
 
-// The film at the top of the page: 8–12 seconds, NO sound, under ~8 MB.
-// The poster is the photo people see while the film loads (and on phones in low-power mode).
-export const HERO = {
-  video: 'media/hero.mp4',
-  poster: 'media/hero.jpg',
-};
-
-// Weddings shown under "Recent weddings". The first one is shown biggest.
-// cover = the photo on the page. photos = what opens when someone clicks it.
-// Photos: JPG, about 2000 px on the long side, under 600 KB each.
-export const WEDDINGS = [
-  { names: 'Couple one', place: 'Cairo', year: 2026, cover: 'media/w1/cover.jpg', photos: ['media/w1/1.jpg', 'media/w1/2.jpg', 'media/w1/3.jpg', 'media/w1/4.jpg', 'media/w1/5.jpg', 'media/w1/6.jpg'] },
-  { names: 'Couple two', place: 'Sahel', year: 2025, cover: 'media/w2/cover.jpg', photos: ['media/w2/1.jpg', 'media/w2/2.jpg', 'media/w2/3.jpg', 'media/w2/4.jpg'] },
-  { names: 'Couple three', place: 'Giza', year: 2025, cover: 'media/w3/cover.jpg', photos: ['media/w3/1.jpg', 'media/w3/2.jpg', 'media/w3/3.jpg', 'media/w3/4.jpg'] },
-  { names: 'Couple four', place: 'El Gouna', year: 2025, cover: 'media/w4/cover.jpg', photos: ['media/w4/1.jpg', 'media/w4/2.jpg', 'media/w4/3.jpg', 'media/w4/4.jpg'] },
-  { names: 'Couple five', place: 'Cairo', year: 2024, cover: 'media/w5/cover.jpg', photos: ['media/w5/1.jpg', 'media/w5/2.jpg', 'media/w5/3.jpg', 'media/w5/4.jpg'] },
-  { names: 'Couple six', place: 'Alexandria', year: 2024, cover: 'media/w6/cover.jpg', photos: ['media/w6/1.jpg', 'media/w6/2.jpg', 'media/w6/3.jpg', 'media/w6/4.jpg'] },
+// The printed photos on top of the page (5 photos). The first one is the biggest.
+// To make the big one a moving film later: add  video: 'media/hero.mp4'  (8–12 s, no sound, under 8 MB).
+export const HERO_PRINTS = [
+  { src: 'media/temp/17.jpg', alt: 'The couple holding each other in the garden' },
+  { src: 'media/temp/18.jpg', alt: 'The bride looking back over her shoulder' },
+  { src: 'media/temp/16.jpg', alt: 'The bride lifting her dress, laughing with friends' },
+  { src: 'media/temp/04.jpg', alt: 'Mother and sister helping the bride into her dress' },
+  { src: 'media/temp/19.jpg', alt: 'A long candlelit dinner table' },
 ];
 
-// Films: upload them to YouTube (can be "Unlisted") and paste the video ID
-// (the letters after "v=" in the link, e.g. youtube.com/watch?v=AbC123xyz → 'AbC123xyz').
-// The first film is shown big.
+// One wedding day, told in chapters. Each photo: src, alt, and shape: 'wide' or 'tall'.
+export const DAY = [
+  { title: 'Getting ready', line: 'Mum’s hands, the dress, the nerves and the laughing.', photos: [
+    { src: 'media/temp/04.jpg', alt: 'Mother and sister fastening the dress', shape: 'wide' },
+    { src: 'media/temp/03.jpg', alt: 'Hands fastening a necklace', shape: 'wide' },
+    { src: 'media/temp/02.jpg', alt: 'The bride in the mirror', shape: 'wide' },
+  ] },
+  { title: 'The first look', line: 'The people who see you first, and their faces when they do.', photos: [
+    { src: 'media/temp/06.jpg', alt: 'Her father clapping when he sees her', shape: 'wide' },
+    { src: 'media/temp/07.jpg', alt: 'Bridesmaids reacting', shape: 'wide' },
+    { src: 'media/temp/05.jpg', alt: 'The groom seeing her for the first time', shape: 'wide' },
+  ] },
+  { title: 'I do', line: 'Every face in the front row.', photos: [
+    { src: 'media/temp/14.jpg', alt: 'Her father giving her away', shape: 'wide' },
+    { src: 'media/temp/08.jpg', alt: 'The ceremony in the garden', shape: 'tall' },
+    { src: 'media/temp/09.jpg', alt: 'Flowers along the guests’ chairs', shape: 'tall' },
+  ] },
+  { title: 'The celebration', line: 'Hands in the air, dress in hand.', photos: [
+    { src: 'media/temp/15.jpg', alt: 'The couple celebrating after the ceremony', shape: 'wide' },
+    { src: 'media/temp/16.jpg', alt: 'The bride running with friends', shape: 'wide' },
+    { src: 'media/temp/10.jpg', alt: 'The groom and his friends toasting', shape: 'wide' },
+  ] },
+  { title: 'Just the two of you', line: 'Ten quiet minutes, away from everyone.', photos: [
+    { src: 'media/temp/17.jpg', alt: 'The couple in the garden', shape: 'wide' },
+    { src: 'media/temp/18.jpg', alt: 'Portrait of the bride', shape: 'tall' },
+    { src: 'media/temp/11.jpg', alt: 'The bride by the window', shape: 'tall' },
+  ] },
+  { title: 'Dinner by candlelight', line: 'Toasts, stories and the last candle on the table.', photos: [
+    { src: 'media/temp/19.jpg', alt: 'The candlelit dinner table', shape: 'wide' },
+  ] },
+];
+
+// Films: upload to YouTube (can be "Unlisted") and paste the video ID
+// (youtube.com/watch?v=AbC123xyz → 'AbC123xyz'). The first film is shown big.
 export const FILMS = [
-  { title: 'Highlight film', couple: 'Couple one', youtube: '', poster: 'media/film1.jpg' },
-  { title: 'Highlight film', couple: 'Couple two', youtube: '', poster: 'media/film2.jpg' },
-  { title: 'Highlight film', couple: 'Couple three', youtube: '', poster: 'media/film3.jpg' },
+  { title: 'Highlight film', couple: 'Coming soon', youtube: '', poster: 'media/temp/15.jpg' },
+  { title: 'Highlight film', couple: 'Coming soon', youtube: '', poster: 'media/temp/13.jpg' },
+  { title: 'Highlight film', couple: 'Coming soon', youtube: '', poster: 'media/temp/05.jpg' },
 ];
 
-// The photo next to "For planners, venues and hotels" (a wide venue / decor shot works best).
-export const PLANNERS_PHOTO = 'media/planners.jpg';
+// Next to "For planners, venues and hotels" (a venue or decor photo works best)
+export const PLANNERS_PHOTO = 'media/temp/08.jpg';
+
+// Behind "Your date is the one thing we can't move" (a wide, happy photo)
+export const CLOSING_PHOTO = 'media/temp/15.jpg';
 
 // What couples said. Only real words from real clients, with their permission.
-// Leave the list empty and this part of the page stays hidden.
+// Leave the list empty and this part stays hidden.
 export const KIND_WORDS = [
   // { text: 'Write what they said here.', who: 'Sara & Omar', when: 'June 2026' },
 ];
 
-// Links in the menu and at the bottom of the page. Leave '' to hide.
+// Links in the menu and at the bottom. Leave '' to hide.
 export const LINKS = {
   instagram: '',   // e.g. 'https://instagram.com/glazstudios'
   email: 'info@glazstudios.com',
