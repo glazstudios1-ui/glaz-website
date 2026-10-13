@@ -3,142 +3,87 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Glaz Studios — Wedding photography and films in Egypt</title>
-<meta name="description" content="Glaz Studios: wedding photography, films, Full Rec, crane and photo booth in Cairo, Sahel and across Egypt. At weddings since 2013.">
+<title>Glaz Studios — Wedding photography and films</title>
+<meta name="description" content="Glaz Studios: wedding photography, cinematography, full coverage, media coverage and photo booth in Egypt. Since 2013.">
 <!-- While the page uses temporary photos, keep it out of Google. Remove this line at launch. -->
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#FFFBF8">
+<meta name="theme-color" content="#1F3328">
 <meta property="og:title" content="Glaz Studios">
-<meta property="og:description" content="Wedding photography and films. Cairo, Sahel and wherever you celebrate.">
+<meta property="og:description" content="Wedding photography and films.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400;1,6..96,500&family=Jost:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500&display=swap">
 <link rel="stylesheet" href="home.css">
-<script>try { if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion'); } catch (e) {}</script>
 </head>
 <body>
 
-<a class="skip" href="#day">Skip to our work</a>
+<a class="skip" href="#work">Skip to our work</a>
 
-<header class="nav" id="nav">
+<header class="nav on-hero" id="nav">
   <a class="logo" href="/" aria-label="Glaz Studios home">GLAZ<span>STUDIOS</span></a>
   <nav class="links" id="menu" aria-label="Main">
-    <a href="#day">A wedding day</a>
-    <a href="#films">Films</a>
-    <a href="#how">How we work</a>
-    <a href="#planners">Planners &amp; venues</a>
-    <a class="book" href="/book">Check your date</a>
+    <a href="/" aria-current="page">Home</a>
+    <a href="/about">About</a>
+    <a href="/faq">FAQ</a>
+    <a class="book" href="/book">Book your date</a>
   </nav>
   <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="menu"><span></span><span></span><span class="sr">Menu</span></button>
 </header>
 
 <main>
-  <!-- Opening: the headline and a table of printed photos -->
-  <section class="hero" id="top">
+  <!-- Opening reel -->
+  <section class="hero" id="top" aria-label="Glaz Studios">
+    <div class="reel" id="reel" aria-hidden="true"></div>
+    <div class="hero-shade"></div>
     <div class="hero-text">
       <h1>Here’s to the best day of your life.</h1>
-      <p>Wedding photography and films that feel as happy as the day did. Cairo, Sahel, and wherever you celebrate.</p>
-      <div class="cta">
-        <a class="btn solid" href="/book">Check your date</a>
-        <a class="btn line" href="#day">See a wedding day</a>
-      </div>
+      <a class="btn light" href="/book">Book your date</a>
     </div>
-    <div class="prints" id="prints" aria-label="Photos from our weddings"></div>
-  </section>
-
-  <!-- Who we are -->
-  <section class="statement">
-    <p>Glaz means <i>eye</i> in Russian. Since 2013, ours have been on the laughs, the happy tears and the dance floor. Today photo, film, Full Rec and crane come from one team, under one contract.</p>
-  </section>
-
-  <!-- One wedding day, in chapters -->
-  <section class="day" id="day" aria-labelledby="day-h">
-    <div class="head">
-      <h2 id="day-h">A whole day, start to finish</h2>
-      <p>From the first button of the dress to the last candle on the table. Tap any photo to see it big.</p>
-    </div>
-    <div id="chapters"></div>
-  </section>
-
-  <!-- Films -->
-  <section class="films" id="films" aria-labelledby="films-h">
-    <div class="head">
-      <h2 id="films-h">Films</h2>
-      <p>Press play, and turn the sound on.</p>
-    </div>
-    <div class="film-grid" id="film-grid"></div>
-  </section>
-
-  <!-- The process (a real sequence) -->
-  <section class="how" id="how" aria-labelledby="how-h">
-    <div class="how-in">
-      <div class="head">
-        <h2 id="how-h">How we work with you</h2>
-        <p>Everything around the photos, so all you have to do on the day is enjoy it.</p>
-      </div>
-      <ol class="timeline">
-        <li><span class="when">A week before</span><h3>We plan it with you</h3>
-          <p>You fill in your timings, places and the people that matter. We call you to go over everything, and every member of our crew gets the plan.</p></li>
-        <li><span class="when">The day</span><h3>We arrive before you’re ready</h3>
-          <p>Your crew knows the schedule, the venue and who to look for. You don’t have to direct anyone.</p></li>
-        <li><span class="when">5 days after</span><h3>Your highlight</h3>
-          <p>A short edit of photos and video, ready to share while everyone is still talking about the night.</p></li>
-        <li><span class="when">25 days after</span><h3>Everything else</h3>
-          <p>Your full gallery and films in a private online gallery you can share with family.</p></li>
-      </ol>
+    <div class="reel-ui">
+      <div class="ticks" id="ticks"></div>
+      <button class="reel-toggle" id="reel-toggle" aria-label="Pause">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3v14H7zM14 5h3v14h-3z"/><path class="i-play" d="M8 5l11 7-11 7z"/></svg>
+      </button>
     </div>
   </section>
 
   <!-- Services -->
   <section class="services" aria-labelledby="services-h">
-    <h2 id="services-h">One team for all of it</h2>
-    <dl class="service-list">
-      <div><dt>Photography</dt><dd>Candid moments and portraits, edited in our own colour.</dd></div>
-      <div><dt>Cinematography</dt><dd>A highlight film to share, and the full film to keep.</dd></div>
-      <div><dt>Full Rec &amp; crane</dt><dd>The whole event recorded from start to end, with a crane for the wide shots.</dd></div>
-      <div><dt>Media coverage</dt><dd>Behind-the-scenes and same-night content for social media.</dd></div>
-      <div><dt>Photo booth</dt><dd>A booth for your guests to take their own photos.</dd></div>
-      <div><dt>Destination weddings</dt><dd>Sahel, Gouna, Luxor and beyond. We travel with the full crew.</dd></div>
-    </dl>
+    <h2 id="services-h" class="sr">What we do</h2>
+    <ul class="service-row" id="services"></ul>
   </section>
 
-  <!-- What couples said (hidden until there are real quotes) -->
-  <section class="words" id="words" aria-label="What couples said" hidden></section>
+  <!-- The work -->
+  <section class="work" id="work" aria-labelledby="work-h">
+    <h2 id="work-h">Our work</h2>
+    <div class="wall" id="wall"></div>
+  </section>
 
-  <!-- Planners, venues, hotels -->
-  <section class="planners" id="planners" aria-labelledby="planners-h">
-    <figure class="planners-photo"><img id="planners-img" alt="" loading="lazy"></figure>
-    <div class="planners-text">
-      <h2 id="planners-h">For planners, venues and hotels</h2>
-      <p>Every event we cover runs on a written plan that our whole crew has before we arrive. We are on time, we work around your team, and the edited highlight is ready within five days.</p>
-      <p>If you plan weddings or host them, we would love to work with you, and we are happy to share edited work from your events for your own page.</p>
-      <div class="cta" id="planners-cta"></div>
-    </div>
+  <!-- Films -->
+  <section class="films" id="films" aria-labelledby="films-h">
+    <h2 id="films-h">Films</h2>
+    <div class="film-grid" id="film-grid"></div>
   </section>
 
   <!-- Close -->
   <section class="closing" id="closing">
     <div class="closing-in">
-      <h2>Your date is the one thing we can’t move.</h2>
-      <p>Dates are confirmed in the order deposits arrive.</p>
-      <a class="btn solid light" href="/book">Check your date</a>
+      <h2>Your date, our eyes.</h2>
+      <a class="btn light" href="/book">Book your date</a>
     </div>
   </section>
 </main>
 
 <footer class="foot">
   <a class="logo" href="#top" aria-label="Back to the top">GLAZ<span>STUDIOS</span></a>
-  <p>Wedding photography and films, since 2013.</p>
-  <nav class="foot-links" id="foot-links" aria-label="Contact"></nav>
+  <nav class="foot-links" id="foot-links" aria-label="Footer"></nav>
+  <p>Wedding photography and films since 2013.</p>
 </footer>
 
 <!-- Photos, full screen -->
 <dialog class="viewer" id="viewer" aria-label="Photo viewer">
-  <header class="viewer-bar">
-    <strong id="viewer-title"></strong>
-    <span class="viewer-count" id="viewer-count" aria-live="polite"></span>
-    <button class="icon-btn" data-close aria-label="Close">✕</button>
-  </header>
+  <span class="viewer-count" id="viewer-count" aria-live="polite"></span>
+  <button class="icon-btn viewer-close" data-close aria-label="Close">✕</button>
   <div class="viewer-track" id="viewer-track" tabindex="0" aria-label="Photos — swipe or use the arrow keys"></div>
   <button class="icon-btn viewer-prev" id="viewer-prev" aria-label="Previous photo">‹</button>
   <button class="icon-btn viewer-next" id="viewer-next" aria-label="Next photo">›</button>
