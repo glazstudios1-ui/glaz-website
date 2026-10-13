@@ -18,7 +18,7 @@ body.ready { opacity: 1; }
 /* repeating rows (timeline, instagram) */
 .rows { display: grid; gap: 8px; }
 .row4 { display: grid; grid-template-columns: 120px 1.4fr 1fr 1.2fr 36px; gap: 8px; align-items: center; }
-.row3 { display: grid; grid-template-columns: 1fr 1fr 1fr 36px; gap: 8px; align-items: center; }
+.row3 { display: grid; grid-template-columns: 1fr 1.4fr 36px; gap: 8px; align-items: center; }
 .rows-head { font-size: 11px; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
 .rows input { min-height: 44px; padding: 10px 12px; font-size: 14px; }
 .x { all: unset; cursor: pointer; width: 36px; height: 36px; display: grid; place-items: center; border-radius: 8px; color: var(--muted); }
@@ -30,9 +30,7 @@ body.ready { opacity: 1; }
   .row4 .where { grid-column: 1 / 2; grid-row: 2; }
   .row4 .tl-notes { grid-column: 2 / 4; grid-row: 2; }
   .row4 [data-del] { grid-column: 3; grid-row: 1; }
-  .row3 { grid-template-columns: 1fr 1fr 36px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
-  .row3 .handle { grid-column: 1 / 4; grid-row: 2; }
-  .row3 [data-del] { grid-column: 3; grid-row: 1; }
+  .row3 { grid-template-columns: 1fr 1.2fr 36px; }
   .rows-head { display: none; }
 }
 .hours { margin-top: 10px; font-size: 14px; color: var(--muted); }

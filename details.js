@@ -17,7 +17,6 @@ const timelineRow = (r = {}) => `<div class="row4" data-row="timeline">
 
 const igRow = (r = {}) => `<div class="row3" data-row="instagram">
   <input data-k="who" value="${esc(r.who)}" placeholder="Who (e.g. Makeup)" aria-label="Who">
-  <input data-k="name" value="${esc(r.name)}" placeholder="Name" aria-label="Name">
   <input class="handle" data-k="handle" value="${esc(r.handle)}" placeholder="@instagram" dir="ltr" autocapitalize="off" spellcheck="false" aria-label="Instagram">
   <button type="button" class="x" data-del aria-label="Remove">✕</button></div>`;
 
@@ -75,7 +74,7 @@ function render() {
       </section>
 
       <section class="card"><h2>5. Instagram accounts</h2><p class="lead-in">So we can tag everyone. Groom and bride first.</p>
-        <div class="row3 rows-head"><span>Who</span><span>Name</span><span>Instagram</span><span></span></div>
+        <div class="row3 rows-head"><span>Who</span><span>Instagram</span><span></span></div>
         <div class="rows" id="instagram">${ig.map(igRow).join('')}</div>
         <button type="button" class="add" data-add="instagram">+ Add someone</button>
       </section>
