@@ -3,147 +3,326 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Glaz Studios — Wedding photography and films in Egypt</title>
-<meta name="description" content="Glaz Studios: wedding photography, films, Full Rec, crane and photo booth in Cairo, Sahel and across Egypt. At weddings since 2013.">
-<!-- While the page uses temporary photos, keep it out of Google. Remove this line at launch. -->
-<meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#FFFBF8">
-<meta property="og:title" content="Glaz Studios">
-<meta property="og:description" content="Wedding photography and films. Cairo, Sahel and wherever you celebrate.">
+<title>Glaz Studios — Wedding photography and films</title>
+<meta name="description" content="Glaz Studios: wedding photography, cinematography, full coverage, media coverage and photo booth. Cairo and wherever you celebrate.">
+<meta name="theme-color" content="#2A0B0C">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400;1,6..96,500&family=Jost:wght@300;400;500&display=swap">
-<link rel="stylesheet" href="home.css">
-<script>try { if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion'); } catch (e) {}</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Courier+Prime:wght@400;700&display=swap">
+<style>
+:root {
+  --oxblood: #2A0B0C;
+  --bone: #E5E2DC;
+  --olive: #7A7957;
+  --ink: #1E1B18;
+  --stone: #6E6A63;
+  --paper: #F4F1EC;
+  --serif: 'Instrument Serif', 'Times New Roman', serif;
+  --mono: 'Courier Prime', 'Courier New', monospace;
+  --gutter: clamp(18px, 5vw, 80px);
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+html, body { margin: 0; background: var(--bone); color: var(--ink); overflow-x: clip; }
+body { font-family: var(--mono); font-size: 13px; line-height: 1.75; -webkit-font-smoothing: antialiased; }
+/* film grain over everything */
+body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: .07; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+a { color: inherit; }
+img { display: block; width: 100%; height: 100%; object-fit: cover; }
+h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-transform: uppercase; letter-spacing: .01em; line-height: 1; }
+:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.kicker { text-transform: uppercase; letter-spacing: .08em; font-size: 11px; line-height: 1.6; }
+.link { display: inline-block; text-transform: uppercase; letter-spacing: .1em; font-size: 11px; text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 3px; }
+.link:hover { opacity: .7; }
+
+/* ---------- Photo slots (placeholder until a photo is added) ---------- */
+.ph { position: relative; margin: 0; overflow: hidden; background: #8f8a7c; }
+.ph .tag { position: absolute; left: 10px; bottom: 8px; right: 10px; font-family: var(--mono); font-size: 10px; letter-spacing: .06em;
+  text-transform: uppercase; color: rgba(255,255,255,.82); text-shadow: 0 1px 3px rgba(0,0,0,.35); line-height: 1.4; }
+.ph.has-img .tag { display: none; }
+.ph[data-tone="field"] { background: radial-gradient(120% 80% at 70% 20%, #c9c3a8 0%, #8e9672 35%, #4f5a3c 70%, #2d3424 100%); }
+.ph[data-tone="dress"] { background: radial-gradient(90% 70% at 50% 45%, #f1ede4 0%, #d7d1c3 40%, #8a8574 85%); }
+.ph[data-tone="bw"] { background: linear-gradient(160deg, #d9d6d0 0%, #8d8a85 45%, #3c3a37 100%); filter: grayscale(1); }
+.ph[data-tone="dusk"] { background: radial-gradient(100% 90% at 30% 25%, #b9a58e 0%, #6f5f50 45%, #2f2620 100%); }
+.ph[data-tone="forest"] { background: linear-gradient(175deg, #a9a99a 0%, #6c6f5e 30%, #3b4033 70%, #23271f 100%); }
+.ph[data-tone="candle"] { background: radial-gradient(80% 70% at 50% 40%, #e2b77a 0%, #9a6a3c 40%, #3a2416 85%); }
+.ph.print { padding: 6px 6px 18px; background: #f4f1ec !important; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+.ph.print > .inner { position: relative; width: 100%; height: 100%; overflow: hidden; }
+
+/* ---------- Navigation ---------- */
+.nav { position: absolute; inset: 0 0 auto; z-index: 10; display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; padding: 22px var(--gutter); color: #fff; }
+.nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: clamp(16px, 2.6vw, 40px); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; padding-top: 8px; }
+.nav ul:last-of-type { justify-content: flex-end; }
+.nav a { text-decoration: none; }
+.nav a:hover { opacity: .7; }
+.brand { text-align: center; text-decoration: none; }
+.brand b { display: block; font-family: var(--serif); font-weight: 400; font-size: clamp(54px, 8vw, 116px); line-height: .82; letter-spacing: .02em; }
+.brand span { display: block; font-size: 9px; letter-spacing: .5em; margin-top: 8px; opacity: .85; }
+.menu-btn { display: none; }
+@media (max-width: 760px) {
+  .nav { grid-template-columns: 1fr auto; align-items: center; }
+  .nav ul { display: none; }
+  .brand { text-align: left; } .brand b { font-size: 46px; }
+  .menu-btn { display: block; justify-self: end; background: none; border: 0; color: inherit; font: inherit; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; cursor: pointer; padding: 10px 0; }
+  .nav.open { position: fixed; inset: 0; background: var(--oxblood); align-content: start; }
+  .nav.open ul { display: flex; flex-direction: column; grid-column: 1 / -1; gap: 18px; font-family: var(--serif); font-size: 34px; letter-spacing: .02em; padding-top: 48px; }
+  .nav.open ul:last-of-type { justify-content: flex-start; padding-top: 0; }
+}
+
+/* ---------- Hero ---------- */
+.hero { position: relative; height: 100svh; min-height: 560px; color: #fff; }
+.hero .ph { position: absolute; inset: 0; }
+.hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,0) 30%, rgba(0,0,0,0) 60%, rgba(0,0,0,.35)); pointer-events: none; }
+.hero-line { position: absolute; z-index: 2; left: 50%; top: 58%; translate: -50% 0; width: min(560px, 86vw); text-align: center;
+  font-family: var(--serif); font-style: italic; font-size: clamp(22px, 2.6vw, 34px); line-height: 1.2; text-shadow: 0 1px 14px rgba(0,0,0,.35); }
+.hero .ph .tag { bottom: 22px; left: var(--gutter); right: auto; }
+
+/* ---------- Welcome (oxblood) ---------- */
+.welcome { background: var(--oxblood); color: #E9E1D8; padding: clamp(80px, 11vw, 150px) var(--gutter) clamp(80px, 10vw, 130px); }
+.welcome-grid { display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: clamp(20px, 4vw, 64px); max-width: 1180px; margin: 0 auto; align-items: start; }
+.welcome h2 { font-size: clamp(30px, 3.4vw, 48px); grid-column: 1 / 3; }
+.welcome .lead { grid-column: 1 / 3; margin-top: -10px; max-width: 40ch; }
+.welcome .p1 { grid-column: 1; grid-row: 3 / 5; aspect-ratio: 3 / 4; margin-top: 60px; width: 82%; }
+.welcome .copy { grid-column: 2; grid-row: 3; max-width: 46ch; margin-top: 30px; }
+.welcome .copy p { margin: 0 0 16px; }
+.welcome .p2 { grid-column: 3; grid-row: 1 / 3; aspect-ratio: 4 / 5; }
+.welcome .p3 { grid-column: 3; grid-row: 3; width: 46%; aspect-ratio: 1; margin: -50px 0 0 -12%; z-index: 1; }
+.services { list-style: none; margin: clamp(60px, 8vw, 110px) auto 0; padding: 0; max-width: 520px; text-align: center; counter-reset: s; }
+.services li { counter-increment: s; position: relative; font-family: var(--serif); font-size: clamp(24px, 2.6vw, 34px); text-transform: uppercase; line-height: 1.25; }
+.services li::before { content: '0' counter(s) '.'; position: absolute; font-family: var(--mono); font-size: 10px; letter-spacing: .1em; top: 2px; opacity: .7; }
+.services li:nth-child(odd)::before { right: calc(100% - 90px); } .services li:nth-child(even)::before { left: calc(100% - 90px); }
+.services + .link { display: table; margin: 34px auto 0; }
+@media (max-width: 860px) {
+  .welcome-grid { grid-template-columns: 1fr 1fr; }
+  .welcome h2, .welcome .lead { grid-column: 1 / -1; grid-row: auto; }
+  .welcome .p1 { grid-column: 1; grid-row: 3; width: 100%; margin-top: 0; }
+  .welcome .p2 { grid-column: 2; grid-row: 3; margin-top: 40px; }
+  .welcome .copy { grid-column: 1 / -1; grid-row: 4; margin-top: 10px; }
+  .welcome .p3 { display: none; }
+  .services li::before { display: none; }
+}
+
+/* ---------- About (bone) ---------- */
+.about { background: var(--bone); padding: clamp(80px, 11vw, 150px) var(--gutter); }
+.about-grid { display: grid; grid-template-columns: 1fr 1.1fr 1fr; gap: clamp(20px, 4vw, 60px); max-width: 1180px; margin: 0 auto; align-items: start; }
+.about h2 { font-size: clamp(28px, 3vw, 42px); }
+.about .intro { grid-column: 1; }
+.about .intro .kicker { margin-top: 14px; max-width: 30ch; }
+.about .main { grid-column: 2; grid-row: 1 / 3; aspect-ratio: 4 / 5; margin-top: 70px; }
+.about .side1 { grid-column: 3; grid-row: 1; width: 52%; aspect-ratio: 3 / 4; justify-self: end; }
+.about .side2 { grid-column: 1; grid-row: 2; width: 46%; aspect-ratio: 3 / 4; margin: 60px 0 0 24%; }
+.about .copy { grid-column: 3; grid-row: 2; align-self: end; }
+.about .copy p { margin: 0 0 14px; }
+@media (max-width: 860px) {
+  .about-grid { grid-template-columns: 1fr 1fr; }
+  .about .intro, .about .copy { grid-column: 1 / -1; grid-row: auto; }
+  .about .main { grid-column: 1 / -1; grid-row: auto; margin-top: 0; }
+  .about .side1, .about .side2 { display: none; }
+}
+
+/* ---------- Promises (photo band) ---------- */
+.promises { position: relative; color: #fff; text-align: center; min-height: 440px; display: grid; place-items: center; padding: 90px var(--gutter); }
+.promises > .ph { position: absolute; inset: 0; }
+.promises::after { content: ''; position: absolute; inset: 0; background: rgba(30,27,24,.45); }
+.promises .in { position: relative; z-index: 1; max-width: 560px; }
+.promises h2 { font-size: clamp(30px, 3.2vw, 44px); margin-bottom: 20px; }
+.promises .slide { min-height: 4.5em; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; }
+.promises .ctl { display: flex; justify-content: center; align-items: center; gap: 22px; margin-top: 18px; font-size: 11px; letter-spacing: .12em; }
+.promises button { background: none; border: 0; color: inherit; cursor: pointer; font: inherit; font-size: 18px; padding: 6px 10px; }
+
+/* ---------- Recent weddings (olive) ---------- */
+.archive { background: var(--olive); color: #F1EEE6; padding: clamp(80px, 11vw, 150px) var(--gutter); }
+.archive-grid { display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: clamp(20px, 4vw, 60px); max-width: 1180px; margin: 0 auto; align-items: start; }
+.archive .big { grid-row: 1 / 3; aspect-ratio: 3 / 4; }
+.archive .head h2 { font-size: clamp(30px, 3.4vw, 46px); }
+.archive .head .kicker { margin: 12px 0 18px; max-width: 30ch; }
+.archive .small { grid-column: 3; grid-row: 1; width: 62%; aspect-ratio: 4 / 5; justify-self: end; }
+.archive .quote { grid-column: 2 / 4; grid-row: 2; align-self: end; max-width: 46ch; }
+.archive .quote p { font-family: var(--serif); font-style: italic; font-size: clamp(20px, 2vw, 28px); line-height: 1.3; margin: 0 0 12px; }
+.strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(10px, 1.6vw, 22px); max-width: 1180px; margin: clamp(50px, 7vw, 90px) auto 0; }
+.strip .ph { aspect-ratio: 4 / 5; }
+.strip .ph:nth-child(even) { margin-top: 40px; }
+@media (max-width: 860px) {
+  .archive-grid { grid-template-columns: 1fr; }
+  .archive .big, .archive .small, .archive .quote { grid-column: auto; grid-row: auto; width: 100%; }
+  .archive .small { display: none; }
+  .strip { grid-template-columns: 1fr 1fr; }
+  .strip .ph:nth-child(even) { margin-top: 0; }
+}
+
+/* ---------- Closing + footer ---------- */
+.closing { background: var(--oxblood); color: #E9E1D8; text-align: center; padding: clamp(90px, 12vw, 160px) var(--gutter); }
+.closing h2 { font-size: clamp(40px, 6vw, 86px); margin-bottom: 18px; }
+.closing p { margin: 0 auto 30px; max-width: 42ch; }
+.btn { display: inline-block; text-decoration: none; text-transform: uppercase; letter-spacing: .14em; font-size: 11px; padding: 16px 30px; border: 1px solid currentColor; }
+.btn:hover { background: #E9E1D8; color: var(--oxblood); }
+.foot { background: var(--bone); padding: 34px var(--gutter); display: flex; flex-wrap: wrap; gap: 14px 28px; justify-content: space-between; align-items: center; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+.foot .brand b { font-size: 34px; color: var(--ink); }
+.foot .brand span { color: var(--stone); }
+.foot nav { display: flex; gap: 22px; flex-wrap: wrap; }
+.foot a { text-decoration: none; }
+</style>
 </head>
 <body>
 
-<a class="skip" href="#day">Skip to our work</a>
-
 <header class="nav" id="nav">
-  <a class="logo" href="/" aria-label="Glaz Studios home">GLAZ<span>STUDIOS</span></a>
-  <nav class="links" id="menu" aria-label="Main">
-    <a href="#day">A wedding day</a>
-    <a href="#films">Films</a>
-    <a href="#how">How we work</a>
-    <a href="#planners">Planners &amp; venues</a>
-    <a class="book" href="/book">Check your date</a>
-  </nav>
-  <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="menu"><span></span><span></span><span class="sr">Menu</span></button>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="#services">Services</a></li>
+  </ul>
+  <a class="brand" href="/" aria-label="Glaz Studios home"><b>GLAZ</b><span>STUDIOS</span></a>
+  <button class="menu-btn" id="menu-btn" aria-expanded="false">Menu</button>
+  <ul>
+    <li><a href="#work">Weddings</a></li>
+    <li><a href="/faq">FAQ</a></li>
+    <li><a href="/book">Book your date</a></li>
+  </ul>
 </header>
 
 <main>
-  <!-- Opening: the headline and a table of printed photos -->
-  <section class="hero" id="top">
-    <div class="hero-text">
-      <h1>Here’s to the best day of your life.</h1>
-      <p>Wedding photography and films that feel as happy as the day did. Cairo, Sahel, and wherever you celebrate.</p>
-      <div class="cta">
-        <a class="btn solid" href="/book">Check your date</a>
-        <a class="btn line" href="#day">See a wedding day</a>
+  <section class="hero" aria-label="Glaz Studios">
+    <figure class="ph" data-slot="hero" data-tone="field"></figure>
+    <p class="hero-line">Your wedding, the way it felt. Every laugh, every tear, every dance.</p>
+  </section>
+
+  <section class="welcome" id="services" aria-labelledby="welcome-h">
+    <div class="welcome-grid">
+      <h2 id="welcome-h">Welcome to Glaz Studios</h2>
+      <p class="lead kicker">Based in Cairo, travelling wherever you celebrate.<br>Weddings, engagements and everything in between.</p>
+      <figure class="ph p2" data-slot="welcome_right" data-tone="forest"></figure>
+      <figure class="ph p1" data-slot="welcome_left" data-tone="dress"></figure>
+      <div class="copy">
+        <p>Glaz means "eye" in Russian. Since 2013 ours have been on the laughs, the happy tears and the dance floor, the small moments nobody planned and everyone remembers.</p>
+        <p>Today photo, film, full coverage and a photo booth come from one team, under one contract, with one plan for your day. You enjoy it. We keep it.</p>
+      </div>
+      <figure class="ph print p3" data-slot="welcome_print" data-tone="field"></figure>
+    </div>
+    <ul class="services">
+      <li>Photography</li>
+      <li>Cinematography</li>
+      <li>Full Coverage</li>
+      <li>Media Coverage</li>
+      <li>Photo Booth</li>
+    </ul>
+    <a class="link" href="/book">Check your date</a>
+  </section>
+
+  <section class="about" aria-labelledby="about-h">
+    <div class="about-grid">
+      <div class="intro">
+        <h2 id="about-h">Hi, we’re John<br>&amp; Peter</h2>
+        <p class="kicker">Photographer and filmmaker, partners in Glaz, and the people behind the camera at your wedding.</p>
+      </div>
+      <figure class="ph main" data-slot="about_main" data-tone="bw"></figure>
+      <figure class="ph side1" data-slot="about_side1" data-tone="dress"></figure>
+      <figure class="ph side2" data-slot="about_side2" data-tone="forest"></figure>
+      <div class="copy">
+        <p>John leads photography. Peter leads film. Together we run a crew that knows the plan for your day before we arrive, and we stay out of the way while we work.</p>
+        <p>We don’t stage your day. We look for the moments that happen on their own.</p>
+        <a class="link" href="/about">Get to know us</a>
       </div>
     </div>
-    <div class="prints" id="prints" aria-label="Photos from our weddings"></div>
   </section>
 
-  <!-- Who we are -->
-  <section class="statement">
-    <p>Glaz means <i>eye</i> in Russian. Since 2013, ours have been on the laughs, the happy tears and the dance floor. Today photo, film, Full Rec and crane come from one team, under one contract.</p>
-  </section>
-
-  <!-- One wedding day, in chapters -->
-  <section class="day" id="day" aria-labelledby="day-h">
-    <div class="head">
-      <h2 id="day-h">A whole day, start to finish</h2>
-      <p>From the first button of the dress to the last candle on the table. Tap any photo to see it big.</p>
+  <section class="promises" aria-labelledby="prom-h">
+    <figure class="ph" data-slot="promises_bg" data-tone="forest"></figure>
+    <div class="in">
+      <h2 id="prom-h">Our promises</h2>
+      <div class="slide" id="slide" aria-live="polite"></div>
+      <div class="ctl"><button id="prev" aria-label="Previous">←</button><span id="count"></span><button id="next" aria-label="Next">→</button></div>
     </div>
-    <div id="chapters"></div>
   </section>
 
-  <!-- Films -->
-  <section class="films" id="films" aria-labelledby="films-h">
-    <div class="head">
-      <h2 id="films-h">Films</h2>
-      <p>Press play, and turn the sound on.</p>
-    </div>
-    <div class="film-grid" id="film-grid"></div>
-  </section>
-
-  <!-- The process (a real sequence) -->
-  <section class="how" id="how" aria-labelledby="how-h">
-    <div class="how-in">
+  <section class="archive" id="work" aria-labelledby="arch-h">
+    <div class="archive-grid">
+      <figure class="ph big" data-slot="archive_big" data-tone="dress"></figure>
       <div class="head">
-        <h2 id="how-h">How we work with you</h2>
-        <p>Everything around the photos, so all you have to do on the day is enjoy it.</p>
+        <h2 id="arch-h">Recent weddings</h2>
+        <p class="kicker">A few of our favourite days, start to finish.</p>
+        <a class="link" href="/book">Book your date</a>
       </div>
-      <ol class="timeline">
-        <li><span class="when">A week before</span><h3>We plan it with you</h3>
-          <p>You fill in your timings, places and the people that matter. We call you to go over everything, and every member of our crew gets the plan.</p></li>
-        <li><span class="when">The day</span><h3>We arrive before you’re ready</h3>
-          <p>Your crew knows the schedule, the venue and who to look for. You don’t have to direct anyone.</p></li>
-        <li><span class="when">5 days after</span><h3>Your highlight</h3>
-          <p>A short edit of photos and video, ready to share while everyone is still talking about the night.</p></li>
-        <li><span class="when">25 days after</span><h3>Everything else</h3>
-          <p>Your full gallery and films in a private online gallery you can share with family.</p></li>
-      </ol>
+      <figure class="ph small print" data-slot="archive_print" data-tone="dusk"></figure>
+      <div class="quote">
+        <p>We didn’t notice them all night, and then we saw the photos and cried.</p>
+        <span class="kicker">— Placeholder: a real quote from a couple goes here</span>
+      </div>
+    </div>
+    <div class="strip">
+      <figure class="ph" data-slot="strip1" data-tone="candle"></figure>
+      <figure class="ph" data-slot="strip2" data-tone="field"></figure>
+      <figure class="ph" data-slot="strip3" data-tone="bw"></figure>
+      <figure class="ph" data-slot="strip4" data-tone="dusk"></figure>
     </div>
   </section>
 
-  <!-- Services -->
-  <section class="services" aria-labelledby="services-h">
-    <h2 id="services-h">One team for all of it</h2>
-    <dl class="service-list">
-      <div><dt>Photography</dt><dd>Candid moments and portraits, edited in our own colour.</dd></div>
-      <div><dt>Cinematography</dt><dd>A highlight film to share, and the full film to keep.</dd></div>
-      <div><dt>Full Rec &amp; crane</dt><dd>The whole event recorded from start to end, with a crane for the wide shots.</dd></div>
-      <div><dt>Media coverage</dt><dd>Behind-the-scenes and same-night content for social media.</dd></div>
-      <div><dt>Photo booth</dt><dd>A booth for your guests to take their own photos.</dd></div>
-      <div><dt>Destination weddings</dt><dd>Sahel, Gouna, Luxor and beyond. We travel with the full crew.</dd></div>
-    </dl>
-  </section>
-
-  <!-- What couples said (hidden until there are real quotes) -->
-  <section class="words" id="words" aria-label="What couples said" hidden></section>
-
-  <!-- Planners, venues, hotels -->
-  <section class="planners" id="planners" aria-labelledby="planners-h">
-    <figure class="planners-photo"><img id="planners-img" alt="" loading="lazy"></figure>
-    <div class="planners-text">
-      <h2 id="planners-h">For planners, venues and hotels</h2>
-      <p>Every event we cover runs on a written plan that our whole crew has before we arrive. We are on time, we work around your team, and the edited highlight is ready within five days.</p>
-      <p>If you plan weddings or host them, we would love to work with you, and we are happy to share edited work from your events for your own page.</p>
-      <div class="cta" id="planners-cta"></div>
-    </div>
-  </section>
-
-  <!-- Close -->
-  <section class="closing" id="closing">
-    <div class="closing-in">
-      <h2>Your date is the one thing we can’t move.</h2>
-      <p>Dates are confirmed in the order deposits arrive.</p>
-      <a class="btn solid light" href="/book">Check your date</a>
-    </div>
+  <section class="closing" aria-labelledby="close-h">
+    <h2 id="close-h">Tell us your date</h2>
+    <p>Dates are confirmed in the order deposits arrive. We reply within 24 hours.</p>
+    <a class="btn" href="/book">Check availability</a>
   </section>
 </main>
 
 <footer class="foot">
-  <a class="logo" href="#top" aria-label="Back to the top">GLAZ<span>STUDIOS</span></a>
-  <p>Wedding photography and films, since 2013.</p>
-  <nav class="foot-links" id="foot-links" aria-label="Contact"></nav>
+  <a class="brand" href="/" aria-label="Glaz Studios home"><b>GLAZ</b><span>STUDIOS</span></a>
+  <nav aria-label="Footer"><a href="/about">About</a><a href="/faq">FAQ</a><a href="/book">Book your date</a><a href="mailto:info@glazstudios.com">info@glazstudios.com</a></nav>
 </footer>
 
-<!-- Photos, full screen -->
-<dialog class="viewer" id="viewer" aria-label="Photo viewer">
-  <header class="viewer-bar">
-    <strong id="viewer-title"></strong>
-    <span class="viewer-count" id="viewer-count" aria-live="polite"></span>
-    <button class="icon-btn" data-close aria-label="Close">✕</button>
-  </header>
-  <div class="viewer-track" id="viewer-track" tabindex="0" aria-label="Photos — swipe or use the arrow keys"></div>
-  <button class="icon-btn viewer-prev" id="viewer-prev" aria-label="Previous photo">‹</button>
-  <button class="icon-btn viewer-next" id="viewer-next" aria-label="Next photo">›</button>
-</dialog>
+<script>
+// =====================================================================
+// PHOTOS — put your photo paths here (e.g. 'media/hero.jpg').
+// Empty = a placeholder box that says which photo goes there.
+// =====================================================================
+const PHOTOS = {
+  hero:            { src: '', note: 'Hero — couple running or walking, wide, lots of movement' },
+  welcome_right:   { src: '', note: 'Couple walking away, tall' },
+  welcome_left:    { src: '', note: 'Bride detail: dress, flowers, tall' },
+  welcome_print:   { src: '', note: 'Small print — landscape or venue' },
+  about_main:      { src: '', note: 'John & Peter portrait, black & white' },
+  about_side1:     { src: '', note: 'Detail — dress / veil' },
+  about_side2:     { src: '', note: 'Behind the scenes, crew at work' },
+  promises_bg:     { src: '', note: 'Wide landscape or venue, calm' },
+  archive_big:     { src: '', note: 'Bride portrait with flowers, tall' },
+  archive_print:   { src: '', note: 'Small print — golden hour couple' },
+  strip1:          { src: '', note: 'Party / dinner' },
+  strip2:          { src: '', note: 'Couple in nature' },
+  strip3:          { src: '', note: 'Black & white emotion' },
+  strip4:          { src: '', note: 'Dance floor' },
+};
+const PROMISES = [
+  'We reply within 24 hours, with a clear price.',
+  'Your highlight in 5 days. Everything else in 25.',
+  'One team and one contract: photo, film, full coverage and photo booth.',
+  'Your crew knows the plan before we arrive. You never have to direct anyone.',
+];
 
-<script type="module" src="home.js"></script>
+document.querySelectorAll('.ph[data-slot]').forEach((fig) => {
+  const p = PHOTOS[fig.dataset.slot] || {};
+  const host = fig.classList.contains('print') ? Object.assign(document.createElement('div'), { className: 'inner' }) : fig;
+  if (host !== fig) { host.dataset.tone = fig.dataset.tone; host.classList.add('ph'); fig.append(host); }
+  if (p.src) {
+    const img = new Image(); img.src = p.src; img.alt = p.note || ''; img.loading = fig.dataset.slot === 'hero' ? 'eager' : 'lazy';
+    host.append(img); fig.classList.add('has-img'); host.classList.add('has-img');
+  } else {
+    const tag = document.createElement('span'); tag.className = 'tag'; tag.textContent = 'Photo · ' + (p.note || fig.dataset.slot);
+    host.append(tag);
+  }
+});
+
+let at = 0;
+const slide = document.getElementById('slide'), count = document.getElementById('count');
+const show = () => { slide.textContent = PROMISES[at]; count.textContent = `${String(at + 1).padStart(2, '0')} / ${String(PROMISES.length).padStart(2, '0')}`; };
+document.getElementById('prev').onclick = () => { at = (at - 1 + PROMISES.length) % PROMISES.length; show(); };
+document.getElementById('next').onclick = () => { at = (at + 1) % PROMISES.length; show(); };
+show();
+
+const nav = document.getElementById('nav'), btn = document.getElementById('menu-btn');
+btn.onclick = () => { const o = nav.classList.toggle('open'); btn.setAttribute('aria-expanded', o); btn.textContent = o ? 'Close' : 'Menu'; document.body.style.overflow = o ? 'hidden' : ''; };
+nav.addEventListener('click', (e) => { if (e.target.closest('ul a') && nav.classList.contains('open')) btn.click(); });
+</script>
 </body>
 </html>
