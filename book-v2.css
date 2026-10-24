@@ -1,0 +1,74 @@
+/* Glaz Studios — booking page in the same look as the home page (loads after site.css) */
+:root {
+  --bg: #E5E2DC; --panel: #F4F1EC; --panel-2: #FBFAF7; --line: #CFCAC2;
+  --text: #1E1B18; --muted: #6E6A63; --gold: #2A0B0C; --gold-ink: #F4F1EC;
+  --bad: #A4302B; --good: #4E6B45;
+  --serif: 'Instrument Serif', 'Times New Roman', serif;
+  --sans: 'Courier Prime', 'Courier New', monospace;
+}
+html[lang="en"] { --sans: 'Courier Prime', 'Courier New', monospace; }
+body { background: var(--bg); font-size: 14px; line-height: 1.7; }
+body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: .07; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+a { color: inherit; }
+
+/* ---------- Same navigation as the home page ---------- */
+.gnav { display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; padding: 22px clamp(18px, 5vw, 80px) 26px; background: #2A0B0C; color: #E9E1D8; }
+.gnav ul { list-style: none; margin: 0; padding: 8px 0 0; display: flex; gap: clamp(16px, 2.6vw, 40px); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+.gnav ul:last-of-type { justify-content: flex-end; }
+.gnav a { text-decoration: none; }
+.gnav a:hover, .gnav a[aria-current] { opacity: .7; }
+.gbrand { text-align: center; text-decoration: none; color: inherit; }
+.gbrand b { display: block; font-family: var(--serif); font-weight: 400; font-size: clamp(46px, 6vw, 84px); line-height: .82; letter-spacing: .02em; }
+.gbrand span { display: block; font-size: 9px; letter-spacing: .5em; margin-top: 8px; opacity: .85; }
+.gmenu { display: none; }
+@media (max-width: 760px) {
+  .gnav { grid-template-columns: 1fr auto; align-items: center; }
+  .gnav ul { display: none; }
+  .gnav .gbrand { text-align: left; } .gnav .gbrand b { font-size: 42px; }
+  .gmenu { display: block; justify-self: end; background: none; border: 0; color: inherit; font: inherit; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; cursor: pointer; padding: 10px 0; }
+  .gnav.open { position: fixed; inset: 0; z-index: 50; align-content: start; }
+  .gnav.open ul { display: flex; flex-direction: column; grid-column: 1 / -1; gap: 18px; font-family: var(--serif); font-size: 34px; letter-spacing: .02em; padding-top: 48px; }
+  .gnav.open ul:last-of-type { justify-content: flex-start; padding-top: 0; }
+}
+
+/* ---------- Page ---------- */
+.wrap { padding-top: clamp(48px, 7vw, 96px); padding-bottom: clamp(64px, 9vw, 120px); }
+.eyebrow { color: var(--text); letter-spacing: .14em; font-size: 11px; }
+h1 { font-family: var(--serif); text-transform: uppercase; font-size: clamp(40px, 5vw, 66px); line-height: 1; letter-spacing: .01em; }
+.lead { color: var(--muted); }
+.steps span { font-family: var(--serif); font-style: italic; color: var(--gold); font-size: 22px; }
+.steps b { font-weight: 700; text-transform: uppercase; font-size: 12px; letter-spacing: .08em; }
+.steps p { color: var(--muted); }
+.services li { border-radius: 0; border-color: var(--line); color: var(--text); text-transform: uppercase; font-size: 10px; letter-spacing: .1em; }
+
+.card { background: var(--panel); border: 0; border-radius: 0; box-shadow: 0 1px 0 var(--line); }
+.card h2 { font-family: var(--serif); text-transform: uppercase; font-size: 34px; }
+.field { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.field em { color: var(--gold); }
+.field i { text-transform: none; letter-spacing: 0; }
+input, select, textarea { border-radius: 0; background: var(--panel-2); font-size: 14px; letter-spacing: 0; text-transform: none; }
+input::placeholder, textarea::placeholder { color: #9b968e; }
+input[type="date"] { color-scheme: light; }
+select { background-color: var(--panel-2); }
+.btn { border-radius: 0; font-weight: 400; text-transform: uppercase; letter-spacing: .14em; font-size: 12px; }
+.btn:hover { filter: none; background: #4A1A1B; }
+.btn.ghost { background: transparent; color: var(--gold); border-color: var(--gold); }
+.btn.ghost:hover { background: var(--gold); color: var(--gold-ink); }
+.notes, .deposit { border-radius: 0; background: transparent; }
+.notes h3, .deposit h3 { font-family: var(--serif); text-transform: uppercase; font-weight: 400; font-size: 20px; color: var(--text); letter-spacing: .01em; }
+.notes ul, .deposit p { color: var(--muted); }
+.deposit { border-color: var(--line); border-style: solid; }
+.hint { border-radius: 0; background: rgba(42,11,12,.05); border-color: rgba(42,11,12,.25); }
+.hint b { color: var(--gold); }
+input[type="file"]::file-selector-button { border-radius: 0; text-transform: uppercase; font-size: 11px; letter-spacing: .08em; }
+.tick { border-radius: 50%; }
+.done h2 { font-family: var(--serif); text-transform: uppercase; }
+
+/* ---------- Same footer as the home page ---------- */
+.gfoot { background: var(--bg); border-top: 1px solid var(--line); padding: 34px clamp(18px, 5vw, 80px); display: flex; flex-wrap: wrap; gap: 14px 28px; justify-content: space-between; align-items: center; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--text); }
+.gfoot .gbrand b { font-size: 34px; }
+.gfoot .gbrand span { color: var(--muted); }
+.gfoot nav { display: flex; gap: 22px; flex-wrap: wrap; }
+.gfoot a { text-decoration: none; }
+.gfoot .yr { width: 100%; color: var(--muted); }

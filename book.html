@@ -5,22 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Book your date — Glaz Studios</title>
 <meta name="description" content="Glaz Studios — wedding photography, cinematography, full rec, crane, media coverage and photo booth in Egypt. Send a booking request.">
-<meta name="theme-color" content="#121212">
+<meta name="theme-color" content="#2A0B0C">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Courier+Prime:wght@400;700&display=swap">
 <link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="book-v2.css">
 </head>
 <body>
 
-<header class="top">
-  <a class="logo" href="/" aria-label="Glaz Studios">GLAZ<span>STUDIOS</span></a>
+<header class="gnav" id="nav">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/#services">Services</a></li>
+  </ul>
+  <a class="gbrand" href="/" aria-label="Glaz Studios home"><b>GLAZ</b><span>STUDIOS</span></a>
+  <button class="gmenu" id="menu-btn" type="button" aria-expanded="false">Menu</button>
+  <ul>
+    <li><a href="/#work">Weddings</a></li>
+    <li><a href="/faq">FAQ</a></li>
+    <li><a href="/book" aria-current="page">Book your date</a></li>
+  </ul>
 </header>
 
 <main class="wrap">
   <section class="intro">
     <p class="eyebrow" data-i18n="eyebrow">Book your date</p>
-    <h1 data-i18n="title">Let us keep your day<br>exactly as you lived it</h1>
+    <h1 data-i18n="title">Let us keep your day exactly as you lived it</h1>
     <p class="lead" data-i18n="lead">Send us the details of your event and our team will reach you on WhatsApp to confirm the date and help you choose the right package.</p>
 
     <ol class="steps">
@@ -30,12 +42,11 @@
     </ol>
 
     <ul class="services" aria-label="Services">
-      <li data-i18n="sv1">Photography</li>
-      <li data-i18n="sv2">Cinematography</li>
-      <li data-i18n="sv3">Full Rec</li>
-      <li data-i18n="sv4">Crane</li>
-      <li data-i18n="sv5">Media coverage</li>
-      <li data-i18n="sv6">Photo booth</li>
+      <li>Photography</li>
+      <li>Cinematography</li>
+      <li>Full Coverage</li>
+      <li>Media Coverage</li>
+      <li>Photo Booth</li>
     </ul>
   </section>
 
@@ -176,11 +187,17 @@
   </section>
 </main>
 
-<footer class="foot">
-  <span>© <span id="yr"></span> Glaz Studios</span>
-  <a href="mailto:info@glazstudios.com" dir="ltr">info@glazstudios.com</a>
+<footer class="gfoot">
+  <a class="gbrand" href="/" aria-label="Glaz Studios home"><b>GLAZ</b><span>STUDIOS</span></a>
+  <nav aria-label="Footer"><a href="/about">About</a><a href="/faq">FAQ</a><a href="/book">Book your date</a><a href="mailto:info@glazstudios.com">info@glazstudios.com</a></nav>
+  <span class="yr">© <span id="yr"></span> Glaz Studios</span>
 </footer>
 
+<script>
+// mobile menu (same as the home page)
+(() => { const nav = document.getElementById('nav'), btn = document.getElementById('menu-btn');
+  btn.onclick = () => { const o = nav.classList.toggle('open'); btn.setAttribute('aria-expanded', o); btn.textContent = o ? 'Close' : 'Menu'; document.body.style.overflow = o ? 'hidden' : ''; }; })();
+</script>
 <script type="module" src="book.js"></script>
 </body>
 </html>
