@@ -76,9 +76,9 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-transf
 /* ---------- Hero ---------- */
 .hero { position: relative; height: 100svh; min-height: 560px; color: #fff; }
 .hero .ph { position: absolute; inset: 0; }
-.hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,0) 30%, rgba(0,0,0,0) 60%, rgba(0,0,0,.35)); pointer-events: none; }
+.hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,0) 30%, rgba(0,0,0,0) 60%, rgba(0,0,0,.35)); pointer-events: none; }
 .hero-line { position: absolute; z-index: 2; left: 50%; top: 58%; translate: -50% 0; width: min(560px, 86vw); text-align: center;
-  font-family: var(--serif); font-style: italic; font-size: clamp(22px, 2.6vw, 34px); line-height: 1.2; text-shadow: 0 1px 14px rgba(0,0,0,.35); }
+  font-family: var(--serif); font-style: italic; font-size: clamp(22px, 2.6vw, 34px); line-height: 1.2; text-shadow: 0 1px 3px rgba(0,0,0,.35), 0 1px 18px rgba(0,0,0,.45); }
 .hero .ph .tag { bottom: 22px; left: var(--gutter); right: auto; }
 .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.2s ease; }
 .hero-video.on { opacity: 1; }
@@ -172,6 +172,8 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-transf
 .foot .brand span { color: var(--stone); }
 .foot nav { display: flex; gap: 22px; flex-wrap: wrap; }
 .foot a { text-decoration: none; }
+/* phones: the hero line sits low, under the couple */
+@media (max-width: 760px) { .hero-line { top: auto; bottom: 86px; } }
 </style>
 </head>
 <body>
@@ -290,6 +292,12 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-transf
 // A missing file shows a box that says which photo goes there.
 // =====================================================================
 const PHOTO_FOLDER = 'media/site/';
+
+// HERO: true = play the film (hero.mp4) over the photo.  false = show the photo (hero.jpg) only.
+const HERO_FILM = false;
+// Which part of the hero photo stays in view on phones (left/right %, top/bottom %).
+// The couple is on the left in the current hero.jpg, so keep the left side.  Center = '50% 50%'.
+const HERO_FOCUS = '24% 50%';
 const PHOTOS = {
   hero:            'Hero — couple running or walking, wide, lots of movement',
   welcome_right:   'Couple walking away, tall',
@@ -321,6 +329,7 @@ document.querySelectorAll('.ph[data-slot]').forEach((fig) => {
   const img = new Image(); img.alt = note; img.loading = slot === 'hero' ? 'eager' : 'lazy'; img.decoding = 'async';
   img.onload = () => { fig.classList.add('has-img'); host.classList.add('has-img'); };
   img.onerror = () => { img.remove(); host.append(tag); };
+  if (slot === 'hero') img.style.objectPosition = HERO_FOCUS;
   img.src = PHOTO_FOLDER + slot + '.jpg';
   host.append(img);
 });
@@ -332,7 +341,7 @@ document.querySelectorAll('.ph[data-slot]').forEach((fig) => {
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const saveData = navigator.connection && navigator.connection.saveData;
-  if (reduce || saveData) return;
+  if (!HERO_FILM || reduce || saveData) return;
   const hero = document.querySelector('.hero'), btn = document.getElementById('hero-pause');
   const files = (innerWidth < 760 ? ['hero-mobile.mp4'] : []).concat('hero.mp4');
   const v = document.createElement('video');
