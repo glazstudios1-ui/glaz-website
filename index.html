@@ -80,6 +80,13 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-transf
 .hero-line { position: absolute; z-index: 2; left: 50%; top: 58%; translate: -50% 0; width: min(560px, 86vw); text-align: center;
   font-family: var(--serif); font-style: italic; font-size: clamp(22px, 2.6vw, 34px); line-height: 1.2; text-shadow: 0 1px 14px rgba(0,0,0,.35); }
 .hero .ph .tag { bottom: 22px; left: var(--gutter); right: auto; }
+.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.2s ease; }
+.hero-video.on { opacity: 1; }
+.hero-pause { position: absolute; z-index: 3; right: var(--gutter); bottom: 22px; width: 38px; height: 38px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.6); background: rgba(0,0,0,.2); color: #fff; cursor: pointer; display: grid; place-items: center; }
+.hero-pause svg { width: 13px; height: 13px; fill: currentColor; }
+.hero-pause .i-play, .hero-pause.paused .i-pause { display: none; }
+.hero-pause.paused .i-play { display: block; }
 
 /* ---------- Welcome (oxblood) ---------- */
 .welcome { background: var(--oxblood); color: #E9E1D8; padding: clamp(80px, 11vw, 150px) var(--gutter) clamp(80px, 10vw, 130px); }
@@ -187,6 +194,9 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-transf
 <main>
   <section class="hero" aria-label="Glaz Studios">
     <figure class="ph" data-slot="hero" data-tone="field"></figure>
+    <button class="hero-pause" id="hero-pause" aria-label="Pause the film" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3v14H7zM14 5h3v14h-3z"/><path class="i-play" d="M8 5l11 7-11 7z"/></svg>
+    </button>
     <p class="hero-line">Your wedding, the way it felt. Every laugh, every tear, every dance.</p>
   </section>
 
@@ -314,6 +324,35 @@ document.querySelectorAll('.ph[data-slot]').forEach((fig) => {
   img.src = PHOTO_FOLDER + slot + '.jpg';
   host.append(img);
 });
+
+// ---------- Hero film ----------
+// Upload  media/site/hero.mp4  (wide, 8–12 s, no sound, about 4–6 MB).
+// Optional: media/site/hero-mobile.mp4 (tall 9:16, about 2–3 MB) for phones.
+// hero.jpg stays as the cover while the film loads, and for phones in low-power / data-saver mode.
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const saveData = navigator.connection && navigator.connection.saveData;
+  if (reduce || saveData) return;
+  const hero = document.querySelector('.hero'), btn = document.getElementById('hero-pause');
+  const files = (innerWidth < 760 ? ['hero-mobile.mp4'] : []).concat('hero.mp4');
+  const v = document.createElement('video');
+  Object.assign(v, { muted: true, loop: true, playsInline: true, autoplay: true, preload: 'auto' });
+  v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.setAttribute('aria-hidden', 'true');
+  v.className = 'hero-video';
+  let i = 0;
+  const next = () => { if (i >= files.length) { v.remove(); return; } v.src = PHOTO_FOLDER + files[i++]; v.play().catch(() => {}); };
+  v.addEventListener('error', next);
+  v.addEventListener('playing', () => { v.classList.add('on'); btn.hidden = false; }, { once: true });
+  btn.onclick = () => {
+    if (v.paused) { v.play(); btn.classList.remove('paused'); btn.setAttribute('aria-label', 'Pause the film'); }
+    else { v.pause(); btn.classList.add('paused'); btn.setAttribute('aria-label', 'Play the film'); }
+  };
+  // start loading only after the page itself has loaded, so the site opens fast
+  const start = () => { hero.querySelector('.ph').after(v); next(); };
+  document.readyState === 'complete' ? start() : addEventListener('load', start, { once: true });
+  // stop the film when it is off screen
+  new IntersectionObserver(([e]) => { if (btn.classList.contains('paused') || !v.src) return; e.isIntersecting ? v.play().catch(() => {}) : v.pause(); }).observe(hero);
+})();
 
 let at = 0;
 const slide = document.getElementById('slide'), count = document.getElementById('count');

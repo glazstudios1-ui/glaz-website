@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Packages — Glaz Studios</title>
+<!-- Private page: only people with the link. Keep it out of Google. -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#000000">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Jost:wght@300;400;500&display=swap">
+<style>
+:root { --bg: #000; --text: #EDEAE4; --muted: #8E8A84; --line: rgba(237,234,228,.14); --soft: rgba(237,234,228,.06);
+  --serif: 'Instrument Serif', 'Times New Roman', serif; --sans: 'Jost', system-ui, sans-serif; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--bg); }
+html, body { margin: 0; color: var(--text); overflow-x: clip; }
+body { font-family: var(--sans); font-weight: 300; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; padding-bottom: 110px; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 1px solid var(--text); outline-offset: 3px; }
+
+/* One quiet black & white photo behind everything */
+.backdrop { position: fixed; inset: 0; z-index: -1; filter: grayscale(1); }
+.backdrop img, .backdrop svg { width: 100%; height: 100%; object-fit: cover; opacity: .32; }
+.backdrop::after { content: ''; position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 40%, rgba(0,0,0,.25) 0%, rgba(0,0,0,.7) 100%); }
+
+.page { max-width: 680px; margin: 0 auto; padding: 0 20px; }
+.top { text-align: center; padding: 34px 0 56px; }
+.brand { font-family: var(--serif); font-size: 30px; letter-spacing: .14em; text-decoration: none; color: var(--text); }
+.brand span { display: block; font-family: var(--sans); font-size: 9px; letter-spacing: .5em; color: var(--muted); margin-top: 2px; }
+h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(48px, 9vw, 76px); line-height: 1; margin: 64px 0 12px; }
+.top p { color: var(--muted); margin: 0; }
+
+.step { margin-bottom: 48px; }
+.step-h { display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px; }
+.step-h b { font-family: var(--serif); font-weight: 400; font-style: italic; font-size: 20px; color: var(--muted); }
+.step-h h2 { font-family: var(--serif); font-weight: 400; font-size: 28px; margin: 0; }
+.step-h small { margin-left: auto; color: var(--muted); font-size: 12px; }
+
+/* Choose: photography / cinematography */
+.choice { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.choice button { background: var(--soft); border: 1px solid var(--line); padding: 20px 16px; cursor: pointer; text-align: left; transition: border-color .2s, background .2s; }
+.choice button b { display: block; font-family: var(--serif); font-weight: 400; font-size: 26px; line-height: 1.1; }
+.choice button span { color: var(--muted); font-size: 13px; }
+.choice button[aria-pressed="true"] { border-color: var(--text); background: rgba(237,234,228,.1); }
+
+/* Hours */
+.hours { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.hours button { background: transparent; border: 1px solid var(--line); padding: 14px 4px 12px; cursor: pointer; text-align: center; transition: border-color .2s, background .2s; }
+.hours button b { display: block; font-family: var(--serif); font-weight: 400; font-size: 30px; line-height: 1; }
+.hours button i { display: block; font-style: normal; font-size: 11px; color: var(--muted); margin-top: 2px; }
+.hours button span { display: block; font-size: 11px; color: var(--muted); margin-top: 8px; }
+.hours button[aria-pressed="true"] { background: var(--text); color: #000; border-color: var(--text); }
+.hours button[aria-pressed="true"] i, .hours button[aria-pressed="true"] span { color: #444; }
+@media (max-width: 520px) { .hours { grid-template-columns: repeat(3, 1fr); } }
+
+.inside { margin: 16px 0 0; padding: 0; list-style: none; color: var(--muted); font-size: 14px; }
+.inside li { padding: 6px 0 6px 22px; position: relative; border-bottom: 1px solid var(--line); }
+.inside li::before { content: '✓'; position: absolute; left: 0; color: var(--text); font-size: 12px; top: 7px; }
+
+/* Add-ons */
+.extras { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+.extras li { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.extras .name { font-size: 15px; }
+.extras .name small { display: block; color: var(--muted); font-size: 12px; }
+.extras .price { color: var(--muted); font-size: 13px; white-space: nowrap; }
+.qty { display: flex; align-items: center; border: 1px solid var(--line); }
+.qty button { width: 36px; height: 36px; background: none; border: 0; cursor: pointer; font-size: 18px; line-height: 1; }
+.qty button:disabled { opacity: .25; cursor: default; }
+.qty output { min-width: 26px; text-align: center; font-size: 14px; }
+.extras li.on .name, .extras li.on .price { color: var(--text); }
+@media (max-width: 520px) { .extras li { grid-template-columns: 1fr auto; } .extras .price { grid-column: 1; grid-row: 2; margin-top: -10px; } .qty { grid-column: 2; grid-row: 1 / 3; } }
+
+/* Total bar */
+.bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; background: rgba(0,0,0,.92); backdrop-filter: blur(8px); border-top: 1px solid var(--line); }
+.bar-in { max-width: 680px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; gap: 16px; }
+.bar .sum { flex: 1; min-width: 0; }
+.bar .sum b { font-family: var(--serif); font-weight: 400; font-size: 30px; line-height: 1; display: block; }
+.bar .sum span { color: var(--muted); font-size: 12px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.book { background: var(--text); color: #000; text-decoration: none; padding: 14px 24px; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; font-weight: 500; white-space: nowrap; }
+.book:hover { background: #fff; }
+
+.notes { color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 22px; }
+.notes p { margin: 0 0 8px; }
+.demo { color: var(--muted); font-size: 12px; text-align: center; border: 1px dashed var(--line); padding: 8px; margin-bottom: 36px; }
+</style>
+</head>
+<body>
+
+<!-- Background photo: upload  media/site/packages-bg.jpg  (wide). It is always shown in black & white, very faded. -->
+<div class="backdrop" id="backdrop" aria-hidden="true">
+  <!-- placeholder until the real photo is uploaded: a couple, far away, under a wide sky -->
+  <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9a9a9a"/><stop offset=".62" stop-color="#cfcfcf"/><stop offset="1" stop-color="#6b6b6b"/></linearGradient>
+      <linearGradient id="land" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a5a5a"/><stop offset="1" stop-color="#1e1e1e"/></linearGradient>
+    </defs>
+    <rect width="1600" height="1000" fill="url(#sky)"/>
+    <path d="M0 640 C 260 600, 420 615, 640 628 S 1100 600, 1600 630 L1600 1000 L0 1000 Z" fill="url(#land)"/>
+    <path d="M0 690 C 300 660, 700 700, 1000 680 S 1400 670, 1600 690 L1600 1000 L0 1000 Z" fill="#2a2a2a" opacity=".7"/>
+    <g transform="translate(1310 596)" fill="#111">
+      <circle cx="0" cy="0" r="4.2"/><path d="M-5 5 L5 5 L13 40 L-13 40 Z"/>
+      <circle cx="16" cy="-2" r="4.2"/><rect x="12" y="4" width="8" height="22" rx="2"/><rect x="12.5" y="25" width="3" height="15"/><rect x="16.5" y="25" width="3" height="15"/>
+      <path d="M5 14 L12 12" stroke="#111" stroke-width="2"/>
+    </g>
+  </svg>
+</div>
+
+<div class="page">
+  <header class="top">
+    <a class="brand" href="/" aria-label="Glaz Studios home">GLAZ<span>STUDIOS</span></a>
+    <h1>Packages</h1>
+    <p>Choose your coverage, add what you like, and book.</p>
+  </header>
+
+  <p class="demo" id="demo" hidden>Example prices for the design.</p>
+
+  <section class="step" aria-labelledby="s1">
+    <div class="step-h"><b>1</b><h2 id="s1">Coverage</h2></div>
+    <div class="choice" id="choice"></div>
+  </section>
+
+  <section class="step" aria-labelledby="s2">
+    <div class="step-h"><b>2</b><h2 id="s2">Hours</h2></div>
+    <div class="hours" id="hours"></div>
+    <ul class="inside" id="inside"></ul>
+  </section>
+
+  <section class="step" aria-labelledby="s3">
+    <div class="step-h"><b>3</b><h2 id="s3">Add to your day</h2><small>Optional</small></div>
+    <ul class="extras" id="extras"></ul>
+  </section>
+
+  <section class="notes">
+    <p>A 30% deposit secures your date. The balance is due on the event day.</p>
+    <p>Your highlight is ready 5 days after the event, everything else 25 days after.</p>
+    <p>Events outside Cairo include a transportation fee, based on the location.</p>
+  </section>
+</div>
+
+<div class="bar" role="region" aria-label="Your total">
+  <div class="bar-in">
+    <div class="sum"><b id="total">—</b><span id="summary"></span></div>
+    <a class="book" id="book" href="/book">Book this</a>
+  </div>
+</div>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+import * as CFG from '../config.js';
+
+const DEPOSIT_PCT = 0.30;
+const HOURS = [6, 8, 10, 12, 14, 16];
+
+// ---- Example data (prices are replaced by the dashboard packages once they exist) ----
+const SERVICES = {
+  photo: { title: 'Photography', sub: 'Photos of your day', inside: ['Lead photographer for the hours you choose', 'Edited photos in a private online gallery', 'Highlight photos in 5 days, all photos in 25'],
+           prices: { 6: 10000, 8: 12000, 10: 14000, 12: 16000, 14: 18000, 16: 20000 } },
+  cinema: { title: 'Cinematography', sub: 'A film of your day', inside: ['Lead cinematographer for the hours you choose', 'Highlight film in 5 days', 'Full film in 25 days'],
+           prices: { 6: 12000, 8: 14500, 10: 17000, 12: 19500, 14: 22000, 16: 24500 } },
+};
+// Add-ons: name, price, unit, how many can be added
+const EXTRAS = [
+  { key: 'hour', name: 'Extra hour', price: 2000, unit: 'per hour', max: 4 },
+  { key: 'photographer', name: 'Extra photographer', price: 5000, max: 3 },
+  { key: 'cinematographer', name: 'Extra cinematographer', price: 6000, max: 3 },
+  { key: 'camera', name: 'Extra camera', price: 2500, max: 3 },
+  { key: 'fullrec', name: 'Full Coverage', sub: 'The whole event recorded, start to end', price: 8000, max: 1 },
+  { key: 'crane', name: 'Crane', sub: 'With operator', price: 9000, max: 1 },
+  { key: 'media', name: 'Media Coverage', sub: 'Same-night content for social media', price: 7000, max: 1 },
+  { key: 'booth', name: 'Photo Booth', price: 8000, max: 1 },
+];
+
+const $ = (id) => document.getElementById(id);
+const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const egp = (n) => 'EGP ' + Number(n || 0).toLocaleString('en-US');
+const short = (n) => (n >= 1000 ? (n / 1000).toLocaleString('en-US', { maximumFractionDigits: 1 }) + 'K' : String(n));
+const nameOf = (svc, h) => `${SERVICES[svc].title} — ${h} Hours`;   // same name as in the dashboard and the booking form
+
+const state = { svc: 'photo', hours: 8, qty: Object.fromEntries(EXTRAS.map((e) => [e.key, 0])) };
+
+function draw() {
+  const S = SERVICES[state.svc];
+  $('choice').innerHTML = Object.entries(SERVICES).map(([k, s]) =>
+    `<button type="button" data-svc="${k}" aria-pressed="${k === state.svc}"><b>${s.title}</b><span>${s.sub}</span></button>`).join('');
+  const avail = HOURS.filter((h) => S.prices[h]);
+  if (!avail.includes(state.hours)) state.hours = avail[0];
+  $('hours').innerHTML = avail.map((h) =>
+    `<button type="button" data-h="${h}" aria-pressed="${h === state.hours}"><b>${h}</b><i>hours</i><span>${short(S.prices[h])}</span></button>`).join('');
+  $('inside').innerHTML = S.inside.map((l) => `<li>${esc(l)}</li>`).join('');
+  $('extras').innerHTML = EXTRAS.map((e) => {
+    const q = state.qty[e.key];
+    return `<li class="${q ? 'on' : ''}"><span class="name">${esc(e.name)}${e.sub ? `<small>${esc(e.sub)}</small>` : ''}</span>
+      <span class="price">+${egp(e.price)}${e.unit ? ` ${e.unit}` : ''}</span>
+      <span class="qty"><button type="button" data-x="${e.key}" data-d="-1" aria-label="Remove ${esc(e.name)}" ${q ? '' : 'disabled'}>−</button>
+        <output aria-label="${esc(e.name)} count">${q}</output>
+        <button type="button" data-x="${e.key}" data-d="1" aria-label="Add ${esc(e.name)}" ${q >= e.max ? 'disabled' : ''}>+</button></span></li>`;
+  }).join('');
+  const base = S.prices[state.hours];
+  const picked = EXTRAS.filter((e) => state.qty[e.key]);
+  const total = base + picked.reduce((a, e) => a + e.price * state.qty[e.key], 0);
+  $('total').textContent = egp(total);
+  const deposit = Math.round((total * DEPOSIT_PCT) / 100) * 100;
+  $('summary').textContent = `${nameOf(state.svc, state.hours)}${picked.length ? ' + ' + picked.map((e) => (state.qty[e.key] > 1 ? `${state.qty[e.key]}× ` : '') + e.name).join(', ') : ''} · Deposit ${egp(deposit)}`;
+  const extras = picked.map((e) => `${e.key}:${state.qty[e.key]}`).join(',');
+  $('book').href = `/book?package=${encodeURIComponent(nameOf(state.svc, state.hours))}${extras ? `&extras=${encodeURIComponent(extras)}` : ''}`;
+}
+
+document.addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.svc) state.svc = b.dataset.svc;
+  else if (b.dataset.h) state.hours = Number(b.dataset.h);
+  else if (b.dataset.x) { const x = EXTRAS.find((k) => k.key === b.dataset.x); state.qty[x.key] = Math.max(0, Math.min(x.max, state.qty[x.key] + Number(b.dataset.d))); }
+  else return;
+  draw();
+});
+
+// Real background photo, if uploaded
+const bg = new Image(); bg.alt = ''; bg.onload = () => { $('backdrop').querySelector('svg')?.replaceWith(bg); }; bg.src = '/media/site/packages-bg.jpg';
+
+// Prices from the dashboard: packages named "Photography — 8 Hours", "Cinematography — 12 Hours", …
+(async () => {
+  const key = CFG.SUPABASE_KEY || '';
+  let fromDb = false;
+  if (key && !key.startsWith('PASTE_')) {
+    try {
+      const sb = createClient(CFG.SUPABASE_URL, key);
+      const { data } = await sb.from('packages').select('name, price, hours').eq('active', true);
+      for (const s of Object.values(SERVICES)) {
+        const found = {};
+        (data || []).forEach((p) => { const m = String(p.name).match(new RegExp(`^${s.title}\\s*[—-]\\s*(\\d+)\\s*hours?$`, 'i')); if (m) found[m[1]] = p.price; });
+        if (Object.keys(found).length) { s.prices = found; fromDb = true; }
+      }
+    } catch (e) { /* keep the example prices */ }
+  }
+  $('demo').hidden = fromDb;
+  draw();
+})();
+draw();
+</script>
+</body>
+</html>
