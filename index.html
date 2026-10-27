@@ -76,9 +76,22 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-transf
 /* ---------- Hero ---------- */
 .hero { position: relative; height: 100svh; min-height: 560px; color: #fff; }
 .hero .ph { position: absolute; inset: 0; z-index: 0; }
-.hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,0) 30%, rgba(0,0,0,0) 60%, rgba(0,0,0,.35)); pointer-events: none; }
-.hero-line { position: absolute; z-index: 2; left: 50%; top: 58%; translate: -50% 0; width: min(560px, 86vw); text-align: center;
-  font-family: var(--serif); font-style: italic; font-size: clamp(22px, 2.6vw, 34px); line-height: 1.2; text-shadow: 0 1px 3px rgba(0,0,0,.35), 0 1px 18px rgba(0,0,0,.45); }
+.hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,0) 28%, rgba(0,0,0,0) 52%, rgba(0,0,0,.5)); pointer-events: none; }
+/* hero words + button. Where they sit is set per slide in HERO (place / mobilePlace) */
+.hero-copy { position: absolute; z-index: 2; bottom: clamp(70px, 12vh, 130px); width: min(500px, 80vw);
+  display: flex; flex-direction: column; gap: 22px; transition: opacity .5s ease; }
+.hero-copy.hide { opacity: 0; }
+.hero-copy::before { content: ''; position: absolute; inset: -40px -60px; z-index: -1; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(0,0,0,.28), rgba(0,0,0,0)); }
+.hero[data-place="left"] .hero-copy   { left: var(--gutter); align-items: flex-start; text-align: left; }
+.hero[data-place="center"] .hero-copy { left: 50%; translate: -50% 0; align-items: center; text-align: center; }
+.hero[data-place="right"] .hero-copy  { right: var(--gutter); align-items: flex-end; text-align: right; }
+.hero-line { margin: 0; font-family: var(--serif); font-style: italic; font-size: clamp(26px, 2.8vw, 42px); line-height: 1.15;
+  text-shadow: 0 1px 3px rgba(0,0,0,.35), 0 1px 18px rgba(0,0,0,.45); text-wrap: balance; }
+.hero-cta { display: inline-block; text-decoration: none; text-transform: uppercase; letter-spacing: .16em; font-size: 11px;
+  padding: 15px 28px; border: 1px solid rgba(255,255,255,.85); color: #fff; background: rgba(0,0,0,.18); backdrop-filter: blur(2px);
+  transition: background .25s, color .25s; }
+.hero-cta:hover, .hero-cta:focus-visible { background: #fff; color: #1c1b19; }
 .hero .ph .tag { bottom: 22px; left: var(--gutter); right: auto; }
 .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.2s ease; }
 .hero-video.on { opacity: 1; }
@@ -178,8 +191,17 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-transf
 .foot .brand span { color: var(--stone); }
 .foot nav { display: flex; gap: 22px; flex-wrap: wrap; }
 .foot a { text-decoration: none; }
-/* phones: the hero line sits low, under the couple */
-@media (max-width: 760px) { .hero-line { top: auto; bottom: 86px; } }
+.hero-cta-phone { display: none; }
+/* phones: the words are centred, at the top (under the logo) or near the bottom — set per slide with mobilePlace.
+   The button stays in one place at the bottom, where the thumb is. */
+@media (max-width: 760px) {
+  .hero[data-place] .hero-copy { left: 50%; right: auto; translate: -50% 0; align-items: center; text-align: center; width: calc(100vw - 48px); }
+  .hero-copy .hero-cta { display: none; }
+  .hero-cta-phone { display: block; position: absolute; z-index: 2; left: 50%; translate: -50% 0; bottom: 80px; white-space: nowrap; padding: 13px 24px; background: rgba(0,0,0,.3); }
+  .hero[data-mplace="bottom"] .hero-copy { top: auto; bottom: 142px; }
+  .hero[data-mplace="top"] .hero-copy { top: 100px; bottom: auto; }
+  .hero-line { font-size: 26px; }
+}
 </style>
 </head>
 <body>
@@ -200,12 +222,16 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-transf
 </header>
 
 <main>
-  <section class="hero" aria-label="Glaz Studios">
+  <section class="hero" aria-label="Glaz Studios" data-place="right" data-mplace="bottom">
     <figure class="ph hero-slides" id="hero-slides"></figure>
     <button class="hero-pause" id="hero-pause" aria-label="Pause the film" hidden>
       <svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3v14H7zM14 5h3v14h-3z"/><path class="i-play" d="M8 5l11 7-11 7z"/></svg>
     </button>
-    <p class="hero-line">Your wedding, the way it felt. Every laugh, every tear, every dance.</p>
+    <div class="hero-copy" id="hero-copy">
+      <p class="hero-line" id="hero-line">Your wedding, the way it felt.</p>
+      <a class="hero-cta" href="/book">Check availability</a>
+    </div>
+    <a class="hero-cta hero-cta-phone" href="/book">Check availability</a>
   </section>
 
   <section class="welcome" id="services" aria-labelledby="welcome-h">
@@ -308,12 +334,20 @@ const PHOTO_FOLDER = 'media/site/';
 //   photo:  a photo, shown for HERO_SECONDS
 //   focus:  which part of the photo stays in view on computers / mobileFocus: on phones
 //           '50% 50%' middle,  '25% 50%' left side,  '75% 50%' right side,  '50% 30%' upper part
+//   line:   the words shown on this slide (the "Check availability" button is always under them)
+//   place:  where the words sit on computers: 'left', 'center' or 'right' (always near the bottom)
+//   mobilePlace: where they sit on phones: 'top' (under the logo) or 'bottom'
+//           Put the words where the photo is calm (sky, grass), not on faces.
 // To change the order, move the lines. To add a slide, copy a line and give it a new file name.
 const HERO = [
-  { film: 'hero-1.mp4', mobile: 'hero-1-mobile.mp4', plays: 1 },
-  { photo: 'hero-2.jpg', focus: '50% 50%', mobileFocus: '40% 50%' },
-  { film: 'hero-3.mp4', mobile: 'hero-3-mobile.mp4', plays: 1 },
-  { photo: 'hero-4.jpg', focus: '50% 30%', mobileFocus: '45% 50%' },
+  { film: 'hero-1.mp4', mobile: 'hero-1-mobile.mp4', plays: 1,
+    line: 'Your wedding, the way it felt.', place: 'right', mobilePlace: 'bottom' },
+  { photo: 'hero-2.jpg', focus: '50% 50%', mobileFocus: '40% 50%',
+    line: 'Some moments happen once. We make sure you keep them.', place: 'right', mobilePlace: 'top' },
+  { film: 'hero-3.mp4', mobile: 'hero-3-mobile.mp4', plays: 1,
+    line: 'The laughs you’ll want to hear again.', place: 'center', mobilePlace: 'bottom' },
+  { photo: 'hero-4.jpg', focus: '50% 30%', mobileFocus: '45% 50%',
+    line: 'Every laugh, every tear, every dance.', place: 'right', mobilePlace: 'top' },
 ];
 const HERO_SECONDS = 5;        // how long each photo stays
 const PHOTOS = {
@@ -415,7 +449,24 @@ document.querySelectorAll('.ph[data-slot]').forEach((fig) => {
       if (isFilm(prev)) setTimeout(() => { if (slides[at] !== prev) prev.pause(); }, 1700);
     }
     box.classList.add('has-img');
+    setCopy(HERO[i], first);
     run();
+  };
+  // the words for this slide: fade out, move, change, fade in
+  const hero = box.closest('.hero'), copy = document.getElementById('hero-copy'), lineEl = document.getElementById('hero-line');
+  let copyTimer = null;
+  const setCopy = (s, first) => {
+    const apply = () => {
+      if (s.line) lineEl.textContent = s.line;
+      hero.dataset.place = s.place || 'center';
+      hero.dataset.mplace = s.mobilePlace || 'bottom';
+      copy.classList.remove('hide');
+    };
+    clearTimeout(copyTimer);
+    if (first) { apply(); return; }
+    if (lineEl.textContent === s.line && hero.dataset.place === (s.place || 'center') && hero.dataset.mplace === (s.mobilePlace || 'bottom')) return;
+    copy.classList.add('hide');
+    copyTimer = setTimeout(apply, 550);
   };
   // what the current slide does next
   const run = () => {
