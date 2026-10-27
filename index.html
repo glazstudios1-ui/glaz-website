@@ -317,7 +317,7 @@ const HERO_SECONDS = 5;        // how long each photo stays
 // The film plays first, then the photos, then the film again …
 // true = film first (media/site/hero.mp4, and hero-mobile.mp4 for phones if you upload one).  false = photos only.
 const HERO_FILM = true;
-const HERO_FILM_SECONDS = 5;   // how long the film shows before the photos start
+const HERO_FILM_SECONDS = 0;   // how long the film shows before the photos start. 0 = the whole film, once
 const PHOTOS = {
   hero:            'Hero — couple running or walking, wide, lots of movement',
   welcome_right:   'Couple walking away, tall',
@@ -371,7 +371,9 @@ document.querySelectorAll('.ph[data-slot]').forEach((fig) => {
   const rebuild = () => { slides = (filmOk ? [video] : []).concat(photos); };
   const schedule = () => {
     clearTimeout(timer);
+    if (video) video.loop = slides.length < 2 || HERO_FILM_SECONDS > 0;
     if (paused || !visible || reduce || slides.length < 2) return;
+    if (isFilm(slides[at]) && !HERO_FILM_SECONDS) return;   // the film moves on by itself when it ends
     const secs = isFilm(slides[at]) ? HERO_FILM_SECONDS : HERO_SECONDS;
     timer = setTimeout(() => show((at + 1) % slides.length), secs * 1000);
   };
@@ -434,6 +436,7 @@ document.querySelectorAll('.ph[data-slot]').forEach((fig) => {
     const fail = () => { if (done) return; done = true; video.remove(); video = null; startWithFirstPhoto(); };
     const next = () => { if (i >= files.length) return fail(); video.src = PHOTO_FOLDER + files[i++]; video.play().catch(() => {}); };
     video.addEventListener('error', next);
+    video.addEventListener('ended', () => { if (!paused && visible && slides.length > 1 && isFilm(slides[at])) show((at + 1) % slides.length); });
     video.addEventListener('playing', () => { if (done) return; done = true; filmOk = true; start(); showButton(); }, { once: true });
     setTimeout(() => { if (!done) fail(); }, 6000);   // the phone blocked autoplay, or the internet is very slow
     next();
