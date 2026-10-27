@@ -87,6 +87,10 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-transf
 .hero-pause svg { width: 13px; height: 13px; fill: currentColor; }
 .hero-pause .i-play, .hero-pause.paused .i-pause { display: none; }
 .hero-pause.paused .i-play { display: block; }
+.hero-slides img { position: absolute; inset: 0; opacity: 0; transition: opacity 1.6s ease; }
+.hero-slides img.on { opacity: 1; z-index: 1; animation: hero-zoom 7s ease-out both; }
+@keyframes hero-zoom { from { transform: scale(1.07); } to { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .hero-slides img { transition: none; } .hero-slides img.on { animation: none; } }
 
 /* ---------- Welcome (oxblood) ---------- */
 .welcome { background: var(--oxblood); color: #E9E1D8; padding: clamp(80px, 11vw, 150px) var(--gutter) clamp(80px, 10vw, 130px); }
@@ -195,7 +199,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-transf
 
 <main>
   <section class="hero" aria-label="Glaz Studios">
-    <figure class="ph" data-slot="hero" data-tone="field"></figure>
+    <figure class="ph hero-slides" id="hero-slides" data-tone="field"></figure>
     <button class="hero-pause" id="hero-pause" aria-label="Pause the film" hidden>
       <svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3v14H7zM14 5h3v14h-3z"/><path class="i-play" d="M8 5l11 7-11 7z"/></svg>
     </button>
@@ -293,11 +297,23 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-transf
 // =====================================================================
 const PHOTO_FOLDER = 'media/site/';
 
-// HERO: true = play the film (hero.mp4) over the photo.  false = show the photo (hero.jpg) only.
+// ---------- HERO SLIDER ----------
+// Upload the photos to  media/site/  with these names: hero.jpg, hero-2.jpg, hero-3.jpg ... hero-8.jpg
+// Wide photos, about 2000 px wide. A missing name is simply skipped, so 1 photo or 8 both work.
+// focus = which part stays in view on phones:  '50% 50%' middle,  '25% 50%' left side,  '75% 50%' right side.
+const HERO_SLIDES = [
+  { file: 'hero.jpg',   focus: '24% 50%' },
+  { file: 'hero-2.jpg', focus: '50% 50%' },
+  { file: 'hero-3.jpg', focus: '50% 50%' },
+  { file: 'hero-4.jpg', focus: '50% 50%' },
+  { file: 'hero-5.jpg', focus: '50% 50%' },
+  { file: 'hero-6.jpg', focus: '50% 50%' },
+  { file: 'hero-7.jpg', focus: '50% 50%' },
+  { file: 'hero-8.jpg', focus: '50% 50%' },
+];
+const HERO_SECONDS = 5;      // how long each photo stays
+// true = play the film (hero.mp4) instead of the slider.  false = the slider.
 const HERO_FILM = false;
-// Which part of the hero photo stays in view on phones (left/right %, top/bottom %).
-// The couple is on the left in the current hero.jpg, so keep the left side.  Center = '50% 50%'.
-const HERO_FOCUS = '24% 50%';
 const PHOTOS = {
   hero:            'Hero — couple running or walking, wide, lots of movement',
   welcome_right:   'Couple walking away, tall',
@@ -329,10 +345,47 @@ document.querySelectorAll('.ph[data-slot]').forEach((fig) => {
   const img = new Image(); img.alt = note; img.loading = slot === 'hero' ? 'eager' : 'lazy'; img.decoding = 'async';
   img.onload = () => { fig.classList.add('has-img'); host.classList.add('has-img'); };
   img.onerror = () => { img.remove(); host.append(tag); };
-  if (slot === 'hero') img.style.objectPosition = HERO_FOCUS;
   img.src = PHOTO_FOLDER + slot + '.jpg';
   host.append(img);
 });
+
+// ---------- Hero slider ----------
+(() => {
+  const box = document.getElementById('hero-slides'), btn = document.getElementById('hero-pause');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const imgs = HERO_SLIDES.map((s, n) => {
+    const img = new Image(); img.alt = n ? '' : 'A Glaz Studios wedding'; img.decoding = 'async';
+    img.style.objectPosition = s.focus || '50% 50%';
+    img.dataset.src = PHOTO_FOLDER + s.file;
+    return img;
+  });
+  let ready = [], at = 0, timer = null, paused = false;
+  const show = (img) => { box.querySelectorAll('img.on').forEach((o) => o.classList.remove('on')); img.classList.add('on'); };
+  const tick = () => { if (ready.length < 2) return; at = (at + 1) % ready.length; show(ready[at]); };
+  const play = () => { clearInterval(timer); if (!paused && !reduce && ready.length > 1) timer = setInterval(tick, HERO_SECONDS * 1000); };
+  const load = (img) => new Promise((ok) => {
+    img.onload = () => { box.append(img); ok(img); };
+    img.onerror = () => ok(null);
+    img.src = img.dataset.src;
+  });
+  // first photo right away, the rest after the page has loaded
+  load(imgs[0]).then((first) => {
+    if (first) { box.classList.add('has-img'); show(first); ready = [first]; }
+    const rest = () => Promise.all(imgs.slice(1).map(load)).then((more) => {
+      ready = [first, ...more].filter(Boolean);
+      if (!first && ready.length) { box.classList.add('has-img'); show(ready[0]); }
+      if (!ready.length) { const t = document.createElement('span'); t.className = 'tag'; t.textContent = 'Photo · hero slider — hero.jpg, hero-2.jpg, hero-3.jpg …'; box.append(t); return; }
+      if (ready.length > 1 && !HERO_FILM) {
+        btn.hidden = false; btn.setAttribute('aria-label', 'Pause the slideshow');
+        btn.onclick = () => { paused = !paused; btn.classList.toggle('paused', paused); btn.setAttribute('aria-label', paused ? 'Play the slideshow' : 'Pause the slideshow'); play(); };
+        play();
+      }
+    });
+    document.readyState === 'complete' ? rest() : addEventListener('load', rest, { once: true });
+  });
+  // stop when the hero is off screen
+  new IntersectionObserver(([e]) => { e.isIntersecting ? play() : clearInterval(timer); }).observe(box);
+})();
 
 // ---------- Hero film ----------
 // Upload  media/site/hero.mp4  (wide, 8–12 s, no sound, about 4–6 MB).
