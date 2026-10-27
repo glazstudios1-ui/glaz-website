@@ -299,26 +299,23 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-transf
 // =====================================================================
 const PHOTO_FOLDER = 'media/site/';
 
-// ---------- HERO SLIDER ----------
-// Upload the photos to  media/site/  with these names: hero.jpg, hero-2.jpg, hero-3.jpg ... hero-8.jpg
-// Wide photos, about 2000 px wide. A missing name is simply skipped, so 1 photo or 8 both work.
-// focus = which part stays in view on phones:  '50% 50%' middle,  '25% 50%' left side,  '75% 50%' right side.
-const HERO_SLIDES = [
-  { file: 'hero.jpg',   focus: '24% 50%' },
-  { file: 'hero-2.jpg', focus: '50% 50%' },
-  { file: 'hero-3.jpg', focus: '50% 50%' },
-  { file: 'hero-4.jpg', focus: '50% 50%' },
-  { file: 'hero-5.jpg', focus: '50% 50%' },
-  { file: 'hero-6.jpg', focus: '50% 50%' },
-  { file: 'hero-7.jpg', focus: '50% 50%' },
-  { file: 'hero-8.jpg', focus: '50% 50%' },
+// ---------- HERO (the big opening at the top) ----------
+// Plays in this order, then starts again from the top. Files go in  media/site/
+//   film:   the wide film for computers (1920x1080, under ~3 MB)
+//   mobile: the tall film for phones (1080x1920). If it is missing, phones show the wide one.
+//   poster: each film's first frame, shown at once while the film loads (hero-1.mp4 → hero-1-poster.jpg, made automatically by name)
+//   plays:  how many times the film plays before moving on
+//   photo:  a photo, shown for HERO_SECONDS
+//   focus:  which part of the photo stays in view on computers / mobileFocus: on phones
+//           '50% 50%' middle,  '25% 50%' left side,  '75% 50%' right side,  '50% 30%' upper part
+// To change the order, move the lines. To add a slide, copy a line and give it a new file name.
+const HERO = [
+  { film: 'hero-1.mp4', mobile: 'hero-1-mobile.mp4', plays: 1 },
+  { photo: 'hero-2.jpg', focus: '50% 50%', mobileFocus: '40% 50%' },
+  { film: 'hero-3.mp4', mobile: 'hero-3-mobile.mp4', plays: 1 },
+  { photo: 'hero-4.jpg', focus: '50% 30%', mobileFocus: '45% 50%' },
 ];
 const HERO_SECONDS = 5;        // how long each photo stays
-// The film plays first, then the photos, then the film again …
-// true = film first (media/site/hero.mp4, and hero-mobile.mp4 for phones if you upload one).  false = photos only.
-const HERO_FILM = true;
-const HERO_FILM_SECONDS = 0;   // how long the film shows before the photos start. 0 = the whole film
-const HERO_FILM_PLAYS = 2;     // with 0 above: how many times the film plays before the photos (1 = once)
 const PHOTOS = {
   hero:            'Hero — couple running or walking, wide, lots of movement',
   welcome_right:   'Couple walking away, tall',
@@ -354,130 +351,122 @@ document.querySelectorAll('.ph[data-slot]').forEach((fig) => {
   host.append(img);
 });
 
-// ---------- Hero slider ----------
+// ---------- Hero: films and photos, one after the other ----------
 (() => {
   const box = document.getElementById('hero-slides'), btn = document.getElementById('hero-pause');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const imgs = HERO_SLIDES.map((s, n) => {
-    const img = new Image(); img.alt = n ? '' : 'A Glaz Studios wedding'; img.decoding = 'async';
-    img.style.objectPosition = s.focus || '50% 50%';
-    img.dataset.src = PHOTO_FOLDER + s.file;
-    return img;
-  });
-  const saveData = navigator.connection && navigator.connection.saveData;
-  const useFilm = HERO_FILM && !reduce && !saveData;
-  let video = null, filmOk = false, photos = [], slides = [], at = 0, timer = null, paused = false, started = false, visible = true, plays = 0;
+  const saveData = !!(navigator.connection && navigator.connection.saveData);
+  const phone = matchMedia('(max-width: 760px)').matches;
+  const stillsOnly = reduce || saveData;   // no films: their first frames are shown as photos instead
+  let at = -1, timer = null, watchdog = null, paused = false, visible = true, plays = 0, waits = 0;
 
-  const isFilm = (el) => !!el && el === video;
-  const rebuild = () => { slides = (filmOk ? [video] : []).concat(photos); };
-  const schedule = () => {
-    clearTimeout(timer);
-    if (video) video.loop = slides.length < 2 || HERO_FILM_SECONDS > 0;
-    if (paused || !visible || reduce || slides.length < 2) return;
-    if (isFilm(slides[at]) && !HERO_FILM_SECONDS) return;   // the film moves on by itself when it ends
-    const secs = isFilm(slides[at]) ? HERO_FILM_SECONDS : HERO_SECONDS;
-    timer = setTimeout(() => show((at + 1) % slides.length), secs * 1000);
-  };
-  const show = (i) => {
-    at = i;
-    const el = slides[i];
-    box.querySelectorAll('.on').forEach((o) => {
-      if (o === el) return;
-      o.classList.remove('on');
-      if (isFilm(o)) setTimeout(() => { if (!o.classList.contains('on')) o.pause(); }, 1700);
-    });
+  // build one element per slide
+  const slides = HERO.map((s, n) => {
+    let el;
+    if (s.film && !stillsOnly) {
+      const files = (phone && s.mobile ? [s.mobile] : []).concat(s.film);
+      el = document.createElement('video');
+      Object.assign(el, { muted: true, playsInline: true, loop: false, preload: n === 0 ? 'auto' : 'none' });
+      el.setAttribute('muted', ''); el.setAttribute('playsinline', ''); el.setAttribute('aria-hidden', 'true');
+      let i = 0;
+      el.useNext = () => {
+        if (i >= files.length) { el.broken = true; return false; }
+        const f = files[i++];
+        el.poster = PHOTO_FOLDER + f.replace('.mp4', '-poster.jpg');
+        el.src = PHOTO_FOLDER + f;
+        return true;
+      };
+      el.addEventListener('error', () => { if (!el.useNext()) { if (slides[at] === el) next(); } else if (slides[at] === el) play(el); });
+      el.addEventListener('playing', () => clearTimeout(watchdog));
+      el.addEventListener('ended', () => {
+        if (slides[at] !== el || paused || !visible) return;
+        if (++plays < (s.plays || 1)) { el.currentTime = 0; play(el); } else next();
+      });
+      el.useNext();
+    } else {
+      const src = s.photo || (s.film && (phone && s.mobile ? s.mobile : s.film).replace('.mp4', '-poster.jpg'));
+      el = new Image(); el.alt = ''; el.decoding = 'async';
+      el.style.objectPosition = (phone && s.mobileFocus) || s.focus || '50% 50%';
+      el.dataset.src = PHOTO_FOLDER + src;
+      el.onerror = () => { el.broken = true; if (slides[at] === el) next(); };
+      if (n === 0) el.src = el.dataset.src;
+    }
+    box.append(el);
+    return el;
+  });
+  const isFilm = (el) => el && el.tagName === 'VIDEO';
+  const play = (el) => el.play().catch(() => {});
+
+  // after the page has loaded, fetch the rest in the background
+  const loadRest = () => slides.forEach((el) => {
+    if (isFilm(el)) { if (el.preload !== 'auto') { el.preload = 'auto'; el.load(); } }
+    else if (!el.src) el.src = el.dataset.src;
+  });
+  document.readyState === 'complete' ? loadRest() : addEventListener('load', loadRest, { once: true });
+
+  const show = (i, first) => {
+    clearTimeout(timer); clearTimeout(watchdog);
+    const prev = slides[at], el = slides[i];
+    at = i; plays = 0; waits = 0;
+    if (first) { el.style.transition = 'none'; setTimeout(() => { el.style.transition = ''; }, 100); }
     el.classList.add('on');
-    if (isFilm(el)) { plays = 0; el.currentTime = 0; if (!paused && visible) el.play().catch(() => {}); }
+    if (prev && prev !== el) {
+      prev.classList.remove('on');
+      if (isFilm(prev)) setTimeout(() => { if (slides[at] !== prev) prev.pause(); }, 1700);
+    }
     box.classList.add('has-img');
-    schedule();
+    run();
   };
-  const start = () => {
-    if (started) return; started = true;
-    rebuild();
-    if (!slides.length) { const t = document.createElement('span'); t.className = 'tag'; t.textContent = 'Photo · hero — hero.mp4, hero.jpg, hero-2.jpg …'; box.append(t); return; }
-    slides[0].style.transition = 'none';   // the very first slide appears at once, no fade
-    show(0);
-    setTimeout(() => { slides[0] && (slides[0].style.transition = ''); }, 100);
+  // what the current slide does next
+  const run = () => {
+    clearTimeout(timer); clearTimeout(watchdog);
+    const el = slides[at];
+    if (!el || paused || !visible) return;
+    if (isFilm(el)) {
+      if (!el.ended && el.currentTime > 0 && el.currentTime < el.duration) play(el);
+      else { el.currentTime = 0; play(el); }
+      // still not playing after a while (slow internet, or the phone blocks videos): keep its first frame for a moment, then move on
+      watchdog = setTimeout(() => { if (el.paused && slides[at] === el) next(); }, 8000);
+    } else if (!reduce) {
+      timer = setTimeout(next, HERO_SECONDS * 1000);
+    }
   };
-  const showButton = () => {
-    if (!filmOk && slides.length < 2) return;
+  const next = () => {
+    for (let k = 1; k <= slides.length; k++) {
+      const j = (at + k) % slides.length, el = slides[j];
+      if (el.broken) continue;
+      if (!isFilm(el) && !(el.complete && el.naturalWidth)) {   // photo still loading: wait up to 4 s for it, then skip it this round
+        if (!el.src) el.src = el.dataset.src;
+        if (waits++ < 8) { timer = setTimeout(next, 500); return; }
+        waits = 0; continue;
+      }
+      if (j === at) { run(); return; }
+      show(j); return;
+    }
+    // nothing usable yet: try again shortly
+    timer = setTimeout(next, 1500);
+  };
+
+  // pause button
+  if (slides.length > 1 || isFilm(slides[0])) {
     btn.hidden = false;
+    btn.setAttribute('aria-label', 'Pause');
     btn.onclick = () => {
       paused = !paused;
       btn.classList.toggle('paused', paused);
       btn.setAttribute('aria-label', paused ? 'Play' : 'Pause');
-      const el = slides[at];
-      if (isFilm(el)) paused ? el.pause() : el.play().catch(() => {});
-      schedule();
+      if (paused) { clearTimeout(timer); clearTimeout(watchdog); if (isFilm(slides[at])) slides[at].pause(); }
+      else run();
     };
-  };
-
-  // photos: the first one right away, the rest after the page has loaded
-  const load = (img) => new Promise((ok) => {
-    img.onload = () => { box.append(img); ok(img); };
-    img.onerror = () => ok(null);
-    img.src = img.dataset.src;
-  });
-  const firstPhoto = load(imgs[0]);
-  const allPhotos = new Promise((ok) => {
-    const rest = () => Promise.all([firstPhoto, ...imgs.slice(1).map(load)]).then(ok);
-    document.readyState === 'complete' ? rest() : addEventListener('load', rest, { once: true });
-  }).then((list) => { photos = list.filter(Boolean); if (started) { rebuild(); if (!box.querySelector('.on') && slides.length) show(0); else schedule(); } showButton(); });
-  const startWithFirstPhoto = () => firstPhoto.then((p) => { if (p && !photos.length) photos = [p]; if (p || filmOk) start(); else allPhotos.then(start); });
-
-  if (!useFilm) {
-    startWithFirstPhoto();
-  } else {
-    // the film starts loading straight away, so it is the first thing people see
-    const files = (innerWidth < 760 ? ['hero-mobile.mp4'] : []).concat('hero.mp4');
-    video = document.createElement('video');
-    Object.assign(video, { muted: true, loop: true, playsInline: true, autoplay: true, preload: 'auto' });
-    video.setAttribute('muted', ''); video.setAttribute('playsinline', ''); video.setAttribute('aria-hidden', 'true');
-    video.className = 'hero-video on';
-    video.style.transition = 'none';
-    box.prepend(video);
-    let i = 0, done = false;
-    // the film file is missing or broken: go on with the photos only
-    const fail = () => { if (done) return; done = true; video.remove(); video = null; if (!started) startWithFirstPhoto(); };
-    // hero.mp4 → hero-poster.jpg, hero-mobile.mp4 → hero-mobile-poster.jpg: the film's first frame, shown at once while it loads
-    const next = () => {
-      if (i >= files.length) return fail();
-      const f = files[i++];
-      video.poster = PHOTO_FOLDER + f.replace('.mp4', '-poster.jpg');
-      video.src = PHOTO_FOLDER + f; video.play().catch(() => {});
-    };
-    video.addEventListener('error', next);
-    video.addEventListener('ended', () => {
-      if (paused || !visible || slides.length < 2 || !isFilm(slides[at])) return;
-      if (++plays < HERO_FILM_PLAYS) { video.currentTime = 0; video.play().catch(() => {}); return; }
-      show((at + 1) % slides.length);
-    });
-    video.addEventListener('playing', () => {
-      if (done || !video) return; done = true; filmOk = true;
-      if (!started) start();
-      else { const cur = slides[at]; rebuild(); at = Math.max(0, slides.indexOf(cur)); schedule(); }   // late film joins the next round
-      showButton();
-    }, { once: true });
-    // slow internet, or the phone blocked autoplay: start the photos meanwhile.
-    // With no photos, the film's first frame (poster) simply stays until the film is ready.
-    setTimeout(() => {
-      if (done || started) return;
-      firstPhoto.then((p) => {
-        if (filmOk || started) return;
-        if (p) { if (!photos.length) photos = [p]; start(); }
-        else allPhotos.then(() => { if (!filmOk && !started && photos.length) start(); });
-      });
-    }, 6000);
-    next();
   }
-
   // stop when the hero is off screen
   new IntersectionObserver(([e]) => {
     visible = e.isIntersecting;
-    const el = slides[at];
-    if (!visible) { clearTimeout(timer); if (isFilm(el)) el.pause(); }
-    else if (!paused && el) { if (isFilm(el)) el.play().catch(() => {}); schedule(); }
+    if (!visible) { clearTimeout(timer); clearTimeout(watchdog); if (isFilm(slides[at])) slides[at].pause(); }
+    else run();
   }).observe(box);
+
+  if (slides.length) show(0, true);
 })();
 
 let at = 0;
