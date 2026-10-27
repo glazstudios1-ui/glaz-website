@@ -75,7 +75,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-transf
 
 /* ---------- Hero ---------- */
 .hero { position: relative; height: 100svh; min-height: 560px; color: #fff; }
-.hero .ph { position: absolute; inset: 0; }
+.hero .ph { position: absolute; inset: 0; z-index: 0; }
 .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,0) 30%, rgba(0,0,0,0) 60%, rgba(0,0,0,.35)); pointer-events: none; }
 .hero-line { position: absolute; z-index: 2; left: 50%; top: 58%; translate: -50% 0; width: min(560px, 86vw); text-align: center;
   font-family: var(--serif); font-style: italic; font-size: clamp(22px, 2.6vw, 34px); line-height: 1.2; text-shadow: 0 1px 3px rgba(0,0,0,.35), 0 1px 18px rgba(0,0,0,.45); }
@@ -87,7 +87,9 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-transf
 .hero-pause svg { width: 13px; height: 13px; fill: currentColor; }
 .hero-pause .i-play, .hero-pause.paused .i-pause { display: none; }
 .hero-pause.paused .i-play { display: block; }
-.hero-slides img { position: absolute; inset: 0; opacity: 0; transition: opacity 1.6s ease; }
+.hero-slides { background: #1c1b19; }
+.hero-slides img, .hero-slides video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.6s ease; }
+.hero-slides video.on { opacity: 1; z-index: 1; }
 .hero-slides img.on { opacity: 1; z-index: 1; animation: hero-zoom 7s ease-out both; }
 @keyframes hero-zoom { from { transform: scale(1.07); } to { transform: scale(1); } }
 @media (prefers-reduced-motion: reduce) { .hero-slides img { transition: none; } .hero-slides img.on { animation: none; } }
@@ -199,7 +201,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-transf
 
 <main>
   <section class="hero" aria-label="Glaz Studios">
-    <figure class="ph hero-slides" id="hero-slides" data-tone="field"></figure>
+    <figure class="ph hero-slides" id="hero-slides"></figure>
     <button class="hero-pause" id="hero-pause" aria-label="Pause the film" hidden>
       <svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3v14H7zM14 5h3v14h-3z"/><path class="i-play" d="M8 5l11 7-11 7z"/></svg>
     </button>
@@ -311,9 +313,11 @@ const HERO_SLIDES = [
   { file: 'hero-7.jpg', focus: '50% 50%' },
   { file: 'hero-8.jpg', focus: '50% 50%' },
 ];
-const HERO_SECONDS = 5;      // how long each photo stays
-// true = play the film (hero.mp4) instead of the slider.  false = the slider.
-const HERO_FILM = false;
+const HERO_SECONDS = 5;        // how long each photo stays
+// The film plays first, then the photos, then the film again …
+// true = film first (media/site/hero.mp4, and hero-mobile.mp4 for phones if you upload one).  false = photos only.
+const HERO_FILM = true;
+const HERO_FILM_SECONDS = 5;   // how long the film shows before the photos start
 const PHOTOS = {
   hero:            'Hero — couple running or walking, wide, lots of movement',
   welcome_right:   'Couple walking away, tall',
@@ -359,61 +363,89 @@ document.querySelectorAll('.ph[data-slot]').forEach((fig) => {
     img.dataset.src = PHOTO_FOLDER + s.file;
     return img;
   });
-  let ready = [], at = 0, timer = null, paused = false;
-  const show = (img) => { box.querySelectorAll('img.on').forEach((o) => o.classList.remove('on')); img.classList.add('on'); };
-  const tick = () => { if (ready.length < 2) return; at = (at + 1) % ready.length; show(ready[at]); };
-  const play = () => { clearInterval(timer); if (!paused && !reduce && ready.length > 1) timer = setInterval(tick, HERO_SECONDS * 1000); };
+  const saveData = navigator.connection && navigator.connection.saveData;
+  const useFilm = HERO_FILM && !reduce && !saveData;
+  let video = null, filmOk = false, photos = [], slides = [], at = 0, timer = null, paused = false, started = false, visible = true;
+
+  const isFilm = (el) => !!el && el === video;
+  const rebuild = () => { slides = (filmOk ? [video] : []).concat(photos); };
+  const schedule = () => {
+    clearTimeout(timer);
+    if (paused || !visible || reduce || slides.length < 2) return;
+    const secs = isFilm(slides[at]) ? HERO_FILM_SECONDS : HERO_SECONDS;
+    timer = setTimeout(() => show((at + 1) % slides.length), secs * 1000);
+  };
+  const show = (i) => {
+    at = i;
+    const el = slides[i];
+    box.querySelectorAll('.on').forEach((o) => {
+      if (o === el) return;
+      o.classList.remove('on');
+      if (isFilm(o)) setTimeout(() => { if (!o.classList.contains('on')) o.pause(); }, 1700);
+    });
+    el.classList.add('on');
+    if (isFilm(el)) { el.currentTime = 0; if (!paused && visible) el.play().catch(() => {}); }
+    box.classList.add('has-img');
+    schedule();
+  };
+  const start = () => {
+    if (started) return; started = true;
+    rebuild();
+    if (!slides.length) { const t = document.createElement('span'); t.className = 'tag'; t.textContent = 'Photo · hero — hero.mp4, hero.jpg, hero-2.jpg …'; box.append(t); return; }
+    show(0);
+  };
+  const showButton = () => {
+    if (!filmOk && slides.length < 2) return;
+    btn.hidden = false;
+    btn.onclick = () => {
+      paused = !paused;
+      btn.classList.toggle('paused', paused);
+      btn.setAttribute('aria-label', paused ? 'Play' : 'Pause');
+      const el = slides[at];
+      if (isFilm(el)) paused ? el.pause() : el.play().catch(() => {});
+      schedule();
+    };
+  };
+
+  // photos: the first one right away, the rest after the page has loaded
   const load = (img) => new Promise((ok) => {
     img.onload = () => { box.append(img); ok(img); };
     img.onerror = () => ok(null);
     img.src = img.dataset.src;
   });
-  // first photo right away, the rest after the page has loaded
-  load(imgs[0]).then((first) => {
-    if (first) { box.classList.add('has-img'); show(first); ready = [first]; }
-    const rest = () => Promise.all(imgs.slice(1).map(load)).then((more) => {
-      ready = [first, ...more].filter(Boolean);
-      if (!first && ready.length) { box.classList.add('has-img'); show(ready[0]); }
-      if (!ready.length) { const t = document.createElement('span'); t.className = 'tag'; t.textContent = 'Photo · hero slider — hero.jpg, hero-2.jpg, hero-3.jpg …'; box.append(t); return; }
-      if (ready.length > 1 && !HERO_FILM) {
-        btn.hidden = false; btn.setAttribute('aria-label', 'Pause the slideshow');
-        btn.onclick = () => { paused = !paused; btn.classList.toggle('paused', paused); btn.setAttribute('aria-label', paused ? 'Play the slideshow' : 'Pause the slideshow'); play(); };
-        play();
-      }
-    });
+  const firstPhoto = load(imgs[0]);
+  const allPhotos = new Promise((ok) => {
+    const rest = () => Promise.all([firstPhoto, ...imgs.slice(1).map(load)]).then(ok);
     document.readyState === 'complete' ? rest() : addEventListener('load', rest, { once: true });
-  });
-  // stop when the hero is off screen
-  new IntersectionObserver(([e]) => { e.isIntersecting ? play() : clearInterval(timer); }).observe(box);
-})();
+  }).then((list) => { photos = list.filter(Boolean); if (started) { rebuild(); if (!box.querySelector('.on') && slides.length) show(0); else schedule(); } showButton(); });
+  const startWithFirstPhoto = () => firstPhoto.then((p) => { if (p && !photos.length) photos = [p]; if (p || filmOk) start(); else allPhotos.then(start); });
 
-// ---------- Hero film ----------
-// Upload  media/site/hero.mp4  (wide, 8–12 s, no sound, about 4–6 MB).
-// Optional: media/site/hero-mobile.mp4 (tall 9:16, about 2–3 MB) for phones.
-// hero.jpg stays as the cover while the film loads, and for phones in low-power / data-saver mode.
-(() => {
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const saveData = navigator.connection && navigator.connection.saveData;
-  if (!HERO_FILM || reduce || saveData) return;
-  const hero = document.querySelector('.hero'), btn = document.getElementById('hero-pause');
-  const files = (innerWidth < 760 ? ['hero-mobile.mp4'] : []).concat('hero.mp4');
-  const v = document.createElement('video');
-  Object.assign(v, { muted: true, loop: true, playsInline: true, autoplay: true, preload: 'auto' });
-  v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.setAttribute('aria-hidden', 'true');
-  v.className = 'hero-video';
-  let i = 0;
-  const next = () => { if (i >= files.length) { v.remove(); return; } v.src = PHOTO_FOLDER + files[i++]; v.play().catch(() => {}); };
-  v.addEventListener('error', next);
-  v.addEventListener('playing', () => { v.classList.add('on'); btn.hidden = false; }, { once: true });
-  btn.onclick = () => {
-    if (v.paused) { v.play(); btn.classList.remove('paused'); btn.setAttribute('aria-label', 'Pause the film'); }
-    else { v.pause(); btn.classList.add('paused'); btn.setAttribute('aria-label', 'Play the film'); }
-  };
-  // start loading only after the page itself has loaded, so the site opens fast
-  const start = () => { hero.querySelector('.ph').after(v); next(); };
-  document.readyState === 'complete' ? start() : addEventListener('load', start, { once: true });
-  // stop the film when it is off screen
-  new IntersectionObserver(([e]) => { if (btn.classList.contains('paused') || !v.src) return; e.isIntersecting ? v.play().catch(() => {}) : v.pause(); }).observe(hero);
+  if (!useFilm) {
+    startWithFirstPhoto();
+  } else {
+    // the film starts loading straight away, so it is the first thing people see
+    const files = (innerWidth < 760 ? ['hero-mobile.mp4'] : []).concat('hero.mp4');
+    video = document.createElement('video');
+    Object.assign(video, { muted: true, loop: true, playsInline: true, autoplay: true, preload: 'auto' });
+    video.setAttribute('muted', ''); video.setAttribute('playsinline', ''); video.setAttribute('aria-hidden', 'true');
+    video.className = 'hero-video';
+    box.prepend(video);
+    let i = 0, done = false;
+    const fail = () => { if (done) return; done = true; video.remove(); video = null; startWithFirstPhoto(); };
+    const next = () => { if (i >= files.length) return fail(); video.src = PHOTO_FOLDER + files[i++]; video.play().catch(() => {}); };
+    video.addEventListener('error', next);
+    video.addEventListener('playing', () => { if (done) return; done = true; filmOk = true; start(); showButton(); }, { once: true });
+    setTimeout(() => { if (!done) fail(); }, 6000);   // the phone blocked autoplay, or the internet is very slow
+    next();
+  }
+
+  // stop when the hero is off screen
+  new IntersectionObserver(([e]) => {
+    visible = e.isIntersecting;
+    const el = slides[at];
+    if (!visible) { clearTimeout(timer); if (isFilm(el)) el.pause(); }
+    else if (!paused && el) { if (isFilm(el)) el.play().catch(() => {}); schedule(); }
+  }).observe(box);
 })();
 
 let at = 0;
