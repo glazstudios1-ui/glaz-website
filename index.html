@@ -317,7 +317,8 @@ const HERO_SECONDS = 5;        // how long each photo stays
 // The film plays first, then the photos, then the film again …
 // true = film first (media/site/hero.mp4, and hero-mobile.mp4 for phones if you upload one).  false = photos only.
 const HERO_FILM = true;
-const HERO_FILM_SECONDS = 0;   // how long the film shows before the photos start. 0 = the whole film, once
+const HERO_FILM_SECONDS = 0;   // how long the film shows before the photos start. 0 = the whole film
+const HERO_FILM_PLAYS = 2;     // with 0 above: how many times the film plays before the photos (1 = once)
 const PHOTOS = {
   hero:            'Hero — couple running or walking, wide, lots of movement',
   welcome_right:   'Couple walking away, tall',
@@ -365,7 +366,7 @@ document.querySelectorAll('.ph[data-slot]').forEach((fig) => {
   });
   const saveData = navigator.connection && navigator.connection.saveData;
   const useFilm = HERO_FILM && !reduce && !saveData;
-  let video = null, filmOk = false, photos = [], slides = [], at = 0, timer = null, paused = false, started = false, visible = true;
+  let video = null, filmOk = false, photos = [], slides = [], at = 0, timer = null, paused = false, started = false, visible = true, plays = 0;
 
   const isFilm = (el) => !!el && el === video;
   const rebuild = () => { slides = (filmOk ? [video] : []).concat(photos); };
@@ -386,7 +387,7 @@ document.querySelectorAll('.ph[data-slot]').forEach((fig) => {
       if (isFilm(o)) setTimeout(() => { if (!o.classList.contains('on')) o.pause(); }, 1700);
     });
     el.classList.add('on');
-    if (isFilm(el)) { el.currentTime = 0; if (!paused && visible) el.play().catch(() => {}); }
+    if (isFilm(el)) { plays = 0; el.currentTime = 0; if (!paused && visible) el.play().catch(() => {}); }
     box.classList.add('has-img');
     schedule();
   };
@@ -394,7 +395,9 @@ document.querySelectorAll('.ph[data-slot]').forEach((fig) => {
     if (started) return; started = true;
     rebuild();
     if (!slides.length) { const t = document.createElement('span'); t.className = 'tag'; t.textContent = 'Photo · hero — hero.mp4, hero.jpg, hero-2.jpg …'; box.append(t); return; }
+    slides[0].style.transition = 'none';   // the very first slide appears at once, no fade
     show(0);
+    setTimeout(() => { slides[0] && (slides[0].style.transition = ''); }, 100);
   };
   const showButton = () => {
     if (!filmOk && slides.length < 2) return;
@@ -430,15 +433,41 @@ document.querySelectorAll('.ph[data-slot]').forEach((fig) => {
     video = document.createElement('video');
     Object.assign(video, { muted: true, loop: true, playsInline: true, autoplay: true, preload: 'auto' });
     video.setAttribute('muted', ''); video.setAttribute('playsinline', ''); video.setAttribute('aria-hidden', 'true');
-    video.className = 'hero-video';
+    video.className = 'hero-video on';
+    video.style.transition = 'none';
     box.prepend(video);
     let i = 0, done = false;
-    const fail = () => { if (done) return; done = true; video.remove(); video = null; startWithFirstPhoto(); };
-    const next = () => { if (i >= files.length) return fail(); video.src = PHOTO_FOLDER + files[i++]; video.play().catch(() => {}); };
+    // the film file is missing or broken: go on with the photos only
+    const fail = () => { if (done) return; done = true; video.remove(); video = null; if (!started) startWithFirstPhoto(); };
+    // hero.mp4 → hero-poster.jpg, hero-mobile.mp4 → hero-mobile-poster.jpg: the film's first frame, shown at once while it loads
+    const next = () => {
+      if (i >= files.length) return fail();
+      const f = files[i++];
+      video.poster = PHOTO_FOLDER + f.replace('.mp4', '-poster.jpg');
+      video.src = PHOTO_FOLDER + f; video.play().catch(() => {});
+    };
     video.addEventListener('error', next);
-    video.addEventListener('ended', () => { if (!paused && visible && slides.length > 1 && isFilm(slides[at])) show((at + 1) % slides.length); });
-    video.addEventListener('playing', () => { if (done) return; done = true; filmOk = true; start(); showButton(); }, { once: true });
-    setTimeout(() => { if (!done) fail(); }, 6000);   // the phone blocked autoplay, or the internet is very slow
+    video.addEventListener('ended', () => {
+      if (paused || !visible || slides.length < 2 || !isFilm(slides[at])) return;
+      if (++plays < HERO_FILM_PLAYS) { video.currentTime = 0; video.play().catch(() => {}); return; }
+      show((at + 1) % slides.length);
+    });
+    video.addEventListener('playing', () => {
+      if (done || !video) return; done = true; filmOk = true;
+      if (!started) start();
+      else { const cur = slides[at]; rebuild(); at = Math.max(0, slides.indexOf(cur)); schedule(); }   // late film joins the next round
+      showButton();
+    }, { once: true });
+    // slow internet, or the phone blocked autoplay: start the photos meanwhile.
+    // With no photos, the film's first frame (poster) simply stays until the film is ready.
+    setTimeout(() => {
+      if (done || started) return;
+      firstPhoto.then((p) => {
+        if (filmOk || started) return;
+        if (p) { if (!photos.length) photos = [p]; start(); }
+        else allPhotos.then(() => { if (!filmOk && !started && photos.length) start(); });
+      });
+    }, 6000);
     next();
   }
 
