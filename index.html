@@ -331,7 +331,8 @@ const PHOTO_FOLDER = 'media/site/';
 //   mobile: the tall film for phones (1080x1920). If it is missing, phones show the wide one.
 //   poster: each film's first frame, shown at once while the film loads (hero-1.mp4 → hero-1-poster.jpg, made automatically by name)
 //   plays:  how many times the film plays before moving on
-//   photo:  a photo, shown for HERO_SECONDS
+//   photo:  a photo, shown for HERO_SECONDS. Wide for computers: 2400 x 1350 (16:9)
+//   mobilePhoto: (optional) a tall version for phones: 1080 x 1920 (9:16). Without it, phones crop the wide one.
 //   focus:  which part of the photo stays in view on computers / mobileFocus: on phones
 //           '50% 50%' middle,  '25% 50%' left side,  '75% 50%' right side,  '50% 30%' upper part
 //   line:   the words shown on this slide (the "Check availability" button is always under them)
@@ -346,7 +347,7 @@ const HERO = [
     line: 'Some moments happen once. We make sure you keep them.', place: 'right', mobilePlace: 'top' },
   { film: 'hero-3.mp4', mobile: 'hero-3-mobile.mp4', plays: 1,
     line: 'The laughs you’ll want to hear again.', place: 'center', mobilePlace: 'bottom' },
-  { photo: 'hero-4.jpg', focus: '50% 30%', mobileFocus: '45% 50%',
+  { photo: 'hero-4.jpg', mobilePhoto: 'hero-4-mobile.jpg', focus: '50% 60%', mobileFocus: '45% 50%',
     line: 'Every laugh, every tear, every dance.', place: 'right', mobilePlace: 'top' },
 ];
 const HERO_SECONDS = 5;        // how long each photo stays
@@ -418,7 +419,7 @@ document.querySelectorAll('.ph[data-slot]').forEach((fig) => {
       });
       el.useNext();
     } else {
-      const src = s.photo || (s.film && (phone && s.mobile ? s.mobile : s.film).replace('.mp4', '-poster.jpg'));
+      const src = s.photo ? ((phone && s.mobilePhoto) || s.photo) : (phone && s.mobile ? s.mobile : s.film).replace('.mp4', '-poster.jpg');
       el = new Image(); el.alt = ''; el.decoding = 'async';
       el.style.objectPosition = (phone && s.mobileFocus) || s.focus || '50% 50%';
       el.dataset.src = PHOTO_FOLDER + src;
