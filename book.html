@@ -11,6 +11,15 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Courier+Prime:wght@400;700&display=swap">
 <link rel="stylesheet" href="site.css">
 <link rel="stylesheet" href="book-v2.css">
+<style>
+/* What the client chose on their packages link (shown above the form) */
+.picked { border: 1px solid var(--line); border-left: 2px solid var(--gold); padding: 14px 16px; margin: 0 0 22px; }
+.picked p { margin: 0; }
+.picked .k { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.picked .v { margin-top: 4px; }
+.picked .t { margin-top: 10px; font-family: var(--serif); font-size: 22px; }
+.picked .t small { font-family: var(--sans); font-size: 12px; color: var(--muted); }
+</style>
 </head>
 <body>
 
@@ -53,6 +62,7 @@
   <section class="card" aria-labelledby="form-title">
     <form id="booking" novalidate>
       <h2 id="form-title" data-i18n="formTitle">Booking request</h2>
+      <div class="picked" id="picked" hidden aria-live="polite"></div>
 
       <div class="grid">
         <label class="field full">

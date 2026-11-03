@@ -81,7 +81,25 @@ form.event_date.min = todayStr;
 $('#yr').textContent = now.getFullYear();
 
 // Pre-select a package from the link, e.g. /book?package=Gold
-const wantedPkg = new URLSearchParams(location.search).get('package');
+const qs = new URLSearchParams(location.search);
+const wantedPkg = qs.get('package');
+
+// Coming from a private packages link: fill in what the client already chose
+const fromLink = {
+  token: (qs.get('ref') || '').slice(0, 40),
+  extras: (qs.get('extras') || '').replace(/[^a-z0-9:,_-]/gi, '').slice(0, 300),
+  total: Math.max(0, Math.round(Number(qs.get('total')) || 0)),
+  sum: (qs.get('sum') || '').slice(0, 400),
+};
+if (qs.get('name')) form.full_name.value = qs.get('name').slice(0, 100);
+if (qs.get('phone')) form.phone.value = qs.get('phone').slice(0, 20);
+if (fromLink.sum) {
+  const box = $('#picked');
+  const esc = (v) => String(v).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  box.innerHTML = `<p class="k">Your choice</p><p class="v">${esc(fromLink.sum)}</p>`
+    + (fromLink.total ? `<p class="t">EGP ${fromLink.total.toLocaleString('en-US')} <small>· we confirm the final price with you on WhatsApp</small></p>` : '');
+  box.hidden = false;
+}
 
 async function loadPackages() {
   if (DEMO) return addPackages(['Silver', 'Gold', 'Platinum']);
@@ -94,6 +112,7 @@ function addPackages(names) {
   if (wantedPkg) {
     const hit = names.find((n) => n.toLowerCase() === wantedPkg.toLowerCase());
     if (hit) sel.value = hit;
+    else if (fromLink.sum) { sel.add(new Option(wantedPkg.slice(0, 80), wantedPkg.slice(0, 80))); sel.value = wantedPkg.slice(0, 80); }
   }
 }
 
@@ -183,6 +202,7 @@ form.addEventListener('submit', async (e) => {
     travel && '🚗 Outside Cairo — add transportation',
     v.phone2 && `Phone 2: ${v.phone2}`,
     v.instagram && `Instagram: ${v.instagram}`,
+    fromLink.sum && `From packages link: ${fromLink.sum}${fromLink.total ? ` — EGP ${fromLink.total.toLocaleString('en-US')}` : ''}`,
     v.message.trim(),
     v.source && `— Heard via: ${v.source}`,
   ].filter(Boolean).join('\n');
@@ -199,6 +219,7 @@ form.addEventListener('submit', async (e) => {
     deposit_amount: v.depAmount > 0 ? v.depAmount : null,
     deposit_screenshot: depPath,
     message: extra || null,
+    ...(fromLink.token ? { link_token: fromLink.token, extras: fromLink.extras || null, quote_total: fromLink.total || null } : {}),
   };
 
   let saved = false, mailed = false;
@@ -210,8 +231,8 @@ form.addEventListener('submit', async (e) => {
     const [db, mail] = await Promise.allSettled([
       sb.from('leads').insert(lead).then((r) => {
         // If 06_leads_extra.sql hasn't been run yet, save without the new columns (they're still in the message)
-        if (r.error && /phone2|instagram|deposit|column/i.test(r.error.message || '')) {
-          const { phone2, instagram, deposit_amount, deposit_screenshot, ...rest } = lead;
+        if (r.error && (fromLink.token || /phone2|instagram|deposit|column/i.test(r.error.message || ''))) {
+          const { phone2, instagram, deposit_amount, deposit_screenshot, extras, link_token, quote_total, ...rest } = lead;
           return sb.from('leads').insert(rest);
         }
         return r;
@@ -232,6 +253,7 @@ form.addEventListener('submit', async (e) => {
           'Event date': lead.event_date,
           'Venue': lead.venue || '—',
           'Package': lead.package_interest || 'Not sure yet',
+          'From packages link': fromLink.sum ? `${fromLink.sum}${fromLink.total ? ` — EGP ${fromLink.total.toLocaleString('en-US')}` : ''}` : '—',
           'Deposit': depLine ? depLine.replace(/^Deposit: /, '') : 'Not paid yet',
           'Transportation': travel ? 'YES — event outside Cairo' : '—',
           'Agreed to notes': 'Yes ✓ (30% deposit – Online Gallery – social media use)',

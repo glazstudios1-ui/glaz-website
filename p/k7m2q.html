@@ -4,143 +4,185 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Packages — Glaz Studios</title>
-<!-- Private page: only people with the link. Keep it out of Google. -->
+<!-- Private page: opens only from a client's own link (made in Dashboard → Packages), on up to 5 devices. -->
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#000000">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#111111">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Jost:wght@300;400;500&display=swap">
 <style>
-:root { --bg: #000; --text: #EDEAE4; --muted: #8E8A84; --line: rgba(237,234,228,.14); --soft: rgba(237,234,228,.06);
+:root { --ink: #F3F1ED; --muted: rgba(243,241,237,.62); --line: rgba(243,241,237,.18); --soft: rgba(243,241,237,.06);
   --serif: 'Instrument Serif', 'Times New Roman', serif; --sans: 'Jost', system-ui, sans-serif; }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html { background: var(--bg); }
-html, body { margin: 0; color: var(--text); overflow-x: clip; }
-body { font-family: var(--sans); font-weight: 300; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; padding-bottom: 110px; }
+html { background: #111; }
+html, body { margin: 0; color: var(--ink); overflow-x: clip; }
+body { font-family: var(--sans); font-weight: 300; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
 button { font: inherit; color: inherit; }
-:focus-visible { outline: 1px solid var(--text); outline-offset: 3px; }
+a { color: inherit; }
+:focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; }
 
-/* One quiet black & white photo behind everything */
-.backdrop { position: fixed; inset: 0; z-index: -1; filter: grayscale(1); }
-.backdrop img, .backdrop svg { width: 100%; height: 100%; object-fit: cover; opacity: .32; }
-.backdrop::after { content: ''; position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 40%, rgba(0,0,0,.25) 0%, rgba(0,0,0,.7) 100%); }
+/* ---------- One grainy black & white photo behind the whole page ---------- */
+.bg { position: fixed; inset: 0; z-index: -1; background: radial-gradient(120% 90% at 55% 45%, #8d8d8b 0%, #5d5d5b 45%, #2b2b2a 100%); }
+.bg video, .bg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; filter: grayscale(1) contrast(1.05) brightness(.82); }
+.bg::before { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(0,0,0,.42) 0%, rgba(0,0,0,.12) 38%, rgba(0,0,0,.52) 100%); }
+.bg::after { content: ''; position: absolute; inset: 0; z-index: 2; opacity: .22; mix-blend-mode: overlay; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 
-.page { max-width: 680px; margin: 0 auto; padding: 0 20px; }
-.top { text-align: center; padding: 34px 0 56px; }
-.brand { font-family: var(--serif); font-size: 30px; letter-spacing: .14em; text-decoration: none; color: var(--text); }
-.brand span { display: block; font-family: var(--sans); font-size: 9px; letter-spacing: .5em; color: var(--muted); margin-top: 2px; }
-h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(48px, 9vw, 76px); line-height: 1; margin: 64px 0 12px; }
-.top p { color: var(--muted); margin: 0; }
+/* ---------- Cover (like the poster) ---------- */
+.cover { min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; padding: clamp(28px, 6vh, 64px) 20px clamp(30px, 6vh, 60px); }
+.cover h1 { font-family: var(--serif); font-weight: 400; text-transform: uppercase; font-size: clamp(58px, 12.5vw, 176px); line-height: .9; letter-spacing: -.01em; margin: 0; text-shadow: 0 1px 30px rgba(0,0,0,.18); }
+.cover .low { max-width: 560px; }
+.caps { text-transform: uppercase; letter-spacing: .2em; font-size: 12px; line-height: 2; font-weight: 400; }
+.cover .lead { margin: 0; }
+.cover .sig { margin: 22px 0 0; font-size: 10px; letter-spacing: .3em; opacity: .85; }
+.cover .for { margin: 26px 0 0; font-family: var(--serif); font-style: italic; font-size: 22px; letter-spacing: 0; text-transform: none; }
+.cover .scroll { display: inline-block; margin-top: 26px; text-decoration: none; font-size: 10px; letter-spacing: .3em; text-transform: uppercase; border-bottom: 1px solid var(--line); padding-bottom: 4px; }
 
-.step { margin-bottom: 48px; }
-.step-h { display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px; }
-.step-h b { font-family: var(--serif); font-weight: 400; font-style: italic; font-size: 20px; color: var(--muted); }
-.step-h h2 { font-family: var(--serif); font-weight: 400; font-size: 28px; margin: 0; }
-.step-h small { margin-left: auto; color: var(--muted); font-size: 12px; }
+/* ---------- Locked message ---------- */
+.locked { max-width: 460px; margin: 0 auto; }
+.locked h2 { font-family: var(--serif); font-weight: 400; font-size: 34px; margin: 0 0 10px; }
+.locked p { margin: 0 0 8px; color: var(--muted); }
+.locked a { display: inline-block; margin-top: 14px; }
 
-/* Choose: photography / cinematography */
-.choice { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.choice button { background: var(--soft); border: 1px solid var(--line); padding: 20px 16px; cursor: pointer; text-align: left; transition: border-color .2s, background .2s; }
-.choice button b { display: block; font-family: var(--serif); font-weight: 400; font-size: 26px; line-height: 1.1; }
-.choice button span { color: var(--muted); font-size: 13px; }
-.choice button[aria-pressed="true"] { border-color: var(--text); background: rgba(237,234,228,.1); }
+/* ---------- Builder ---------- */
+.builder { background: linear-gradient(180deg, rgba(17,17,17,0) 0, rgba(17,17,17,.82) 140px, rgba(17,17,17,.9) 100%); padding: 120px 20px 150px; }
+.wrap { max-width: 700px; margin: 0 auto; }
+.step { margin-bottom: 56px; }
+.step-h { display: flex; align-items: baseline; gap: 14px; margin-bottom: 18px; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
+.step-h b { font-size: 10px; letter-spacing: .3em; color: var(--muted); font-weight: 400; }
+.step-h h2 { font-family: var(--serif); font-weight: 400; text-transform: uppercase; font-size: 32px; line-height: 1; margin: 0; letter-spacing: .01em; }
+.step-h small { margin-left: auto; color: var(--muted); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; }
 
-/* Hours */
-.hours { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
-.hours button { background: transparent; border: 1px solid var(--line); padding: 14px 4px 12px; cursor: pointer; text-align: center; transition: border-color .2s, background .2s; }
-.hours button b { display: block; font-family: var(--serif); font-weight: 400; font-size: 30px; line-height: 1; }
-.hours button i { display: block; font-style: normal; font-size: 11px; color: var(--muted); margin-top: 2px; }
-.hours button span { display: block; font-size: 11px; color: var(--muted); margin-top: 8px; }
-.hours button[aria-pressed="true"] { background: var(--text); color: #000; border-color: var(--text); }
-.hours button[aria-pressed="true"] i, .hours button[aria-pressed="true"] span { color: #444; }
-@media (max-width: 520px) { .hours { grid-template-columns: repeat(3, 1fr); } }
+.choice { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.choice button { background: var(--soft); border: 1px solid var(--line); padding: 20px 14px; cursor: pointer; text-align: center; transition: border-color .2s, background .2s; }
+.choice button b { display: block; font-family: var(--serif); font-weight: 400; text-transform: uppercase; font-size: 21px; line-height: 1.05; letter-spacing: .02em; }
+.choice button span { display: block; margin-top: 6px; color: var(--muted); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; }
+.choice button[aria-pressed="true"] { border-color: var(--ink); background: rgba(243,241,237,.12); }
+@media (max-width: 560px) {
+  .choice { gap: 6px; }
+  .choice button { padding: 14px 4px 12px; }
+  .choice button b { text-transform: none; font-size: min(17px, 4.3vw); letter-spacing: 0; }
+  .choice button span { font-size: 8px; letter-spacing: .08em; }
+}
 
-.inside { margin: 16px 0 0; padding: 0; list-style: none; color: var(--muted); font-size: 14px; }
-.inside li { padding: 6px 0 6px 22px; position: relative; border-bottom: 1px solid var(--line); }
-.inside li::before { content: '✓'; position: absolute; left: 0; color: var(--text); font-size: 12px; top: 7px; }
+.hours { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; }
+.hours button { background: transparent; border: 1px solid var(--line); padding: 16px 6px 14px; cursor: pointer; text-align: center; transition: border-color .2s, background .2s; }
+.hours button b { display: block; font-family: var(--serif); font-weight: 400; font-size: 40px; line-height: 1; }
+.hours button i { display: block; font-style: normal; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.hours button span { display: block; font-size: 12px; color: var(--muted); margin-top: 10px; letter-spacing: .06em; }
+.hours button[aria-pressed="true"] { background: var(--ink); color: #111; border-color: var(--ink); }
+.hours button em { display: block; font-style: normal; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
+.hours button[aria-pressed="true"] i, .hours button[aria-pressed="true"] span, .hours button[aria-pressed="true"] em { color: #555; }
 
-/* Add-ons */
-.extras { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+.inside { margin: 18px 0 0; padding: 0; list-style: none; color: var(--muted); font-size: 14px; }
+.inside li { padding: 7px 0 7px 22px; position: relative; border-bottom: 1px solid var(--line); }
+.inside li::before { content: '—'; position: absolute; left: 0; color: var(--ink); }
+
+.extras { margin: 0; padding: 0; list-style: none; }
 .extras li { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
 .extras .name { font-size: 15px; }
 .extras .name small { display: block; color: var(--muted); font-size: 12px; }
 .extras .price { color: var(--muted); font-size: 13px; white-space: nowrap; }
+.extras li.on .name, .extras li.on .price { color: var(--ink); }
+.extras li.off .name, .extras li.off .price { opacity: .45; }
+.extras li.pick { grid-template-columns: 1fr; gap: 10px; }
+.opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }
+.opts button { background: transparent; border: 1px solid var(--line); padding: 10px 12px; text-align: left; cursor: pointer; transition: border-color .2s, background .2s; }
+.opts button b { display: block; font-weight: 400; font-size: 14px; }
+.opts button span { display: block; font-size: 12px; color: var(--muted); }
+.opts button[aria-pressed="true"] { background: var(--ink); color: #111; border-color: var(--ink); }
+.opts button[aria-pressed="true"] span { color: #555; }
+.add { background: none; border: 1px solid var(--line); padding: 11px 14px; min-width: 88px; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; cursor: pointer; }
+.add[aria-pressed="true"] { background: var(--ink); color: #111; border-color: var(--ink); }
+.add:disabled { opacity: .35; cursor: default; }
+.peek { display: inline-block; background: none; border: 0; border-bottom: 1px solid var(--line); padding: 0 0 2px; margin-top: 8px; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--ink); cursor: pointer; }
+.peekimg { grid-column: 1 / -1; margin: 4px 0 6px; }
+.peekimg img, .peekimg .ph { display: block; width: 100%; max-width: 300px; aspect-ratio: 4 / 5; object-fit: cover; filter: grayscale(1); }
+.peekimg .ph { display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; background: rgba(243,241,237,.05); border: 1px dashed var(--line); color: var(--muted); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; filter: none; }
 .qty { display: flex; align-items: center; border: 1px solid var(--line); }
-.qty button { width: 36px; height: 36px; background: none; border: 0; cursor: pointer; font-size: 18px; line-height: 1; }
+.qty button { width: 40px; height: 40px; background: none; border: 0; cursor: pointer; font-size: 18px; line-height: 1; }
 .qty button:disabled { opacity: .25; cursor: default; }
-.qty output { min-width: 26px; text-align: center; font-size: 14px; }
-.extras li.on .name, .extras li.on .price { color: var(--text); }
-@media (max-width: 520px) { .extras li { grid-template-columns: 1fr auto; } .extras .price { grid-column: 1; grid-row: 2; margin-top: -10px; } .qty { grid-column: 2; grid-row: 1 / 3; } }
-
-/* Total bar */
-.bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; background: rgba(0,0,0,.92); backdrop-filter: blur(8px); border-top: 1px solid var(--line); }
-.bar-in { max-width: 680px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; gap: 16px; }
-.bar .sum { flex: 1; min-width: 0; }
-.bar .sum b { font-family: var(--serif); font-weight: 400; font-size: 30px; line-height: 1; display: block; }
-.bar .sum span { color: var(--muted); font-size: 12px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.book { background: var(--text); color: #000; text-decoration: none; padding: 14px 24px; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; font-weight: 500; white-space: nowrap; }
-.book:hover { background: #fff; }
+.qty output { min-width: 24px; text-align: center; font-size: 14px; }
+@media (max-width: 520px) {
+  .extras li { grid-template-columns: 1fr auto; }
+  .extras li:not(.pick) .price { grid-column: 1; grid-row: 2; margin-top: -10px; }
+  .qty, .add { grid-column: 2; grid-row: 1 / 3; }
+  .peekimg { grid-row: 3; }
+  .opts { grid-template-columns: 1fr 1fr; }
+}
 
 .notes { color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 22px; }
 .notes p { margin: 0 0 8px; }
-.demo { color: var(--muted); font-size: 12px; text-align: center; border: 1px dashed var(--line); padding: 8px; margin-bottom: 36px; }
+.demo { color: var(--muted); font-size: 12px; text-align: center; border: 1px dashed var(--line); padding: 8px; margin: 0 0 40px; }
+
+/* ---------- Total bar ---------- */
+.bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; background: rgba(17,17,17,.94); backdrop-filter: blur(8px); border-top: 1px solid var(--line); transform: translateY(100%); transition: transform .3s; }
+.bar.show { transform: none; }
+.bar-in { max-width: 700px; margin: 0 auto; padding: 14px 20px calc(14px + env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 16px; }
+.bar .sum { flex: 1; min-width: 0; }
+.bar .sum b { font-family: var(--serif); font-weight: 400; font-size: 30px; line-height: 1; display: block; }
+.bar .sum span { color: var(--muted); font-size: 12px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.book { background: var(--ink); color: #111; text-decoration: none; padding: 15px 24px; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; font-weight: 500; white-space: nowrap; }
+.book:hover { background: #fff; }
+@media (prefers-reduced-motion: reduce) { .bar { transition: none; } }
 </style>
 </head>
 <body>
 
-<!-- Background photo: upload  media/site/packages-bg.jpg  (wide). It is always shown in black & white, very faded. -->
-<div class="backdrop" id="backdrop" aria-hidden="true">
-  <!-- placeholder until the real photo is uploaded: a couple, far away, under a wide sky -->
-  <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
-    <defs>
-      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9a9a9a"/><stop offset=".62" stop-color="#cfcfcf"/><stop offset="1" stop-color="#6b6b6b"/></linearGradient>
-      <linearGradient id="land" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a5a5a"/><stop offset="1" stop-color="#1e1e1e"/></linearGradient>
-    </defs>
-    <rect width="1600" height="1000" fill="url(#sky)"/>
-    <path d="M0 640 C 260 600, 420 615, 640 628 S 1100 600, 1600 630 L1600 1000 L0 1000 Z" fill="url(#land)"/>
-    <path d="M0 690 C 300 660, 700 700, 1000 680 S 1400 670, 1600 690 L1600 1000 L0 1000 Z" fill="#2a2a2a" opacity=".7"/>
-    <g transform="translate(1310 596)" fill="#111">
-      <circle cx="0" cy="0" r="4.2"/><path d="M-5 5 L5 5 L13 40 L-13 40 Z"/>
-      <circle cx="16" cy="-2" r="4.2"/><rect x="12" y="4" width="8" height="22" rx="2"/><rect x="12.5" y="25" width="3" height="15"/><rect x="16.5" y="25" width="3" height="15"/>
-      <path d="M5 14 L12 12" stroke="#111" stroke-width="2"/>
-    </g>
-  </svg>
+<!-- Background, always shown in black & white with grain:
+     - video: media/site/packages-bg.mp4 (short, no sound, loops) + media/site/packages-bg-start.jpg (its first frame)
+     - photo: media/site/packages-bg.jpg — used when there is no packages-bg.mp4 -->
+<div class="bg" id="bg" aria-hidden="true">
+  <video id="bgv" autoplay muted loop playsinline preload="auto" poster="/media/site/packages-bg-start.jpg" disablepictureinpicture>
+    <source src="/media/site/packages-bg.mp4" type="video/mp4">
+  </video>
 </div>
 
-<div class="page">
-  <header class="top">
-    <a class="brand" href="/" aria-label="Glaz Studios home">GLAZ<span>STUDIOS</span></a>
-    <h1>Packages</h1>
-    <p>Choose your coverage, add what you like, and book.</p>
-  </header>
+<header class="cover">
+  <h1>Our Packages</h1>
+  <div class="low" id="low">
+    <p class="caps lead">Choose the coverage for your day, add what you need, and book. Every package is built around you.</p>
+    <p class="caps sig">( Glaz Studios )</p>
+  </div>
+</header>
 
-  <p class="demo" id="demo" hidden>Example prices for the design.</p>
+<main class="builder" id="builder" hidden>
+  <div class="wrap">
+    <p class="demo" id="demo" hidden>Example prices for the design.</p>
 
-  <section class="step" aria-labelledby="s1">
-    <div class="step-h"><b>1</b><h2 id="s1">Coverage</h2></div>
-    <div class="choice" id="choice"></div>
-  </section>
+    <section class="step" id="start" aria-labelledby="s1">
+      <div class="step-h"><b>01</b><h2 id="s1">Coverage</h2></div>
+      <div class="choice" id="choice"></div>
+    </section>
 
-  <section class="step" aria-labelledby="s2">
-    <div class="step-h"><b>2</b><h2 id="s2">Hours</h2></div>
-    <div class="hours" id="hours"></div>
-    <ul class="inside" id="inside"></ul>
-  </section>
+    <section class="step" aria-labelledby="s2">
+      <div class="step-h"><b>02</b><h2 id="s2">Hours</h2></div>
+      <div class="hours" id="hours"></div>
+      <ul class="inside" id="inside"></ul>
+    </section>
 
-  <section class="step" aria-labelledby="s3">
-    <div class="step-h"><b>3</b><h2 id="s3">Add to your day</h2><small>Optional</small></div>
-    <ul class="extras" id="extras"></ul>
-  </section>
+    <section class="step" aria-labelledby="s3">
+      <div class="step-h"><b>03</b><h2 id="s3">Add to your day</h2><small>Optional</small></div>
+      <ul class="extras" id="extras"></ul>
+    </section>
 
-  <section class="notes">
-    <p>A 30% deposit secures your date. The balance is due on the event day.</p>
-    <p>Your highlight is ready 5 days after the event, everything else 25 days after.</p>
-    <p>Events outside Cairo include a transportation fee, based on the location.</p>
-  </section>
-</div>
+    <section class="step" aria-labelledby="s4" id="recStep">
+      <div class="step-h"><b>04</b><h2 id="s4">Full Record 4K</h2><small>Optional</small></div>
+      <ul class="extras" id="rec"></ul>
+    </section>
 
-<div class="bar" role="region" aria-label="Your total">
+    <section class="notes">
+      <p>A 30% deposit secures your date. The date is confirmed once the deposit is received.</p>
+      <p>Your highlight is ready on the wedding day. Everything else is delivered 25 days after.</p>
+      <p>Events outside Cairo include a transportation fee, based on the location.</p>
+      <p>Items marked “on request” are priced for your event. We confirm them with you after you book.</p>
+    </section>
+  </div>
+</main>
+
+<div class="bar" id="bar" role="region" aria-label="Your total">
   <div class="bar-in">
     <div class="sum"><b id="total">—</b><span id="summary"></span></div>
     <a class="book" id="book" href="/book">Book this</a>
@@ -151,94 +193,257 @@ h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(48px, 9vw, 76
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 import * as CFG from '../config.js';
 
-const DEPOSIT_PCT = 0.30;
-const HOURS = [6, 8, 10, 12, 14, 16];
-
-// ---- Example data (prices are replaced by the dashboard packages once they exist) ----
-const SERVICES = {
-  photo: { title: 'Photography', sub: 'Photos of your day', inside: ['Lead photographer for the hours you choose', 'Edited photos in a private online gallery', 'Highlight photos in 5 days, all photos in 25'],
-           prices: { 6: 10000, 8: 12000, 10: 14000, 12: 16000, 14: 18000, 16: 20000 } },
-  cinema: { title: 'Cinematography', sub: 'A film of your day', inside: ['Lead cinematographer for the hours you choose', 'Highlight film in 5 days', 'Full film in 25 days'],
-           prices: { 6: 12000, 8: 14500, 10: 17000, 12: 19500, 14: 22000, 16: 24500 } },
-};
-// Add-ons: name, price, unit, how many can be added
-const EXTRAS = [
-  { key: 'hour', name: 'Extra hour', price: 2000, unit: 'per hour', max: 4 },
-  { key: 'photographer', name: 'Extra photographer', price: 5000, max: 3 },
-  { key: 'cinematographer', name: 'Extra cinematographer', price: 6000, max: 3 },
-  { key: 'camera', name: 'Extra camera', price: 2500, max: 3 },
-  { key: 'fullrec', name: 'Full Coverage', sub: 'The whole event recorded, start to end', price: 8000, max: 1 },
-  { key: 'crane', name: 'Crane', sub: 'With operator', price: 9000, max: 1 },
-  { key: 'media', name: 'Media Coverage', sub: 'Same-night content for social media', price: 7000, max: 1 },
-  { key: 'booth', name: 'Photo Booth', price: 8000, max: 1 },
-];
+const CONTACT = 'mailto:info@glazstudios.com';   // put your WhatsApp link here later, e.g. https://wa.me/2010XXXXXXXX
+let DEPOSIT_PCT = 0.30;   // from Dashboard → Settings
+const SHOW_PHOTO_PLACEHOLDER = false;   // design preview only
 
 const $ = (id) => document.getElementById(id);
 const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const egp = (n) => 'EGP ' + Number(n || 0).toLocaleString('en-US');
 const short = (n) => (n >= 1000 ? (n / 1000).toLocaleString('en-US', { maximumFractionDigits: 1 }) + 'K' : String(n));
-const nameOf = (svc, h) => `${SERVICES[svc].title} — ${h} Hours`;   // same name as in the dashboard and the booking form
+const WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'];
+const count = (n, [one, many]) => `${WORDS[n] || n} ${n === 1 ? one : many}`;
+const cams = (n) => `${n} camera${n === 1 ? '' : 's'}`;
 
-const state = { svc: 'photo', hours: 8, qty: Object.fromEntries(EXTRAS.map((e) => [e.key, 0])) };
+// ---- Packages and add-ons come from the dashboard:
+//      Settings → Packages (names like "Photography — 8 Hours") and Packages → Prices & add-ons ----
+const COVERAGE = {
+  photo:  { title: 'Photography',    sub: 'Photos of your day', who: ['photographer', 'photographers'], gets: 'Edited photos in a private online gallery', hours: {} },
+  cinema: { title: 'Cinematography', sub: 'A film of your day', who: ['cinematographer', 'cinematographers'], gets: 'Highlight film and full film', hours: {} },
+};
+const BOTH = { title: 'Photo & Film', hours: {} };   // its own price if the dashboard has "Photo & Film — 8 Hours", else both added
+let ITEMS = [], PICKS = {};
+
+// Example data, only for the design preview (no database)
+const DEMO_DATA = {
+  extra_hour_price: 2000, deposit_pct: 0.3,
+  packages: [4, 8, 12].flatMap((h, i) => [
+    { name: `Photography — ${h} Hours`, price: [10000, 15000, 20000][i], hours: h, cameras: h > 4 ? 2 : 1 },
+    { name: `Cinematography — ${h} Hours`, price: [10000, 15000, 20000][i], hours: h, cameras: h > 4 ? 2 : 1 }]),
+  extras: [
+    ['photographer', 'add', null, 'Extra photographer', 'One more camera for photos', 5000, 3],
+    ['cinematographer', 'add', null, 'Extra cinematographer', 'One more camera for the film', 5000, 3],
+    ['longfilm', 'add', null, 'Long film', '30 minutes to 1 hour, with one more camera', 10000, 1, 'cinema'],
+    ['highlight', 'add', null, 'Party highlight film', 'A short film of the party', 8000, 1],
+    ['booth', 'add', null, 'Photo Booth', '4 hours for your guests', 12500, 1, null, '/media/site/photobooth.jpg'],
+    ['media', 'add', null, 'Media Coverage', 'Content for your pages', null, 1],
+    ['party1', 'rec', 'Shoulder cameras · Party', '1 camera', 'Cameras moving with you at the party', 5000, 1],
+    ['party2', 'rec', 'Shoulder cameras · Party', '2 cameras', 'Cameras moving with you at the party', 8000, 1],
+    ['church1', 'rec', 'Shoulder cameras · Church', '1 camera', 'Cameras moving with you at the church', 3000, 1],
+    ['church2', 'rec', 'Shoulder cameras · Church', '2 cameras', 'Cameras moving with you at the church', 6000, 1],
+    ['crane', 'rec', null, 'Crane', 'With its own camera', 8000, 1],
+    ['mixer', 'rec', 'Mixer', 'Mixer', 'All cameras cut live', 5000, 1],
+    ['live', 'rec', 'Mixer', 'Mixer + live streaming', 'All cameras cut live', 7000, 1],
+    ['wire', 'rec', null, 'Wire camera', 'A camera moving on a cable above the hall', 15000, 1],
+    ['drone', 'rec', null, 'Drone', 'Shots from the sky', 15000, 1],
+  ].map(([key, section, group_name, name, description, price, max_qty, needs, photo_url]) => ({ key, section, group_name, name, description, price, max_qty, needs, photo_url })),
+};
+
+function load(d) {
+  if (d.deposit_pct != null) DEPOSIT_PCT = Number(d.deposit_pct);
+  const esc_ = (t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  for (const p of d.packages || []) {
+    if (p.price == null) continue;
+    for (const s of [COVERAGE.photo, COVERAGE.cinema, BOTH]) {
+      const m = String(p.name).match(new RegExp(`^${esc_(s.title)}\\s*[—–-]\\s*(\\d+)\\s*hours?$`, 'i'));
+      if (m) s.hours[m[1]] = { price: Number(p.price), cams: Number(p.cameras) || (Number(m[1]) > 4 ? 2 : 1) };
+    }
+  }
+  ITEMS = [];
+  if (d.extra_hour_price) ITEMS.push({ key: 'hour', sec: 'add', name: 'Extra hour', price: Number(d.extra_hour_price), unit: 'per hour', max: 4, show: true });
+  PICKS = {};
+  for (const e of d.extras || []) {
+    if (e.group_name && !PICKS[e.group_name]) PICKS[e.group_name] = { name: e.group_name, sub: e.description };
+    ITEMS.push({ key: e.key, sec: e.section, pick: e.group_name || null, name: e.name, sub: e.group_name ? '' : e.description,
+                 price: e.price == null ? null : Number(e.price), max: e.max_qty || 1, needs: e.needs, photo: e.photo_url, show: true });
+  }
+  ITEMS.filter((i) => i.photo).forEach((i) => { const im = new Image(); im.onload = () => { i.photoOk = true; if (!$('builder').hidden) draw(); }; im.src = i.photo; });
+}
+
+// Coverage choices: Photography, Cinematography, and both together
+const SVCS = {
+  photo:  { title: COVERAGE.photo.title,  sub: COVERAGE.photo.sub },
+  cinema: { title: COVERAGE.cinema.title, sub: COVERAGE.cinema.sub },
+  both:   { title: BOTH.title,            sub: 'Photos and film together' },
+};
+const has = (svc, part) => svc === part || svc === 'both';
+function slot(svc, h) {   // { price, label for cameras, list of what is inside }
+  const p = COVERAGE.photo.hours[h], c = COVERAGE.cinema.hours[h];
+  if (svc !== 'both') {
+    const s = COVERAGE[svc], v = s.hours[h];
+    if (!v || v.price == null) return null;
+    return { price: v.price, camLabel: cams(v.cams), inside: [`${count(v.cams, s.who)} for ${h} hours`, s.gets] };
+  }
+  if (!p || !c) return null;
+  return { price: BOTH.hours[h]?.price ?? p.price + c.price, camLabel: `${p.cams} + ${c.cams} cameras`,
+           inside: [`${count(p.cams, COVERAGE.photo.who)} and ${count(c.cams, COVERAGE.cinema.who).toLowerCase()} for ${h} hours`,
+                    `${COVERAGE.photo.gets}, ${COVERAGE.cinema.gets.toLowerCase()}`] };
+}
+const hoursOf = (svc) => [...new Set([...Object.keys(COVERAGE.photo.hours), ...Object.keys(COVERAGE.cinema.hours)])].map(Number).filter((h) => slot(svc, h)).sort((a, b) => a - b);
+const nameOf = (svc, h) => `${SVCS[svc].title} — ${h} Hours`;   // same name as in the dashboard and the booking form
+
+const state = { peek: null, svc: 'photo', hours: 8, qty: {}, client: null, token: '' };
+const shown = () => ITEMS.filter((i) => i.show);
+const usable = (i) => !i.needs || has(state.svc, i.needs);
+const priceTag = (i) => (i.price == null ? 'On request' : `+${egp(i.price)}${i.unit ? ` ${i.unit}` : ''}`);
+
+function itemRow(i) {
+  const q = state.qty[i.key] || 0, ok = usable(i);
+  const canPeek = i.photo && (i.photoOk || SHOW_PHOTO_PLACEHOLDER), open = canPeek && state.peek === i.key;
+  const sub = !ok ? `With ${COVERAGE[i.needs].title} only` : i.sub;
+  const ctrl = (i.max || 1) > 1
+    ? `<span class="qty"><button type="button" data-x="${i.key}" data-d="-1" aria-label="Remove ${esc(i.name)}" ${q ? '' : 'disabled'}>−</button>
+        <output aria-label="${esc(i.name)} count">${q}</output>
+        <button type="button" data-x="${i.key}" data-d="1" aria-label="Add ${esc(i.name)}" ${q >= i.max || !ok ? 'disabled' : ''}>+</button></span>`
+    : `<button type="button" class="add" data-t="${i.key}" aria-pressed="${!!q}" ${ok ? '' : 'disabled'}>${q ? 'Added' : 'Add'}</button>`;
+  return `<li class="${q ? 'on' : ''} ${ok ? '' : 'off'}"><span class="name">${esc(i.name)}${sub ? `<small>${esc(sub)}</small>` : ''}${canPeek
+      ? `<button type="button" class="peek" data-peek="${i.key}" aria-expanded="${open}">${open ? 'Hide' : 'See'} the booth</button>` : ''}</span>
+    <span class="price">${priceTag(i)}</span>${ctrl}
+    ${open ? `<figure class="peekimg">${i.photoOk ? `<img src="${esc(i.photo)}" alt="Our photo booth">` : '<span class="ph">Photo booth photo</span>'}</figure>` : ''}</li>`;
+}
+function pickRow(key) {
+  const g = PICKS[key], opts = shown().filter((i) => i.pick === key);
+  if (!opts.length) return '';
+  const on = opts.some((i) => state.qty[i.key]);
+  return `<li class="pick ${on ? 'on' : ''}"><span class="name">${esc(g.name)}${g.sub ? `<small>${esc(g.sub)}</small>` : ''}</span>
+    <div class="opts" role="group" aria-label="${esc(g.name)}">${opts.map((i) =>
+      `<button type="button" data-p="${i.key}" aria-pressed="${!!state.qty[i.key]}"><b>${esc(i.name)}</b><span>${priceTag(i)}</span></button>`).join('')}</div></li>`;
+}
+function section(sec) {   // items in the order they are listed, with each pick group where its first option is
+  const seen = new Set();
+  return shown().filter((i) => i.sec === sec).map((i) => {
+    if (!i.pick) return itemRow(i);
+    if (seen.has(i.pick)) return '';
+    seen.add(i.pick); return pickRow(i.pick);
+  }).join('');
+}
+const label = (i) => (!i.pick || i.name.startsWith(i.pick) ? i.name : `${i.pick}: ${i.name}`);
 
 function draw() {
-  const S = SERVICES[state.svc];
-  $('choice').innerHTML = Object.entries(SERVICES).map(([k, s]) =>
-    `<button type="button" data-svc="${k}" aria-pressed="${k === state.svc}"><b>${s.title}</b><span>${s.sub}</span></button>`).join('');
-  const avail = HOURS.filter((h) => S.prices[h]);
-  if (!avail.includes(state.hours)) state.hours = avail[0];
-  $('hours').innerHTML = avail.map((h) =>
-    `<button type="button" data-h="${h}" aria-pressed="${h === state.hours}"><b>${h}</b><i>hours</i><span>${short(S.prices[h])}</span></button>`).join('');
-  $('inside').innerHTML = S.inside.map((l) => `<li>${esc(l)}</li>`).join('');
-  $('extras').innerHTML = EXTRAS.map((e) => {
-    const q = state.qty[e.key];
-    return `<li class="${q ? 'on' : ''}"><span class="name">${esc(e.name)}${e.sub ? `<small>${esc(e.sub)}</small>` : ''}</span>
-      <span class="price">+${egp(e.price)}${e.unit ? ` ${e.unit}` : ''}</span>
-      <span class="qty"><button type="button" data-x="${e.key}" data-d="-1" aria-label="Remove ${esc(e.name)}" ${q ? '' : 'disabled'}>−</button>
-        <output aria-label="${esc(e.name)} count">${q}</output>
-        <button type="button" data-x="${e.key}" data-d="1" aria-label="Add ${esc(e.name)}" ${q >= e.max ? 'disabled' : ''}>+</button></span></li>`;
-  }).join('');
-  const base = S.prices[state.hours];
-  const picked = EXTRAS.filter((e) => state.qty[e.key]);
-  const total = base + picked.reduce((a, e) => a + e.price * state.qty[e.key], 0);
-  $('total').textContent = egp(total);
+  $('choice').innerHTML = Object.entries(SVCS).filter(([k]) => hoursOf(k).length).map(([k, s]) =>
+    `<button type="button" data-svc="${k}" aria-pressed="${k === state.svc}"><b>${esc(s.title)}</b><span>${esc(s.sub)}</span></button>`).join('');
+  const avail = hoursOf(state.svc);
+  if (!avail.includes(state.hours)) state.hours = avail[Math.min(1, avail.length - 1)];
+  const now = slot(state.svc, state.hours);
+  $('hours').innerHTML = avail.map((h) => { const s = slot(state.svc, h);
+    return `<button type="button" data-h="${h}" aria-pressed="${h === state.hours}"><b>${h}</b><i>hours</i><span>${short(s.price)}</span><em>${esc(s.camLabel)}</em></button>`; }).join('');
+  $('inside').innerHTML = now.inside.map((l) => `<li>${esc(l)}</li>`).join('');
+
+  ITEMS.forEach((i) => { if (!i.show || !usable(i)) state.qty[i.key] = 0; });   // e.g. Long film needs Cinematography
+  $('extras').innerHTML = section('add');
+  $('rec').innerHTML = section('rec');
+  $('recStep').hidden = !$('rec').innerHTML.trim();
+
+  const picked = shown().filter((i) => state.qty[i.key]);
+  const total = now.price + picked.reduce((a, i) => a + (i.price || 0) * state.qty[i.key], 0);
+  const onRequest = picked.filter((i) => i.price == null);
+  $('total').textContent = egp(total) + (onRequest.length ? ' +' : '');
   const deposit = Math.round((total * DEPOSIT_PCT) / 100) * 100;
-  $('summary').textContent = `${nameOf(state.svc, state.hours)}${picked.length ? ' + ' + picked.map((e) => (state.qty[e.key] > 1 ? `${state.qty[e.key]}× ` : '') + e.name).join(', ') : ''} · Deposit ${egp(deposit)}`;
-  const extras = picked.map((e) => `${e.key}:${state.qty[e.key]}`).join(',');
-  $('book').href = `/book?package=${encodeURIComponent(nameOf(state.svc, state.hours))}${extras ? `&extras=${encodeURIComponent(extras)}` : ''}`;
+  $('summary').textContent = `${nameOf(state.svc, state.hours)}${picked.length ? ' + ' + picked.map((i) => (state.qty[i.key] > 1 ? `${state.qty[i.key]}× ` : '') + label(i)).join(', ') : ''}`
+    + (onRequest.length ? ` · ${onRequest.map((i) => i.name).join(', ')} on request` : '') + ` · Deposit ${egp(deposit)}`;
+
+  // Everything chosen goes to the booking form, so the client does not type it again
+  const q = new URLSearchParams({ package: nameOf(state.svc, state.hours) });
+  const extras = picked.map((i) => `${i.key}:${state.qty[i.key]}`).join(',');
+  if (extras) q.set('extras', extras);
+  if (state.client?.name) q.set('name', state.client.name);
+  if (state.client?.phone) q.set('phone', state.client.phone);
+  if (state.token) q.set('ref', state.token);
+  q.set('total', String(total));
+  q.set('sum', $('summary').textContent.split(' · Deposit')[0]);
+  $('book').href = `/book?${q}`;
 }
 
 document.addEventListener('click', (e) => {
-  const b = e.target.closest('button'); if (!b) return;
+  const b = e.target.closest('button'); if (!b || !b.closest('#builder')) return;
+  const item = (k) => ITEMS.find((i) => i.key === k);
   if (b.dataset.svc) state.svc = b.dataset.svc;
   else if (b.dataset.h) state.hours = Number(b.dataset.h);
-  else if (b.dataset.x) { const x = EXTRAS.find((k) => k.key === b.dataset.x); state.qty[x.key] = Math.max(0, Math.min(x.max, state.qty[x.key] + Number(b.dataset.d))); }
-  else return;
+  else if (b.dataset.peek) state.peek = state.peek === b.dataset.peek ? null : b.dataset.peek;
+  else if (b.dataset.x) { const i = item(b.dataset.x); state.qty[i.key] = Math.max(0, Math.min(i.max, (state.qty[i.key] || 0) + Number(b.dataset.d))); }
+  else if (b.dataset.t) state.qty[b.dataset.t] = state.qty[b.dataset.t] ? 0 : 1;
+  else if (b.dataset.p) {   // one option per group; tap it again to remove it
+    const i = item(b.dataset.p), was = state.qty[i.key];
+    ITEMS.filter((o) => o.pick === i.pick).forEach((o) => { state.qty[o.key] = 0; });
+    state.qty[i.key] = was ? 0 : 1;
+  } else return;
   draw();
 });
 
-// Real background photo, if uploaded
-const bg = new Image(); bg.alt = ''; bg.onload = () => { $('backdrop').querySelector('svg')?.replaceWith(bg); }; bg.src = '/media/site/packages-bg.jpg';
+// Show the total bar once the client reaches the packages
+new IntersectionObserver(([en]) => $('bar').classList.toggle('show', en.isIntersecting || en.boundingClientRect.top < 0), { threshold: 0 }).observe($('start'));
 
-// Prices from the dashboard: packages named "Photography — 8 Hours", "Cinematography — 12 Hours", …
+// Background video: a little slower, so it feels calm. Paused for people who turn off motion.
+const bgv = $('bgv');
+bgv.querySelector('source').addEventListener('error', () => {   // no video uploaded: show the photo
+  const im = new Image(); im.alt = ''; im.onload = () => bgv.replaceWith(im); im.src = '/media/site/packages-bg.jpg';
+});
+bgv.playbackRate = 0.75; bgv.addEventListener('loadedmetadata', () => { bgv.playbackRate = 0.75; });
+if (matchMedia('(prefers-reduced-motion: reduce)').matches) { bgv.removeAttribute('autoplay'); bgv.pause(); }
+
+
+// One id per phone/browser. A link opens on up to 5 of them; you see each one in Dashboard → Packages.
+function deviceId() {
+  try {
+    let d = localStorage.getItem('glaz_device');
+    if (!d) { d = crypto.randomUUID(); localStorage.setItem('glaz_device', d); }
+    return d;
+  } catch (e) {
+    const m = document.cookie.match(/(?:^|; )glaz_device=([^;]+)/);
+    if (m) return m[1];
+    const d = crypto.randomUUID(); document.cookie = `glaz_device=${d}; max-age=31536000; path=/; samesite=lax`; return d;
+  }
+}
+// A readable name for the device, e.g. "iPhone · Safari" or "Android SM-S918B · Chrome"
+function deviceLabel() {
+  const u = navigator.userAgent;
+  const os = /iPhone/.test(u) ? 'iPhone' : (/iPad/.test(u) || (/Macintosh/.test(u) && navigator.maxTouchPoints > 1)) ? 'iPad'
+    : /Android/.test(u) ? 'Android' : /Windows/.test(u) ? 'Windows' : /Macintosh/.test(u) ? 'Mac' : /Linux/.test(u) ? 'Linux' : 'Device';
+  const model = (u.match(/Android [\d.]+; (?:[a-z]{2}-[a-z]{2}; )?([^;)]+?)(?: Build|\))/i) || [])[1];
+  const app = /Instagram/.test(u) ? 'Instagram' : /FBAN|FBAV/.test(u) ? 'Facebook' : /WhatsApp/.test(u) ? 'WhatsApp'
+    : /SamsungBrowser/.test(u) ? 'Samsung Internet' : /EdgA?\/|EdgiOS/.test(u) ? 'Edge' : /OPR\/|OPiOS/.test(u) ? 'Opera'
+    : /CriOS|Chrome\//.test(u) ? 'Chrome' : /FxiOS|Firefox\//.test(u) ? 'Firefox' : /Safari\//.test(u) ? 'Safari' : 'Browser';
+  return `${os}${model && model !== 'K' ? ' ' + model.trim() : ''} · ${app}`;
+}
+
+function lock(title, text) {
+  $('low').innerHTML = `<div class="locked"><h2>${esc(title)}</h2><p>${esc(text)}</p>
+    <a class="caps" href="${CONTACT}">Contact Glaz Studios</a></div>`;
+}
+
+function open(client, expires) {
+  state.client = client;
+  const until = expires ? new Date(expires).toLocaleDateString('en-GB', { day: 'numeric', month: 'long' }) : '';
+  $('low').insertAdjacentHTML('beforeend',
+    `${client?.name ? `<p class="for">Prepared for ${esc(client.name)}</p>` : ''}
+     ${until ? `<p class="caps" style="font-size:10px;margin:6px 0 0;opacity:.8">This link is yours only · valid until ${esc(until)}</p>` : ''}
+     <a class="scroll" href="#start">See the packages</a>`);
+  $('builder').hidden = false;
+  draw();
+}
+
 (async () => {
   const key = CFG.SUPABASE_KEY || '';
-  let fromDb = false;
-  if (key && !key.startsWith('PASTE_')) {
-    try {
-      const sb = createClient(CFG.SUPABASE_URL, key);
-      const { data } = await sb.from('packages').select('name, price, hours').eq('active', true);
-      for (const s of Object.values(SERVICES)) {
-        const found = {};
-        (data || []).forEach((p) => { const m = String(p.name).match(new RegExp(`^${s.title}\\s*[—-]\\s*(\\d+)\\s*hours?$`, 'i')); if (m) found[m[1]] = p.price; });
-        if (Object.keys(found).length) { s.prices = found; fromDb = true; }
-      }
-    } catch (e) { /* keep the example prices */ }
+  const token = new URLSearchParams(location.search).get('k') || '';
+  if (!key || key.startsWith('PASTE_')) { $('demo').hidden = false; load(DEMO_DATA); return open({ name: '' }, null); }   // design preview only
+  if (!token) return lock('This page is private', 'It opens only from the link we send you. Message us and we will send you your own link.');
+  state.token = token;
+  try {
+    const sb = createClient(CFG.SUPABASE_URL, key);
+    const { data: res, error } = await sb.rpc('open_package_link', { p_token: token, p_device: deviceId(), p_label: deviceLabel() });
+    if (error) throw error;
+    if (!res?.ok) {
+      const why = { expired: ['This link has expired', 'Links stay open for a few days only. Message us and we will send you a new one.'],
+                    device: ['This link is already open on other phones', 'Each link opens on a few phones only. Message us and we will send you your own link.'] }[res?.reason]
+                  || ['This link is not valid', 'Message us and we will send you a new link.'];
+      return lock(...why);
+    }
+    load(res);   // packages, add-ons and deposit from the dashboard
+    open({ name: res.name, phone: res.phone }, res.expires_at);
+  } catch (e) {
+    lock('We could not open your packages', 'Please try again in a minute. If it still does not open, message us.');
   }
-  $('demo').hidden = fromDb;
-  draw();
 })();
-draw();
 </script>
 </body>
 </html>
