@@ -1,536 +1,391 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Glaz Studios — Wedding photography and films</title>
-<meta name="description" content="Glaz Studios: wedding photography, cinematography, full coverage, media coverage and photo booth. Cairo and wherever you celebrate.">
-<meta name="theme-color" content="#2A0B0C">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Courier+Prime:wght@400;700&display=swap">
+<meta name="description" content="Glaz Studios: wedding photography and cinematography in Cairo. We cover your whole day and keep it the way it really happened.">
+<meta name="theme-color" content="#000000">
+<meta property="og:title" content="Glaz Studios — Wedding photography and films">
+<meta property="og:description" content="Your whole wedding day, from getting ready to the last song, kept the way it really happened.">
+<meta property="og:image" content="media/site/hero-4.jpg">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400&family=Cormorant+Garamond:wght@400;500&family=Barlow+Condensed:wght@400;500&family=Barlow:wght@300;400&display=swap">
 <style>
-:root {
-  --oxblood: #2A0B0C;
-  --bone: #E5E2DC;
-  --olive: #7A7957;
-  --ink: #1E1B18;
-  --stone: #6E6A63;
-  --paper: #F4F1EC;
-  --serif: 'Instrument Serif', 'Times New Roman', serif;
-  --mono: 'Courier Prime', 'Courier New', monospace;
-  --gutter: clamp(18px, 5vw, 80px);
-}
+:root { color-scheme: dark; --bg: #000; --panel: #0C0C0B; --text: #D8D2C7; --muted: #8A847B; --warm: #E8DCC2; --line: rgba(216,210,199,.14);
+  --title: 'Cormorant Garamond', Georgia, serif; --cond: 'Barlow Condensed', 'Arial Narrow', sans-serif; --sans: 'Barlow', system-ui, sans-serif; --mark: 'Bodoni Moda', Didot, serif;
+  --gut: clamp(18px, 4vw, 60px); }
 * { box-sizing: border-box; }
-[hidden] { display: none !important; }
-html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-html, body { margin: 0; background: var(--bone); color: var(--ink); overflow-x: clip; }
-body { font-family: var(--mono); font-size: 13px; line-height: 1.75; -webkit-font-smoothing: antialiased; }
-/* film grain over everything */
-body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: .07; mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-a { color: inherit; }
-img { display: block; width: 100%; height: 100%; object-fit: cover; }
-h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-transform: uppercase; letter-spacing: .01em; line-height: 1; }
-:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
-.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
-.kicker { text-transform: uppercase; letter-spacing: .08em; font-size: 11px; line-height: 1.6; }
-.link { display: inline-block; text-transform: uppercase; letter-spacing: .1em; font-size: 11px; text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 3px; }
-.link:hover { opacity: .7; }
+html { background: var(--bg); scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 300 17px/1.65 var(--sans); overflow-x: clip; -webkit-font-smoothing: antialiased; }
+img, video { display: block; max-width: 100%; height: auto; }
+a { color: inherit; } h1, h2, h3 { font-weight: 400; margin: 0; } p { margin: 0; }
+:focus-visible { outline: 1px solid var(--warm); outline-offset: 4px; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 99; background: var(--warm); color: #000; padding: 10px 14px; }
+.skip:focus { top: 12px; }
+.grain { position: fixed; inset: -50%; z-index: 40; pointer-events: none; opacity: .08; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); animation: grain 1s steps(4) infinite; }
+@keyframes grain { 0% { transform: translate(0, 0); } 25% { transform: translate(-3%, 2%); } 50% { transform: translate(2%, -3%); } 75% { transform: translate(-2%, -1%); } }
 
-/* ---------- Photo slots (placeholder until a photo is added) ---------- */
-.ph { position: relative; margin: 0; overflow: hidden; background: #8f8a7c; }
-.ph .tag { position: absolute; left: 10px; bottom: 8px; right: 10px; font-family: var(--mono); font-size: 10px; letter-spacing: .06em;
-  text-transform: uppercase; color: rgba(255,255,255,.82); text-shadow: 0 1px 3px rgba(0,0,0,.35); line-height: 1.4; }
-.ph.has-img .tag { display: none; }
-.ph[data-tone="field"] { background: radial-gradient(120% 80% at 70% 20%, #c9c3a8 0%, #8e9672 35%, #4f5a3c 70%, #2d3424 100%); }
-.ph[data-tone="dress"] { background: radial-gradient(90% 70% at 50% 45%, #f1ede4 0%, #d7d1c3 40%, #8a8574 85%); }
-.ph[data-tone="bw"] { background: linear-gradient(160deg, #d9d6d0 0%, #8d8a85 45%, #3c3a37 100%); filter: grayscale(1); }
-.ph[data-tone="dusk"] { background: radial-gradient(100% 90% at 30% 25%, #b9a58e 0%, #6f5f50 45%, #2f2620 100%); }
-.ph[data-tone="forest"] { background: linear-gradient(175deg, #a9a99a 0%, #6c6f5e 30%, #3b4033 70%, #23271f 100%); }
-.ph[data-tone="candle"] { background: radial-gradient(80% 70% at 50% 40%, #e2b77a 0%, #9a6a3c 40%, #3a2416 85%); }
-.ph.print { padding: 6px 6px 18px; background: #f4f1ec !important; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
-.ph.print > .inner { position: relative; width: 100%; height: 100%; overflow: hidden; }
+/* ---------- Intro: studio card, then the letterbox opens ---------- */
+.card { position: fixed; inset: 0; z-index: 30; display: grid; place-content: center; justify-items: center; gap: 22px; pointer-events: none; }
+.card img { width: 58px; opacity: 0; transition: opacity 1s; }
+.card .wm { font: 400 15px/1 var(--mark); letter-spacing: .7em; text-indent: .7em; opacity: 0; transition: opacity 1s .25s; }
+.card .pr { font: 400 13px/1 var(--cond); letter-spacing: .4em; text-indent: .4em; color: var(--muted); opacity: 0; transition: opacity 1s .7s; }
+.c1 .card img, .c1 .card .wm, .c1 .card .pr { opacity: 1; animation: flicker 2.2s linear; }
+.c2 .card { opacity: 0; transition: opacity .7s; }
+.c3 .card { display: none; }
+@keyframes flicker { 0%, 100% { filter: brightness(1); } 8% { filter: brightness(.6); } 10% { filter: brightness(1.15); } 46% { filter: brightness(.85); } 48% { filter: brightness(1); } }
 
-/* ---------- Navigation ---------- */
-.nav { position: absolute; inset: 0 0 auto; z-index: 10; display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; padding: 22px var(--gutter); color: #fff; }
-.nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: clamp(16px, 2.6vw, 40px); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; padding-top: 8px; }
-.nav ul:last-of-type { justify-content: flex-end; }
-.nav a { text-decoration: none; }
-.nav a:hover { opacity: .7; }
-.brand { text-align: center; text-decoration: none; }
-.brand b { display: block; font-family: var(--serif); font-weight: 400; font-size: clamp(54px, 8vw, 116px); line-height: .82; letter-spacing: .02em; }
-.brand span { display: block; font-size: 9px; letter-spacing: .5em; margin-top: 8px; opacity: .85; }
-.menu-btn { display: none; }
+.hero { --fh: min(100svh - 150px, 100vw / 2.39); position: relative; height: 100svh; min-height: 520px; }
+.frame { position: absolute; left: 0; right: 0; top: 50%; height: var(--fh); transform: translateY(-50%); overflow: hidden; background: #000; }
+.frame video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .9s; }
+.frame video.on { opacity: 1; }
+.js .frame { clip-path: inset(50% 0 50% 0); }
+.c2 .frame { clip-path: inset(0 0 0 0); transition: clip-path 1.8s cubic-bezier(.65, 0, .2, 1); }
+.bar { position: absolute; left: 0; right: 0; height: calc((100svh - var(--fh)) / 2); display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 0 var(--gut); }
+.bar.t { top: 0; } .bar.b { bottom: 0; }
+.js .bar > * { opacity: 0; } .c3 .bar > * { opacity: 1; transition: opacity 1s; }
+.logo { font: 400 14px/1 var(--mark); letter-spacing: .5em; text-decoration: none; white-space: nowrap; }
+nav.links { display: flex; gap: 30px; font: 400 15px/1 var(--cond); letter-spacing: .2em; }
+nav.links a { text-decoration: none; opacity: .8; } nav.links a:hover { opacity: 1; }
+.menu { display: none; background: none; border: 0; color: inherit; font: 400 15px var(--cond); letter-spacing: .2em; cursor: pointer; }
+.sub-line { font: 400 clamp(19px, 2vw, 26px)/1.3 var(--title); }
+.cta { display: inline-block; text-decoration: none; font: 500 14px/1 var(--cond); letter-spacing: .25em; padding: 15px 22px; color: #000; background: var(--warm); white-space: nowrap; }
+.cta:hover { background: #fff3da; }
+.pause { position: absolute; right: var(--gut); top: calc(50% + var(--fh) / 2 - 56px); width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,.45); background: rgba(0,0,0,.25); color: #fff; cursor: pointer; display: grid; place-items: center; }
+.pause svg { width: 13px; height: 13px; fill: currentColor; } .pause .i-play { display: none; } .pause[aria-pressed="true"] .i-play { display: block; } .pause[aria-pressed="true"] .i-pause { display: none; }
+.js .pause { opacity: 0; } .c3 .pause { opacity: 1; transition: opacity 1s; }
 @media (max-width: 760px) {
-  .nav { grid-template-columns: 1fr auto; align-items: center; }
-  .nav ul { display: none; }
-  .brand { text-align: left; } .brand b { font-size: 46px; }
-  .menu-btn { display: block; justify-self: end; background: none; border: 0; color: inherit; font: inherit; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; cursor: pointer; padding: 10px 0; }
-  .nav.open { position: fixed; inset: 0; background: var(--oxblood); align-content: start; }
-  .nav.open ul { display: flex; flex-direction: column; grid-column: 1 / -1; gap: 18px; font-family: var(--serif); font-size: 34px; letter-spacing: .02em; padding-top: 48px; }
-  .nav.open ul:last-of-type { justify-content: flex-start; padding-top: 0; }
+  .hero { --fh: min(100svh - 240px, 135vw); }
+  .bar.b { flex-direction: column; align-items: flex-start; justify-content: center; gap: 14px; }
+  .menu { display: block; position: relative; z-index: 61; }
+  nav.links { position: fixed; inset: 0; z-index: 60; flex-direction: column; align-items: center; justify-content: center; gap: 30px; background: #000; font-size: 26px; opacity: 0; visibility: hidden; transition: .3s; }
+  .hero.open nav.links { opacity: 1; visibility: visible; }
 }
 
-/* ---------- Hero ---------- */
-.hero { position: relative; height: 100svh; min-height: 560px; color: #fff; }
-.hero .ph { position: absolute; inset: 0; z-index: 0; }
-.hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,0) 28%, rgba(0,0,0,0) 52%, rgba(0,0,0,.5)); pointer-events: none; }
-/* hero words + button. Where they sit is set per slide in HERO (place / mobilePlace) */
-.hero-copy { position: absolute; z-index: 2; bottom: clamp(70px, 12vh, 130px); width: min(500px, 80vw);
-  display: flex; flex-direction: column; gap: 22px; transition: opacity .5s ease; }
-.hero-copy.hide { opacity: 0; }
-.hero-copy::before { content: ''; position: absolute; inset: -40px -60px; z-index: -1; pointer-events: none;
-  background: radial-gradient(closest-side, rgba(0,0,0,.28), rgba(0,0,0,0)); }
-.hero[data-place="left"] .hero-copy   { left: var(--gutter); align-items: flex-start; text-align: left; }
-.hero[data-place="center"] .hero-copy { left: 50%; translate: -50% 0; align-items: center; text-align: center; }
-.hero[data-place="right"] .hero-copy  { right: var(--gutter); align-items: flex-end; text-align: right; }
-.hero-line { margin: 0; font-family: var(--serif); font-style: italic; font-size: clamp(26px, 2.8vw, 42px); line-height: 1.15;
-  text-shadow: 0 1px 3px rgba(0,0,0,.35), 0 1px 18px rgba(0,0,0,.45); text-wrap: balance; }
-.hero-cta { display: inline-block; text-decoration: none; text-transform: uppercase; letter-spacing: .16em; font-size: 11px;
-  padding: 15px 28px; border: 1px solid rgba(255,255,255,.85); color: #fff; background: rgba(0,0,0,.18); backdrop-filter: blur(2px);
-  transition: background .25s, color .25s; }
-.hero-cta:hover, .hero-cta:focus-visible { background: #fff; color: #1c1b19; }
-.hero .ph .tag { bottom: 22px; left: var(--gutter); right: auto; }
-.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.2s ease; }
-.hero-video.on { opacity: 1; }
-.hero-pause { position: absolute; z-index: 3; right: var(--gutter); bottom: 22px; width: 38px; height: 38px; border-radius: 50%;
-  border: 1px solid rgba(255,255,255,.6); background: rgba(0,0,0,.2); color: #fff; cursor: pointer; display: grid; place-items: center; }
-.hero-pause svg { width: 13px; height: 13px; fill: currentColor; }
-.hero-pause .i-play, .hero-pause.paused .i-pause { display: none; }
-.hero-pause.paused .i-play { display: block; }
-.hero-slides { background: #1c1b19; }
-.hero-slides img, .hero-slides video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.6s ease; }
-.hero-slides video.on { opacity: 1; z-index: 1; }
-.hero-slides img.on { opacity: 1; z-index: 1; animation: hero-zoom 7s ease-out both; }
-@keyframes hero-zoom { from { transform: scale(1.07); } to { transform: scale(1); } }
-@media (prefers-reduced-motion: reduce) { .hero-slides img { transition: none; } .hero-slides img.on { animation: none; } }
+/* ---------- Sections ---------- */
+section { padding: clamp(90px, 12vw, 160px) var(--gut); }
+.wrap { max-width: 1300px; margin: 0 auto; }
+.sec-h { font: 400 clamp(44px, 6vw, 92px)/1 var(--title); }
+.kick { display: block; font: 400 14px/1 var(--cond); letter-spacing: .35em; color: var(--muted); margin-bottom: 18px; }
+.sec-p { margin-top: 22px; max-width: 52ch; color: var(--muted); }
 
-/* ---------- Welcome (oxblood) ---------- */
-.welcome { background: var(--oxblood); color: #E9E1D8; padding: clamp(80px, 11vw, 150px) var(--gutter) clamp(80px, 10vw, 130px); }
-.welcome-grid { display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: clamp(20px, 4vw, 64px); max-width: 1180px; margin: 0 auto; align-items: start; }
-.welcome h2 { font-size: clamp(30px, 3.4vw, 48px); grid-column: 1 / 3; }
-.welcome .lead { grid-column: 1 / 3; margin-top: -10px; max-width: 40ch; }
-.welcome .p1 { grid-column: 1; grid-row: 3 / 5; aspect-ratio: 3 / 4; margin-top: 60px; width: 82%; }
-.welcome .copy { grid-column: 2; grid-row: 3; max-width: 46ch; margin-top: 30px; }
-.welcome .copy p { margin: 0 0 16px; }
-.welcome .p2 { grid-column: 3; grid-row: 1 / 3; aspect-ratio: 4 / 5; }
-.welcome .p3 { grid-column: 3; grid-row: 3; width: 46%; aspect-ratio: 1; margin: -50px 0 0 -12%; z-index: 1; }
-.services { list-style: none; margin: clamp(60px, 8vw, 110px) auto 0; padding: 0; max-width: 520px; text-align: center; counter-reset: s; }
-.services li { counter-increment: s; position: relative; font-family: var(--serif); font-size: clamp(24px, 2.6vw, 34px); text-transform: uppercase; line-height: 1.25; }
-.services li::before { content: '0' counter(s) '.'; position: absolute; font-family: var(--mono); font-size: 10px; letter-spacing: .1em; top: 2px; opacity: .7; }
-.services li:nth-child(odd)::before { right: calc(100% - 90px); } .services li:nth-child(even)::before { left: calc(100% - 90px); }
-.services + .link { display: table; margin: 34px auto 0; }
-@media (max-width: 860px) {
-  .welcome-grid { grid-template-columns: 1fr 1fr; }
-  .welcome h2, .welcome .lead { grid-column: 1 / -1; grid-row: auto; }
-  .welcome .p1 { grid-column: 1; grid-row: 3; width: 100%; margin-top: 0; }
-  .welcome .p2 { grid-column: 2; grid-row: 3; margin-top: 40px; }
-  .welcome .copy { grid-column: 1 / -1; grid-row: 4; margin-top: 10px; }
-  .welcome .p3 { display: none; }
-  .services li::before { display: none; }
+/* Your day, written down once: the private link */
+.plan { background: var(--panel); }
+.plan .grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(40px, 7vw, 110px); align-items: center; }
+.plan ol { list-style: none; margin: 36px 0 0; padding: 0; counter-reset: s; }
+.plan ol li { counter-increment: s; display: grid; grid-template-columns: 54px 1fr; gap: 6px 10px; padding: 18px 0; border-top: 1px solid var(--line); }
+.plan ol li::before { content: counter(s, decimal-leading-zero); font: 400 15px/1.6 var(--cond); letter-spacing: .2em; color: var(--muted); }
+.plan ol h3 { font: 400 22px/1.3 var(--title); color: var(--text); }
+.plan ol p { grid-column: 2; color: var(--muted); font-size: 15px; }
+.phone { justify-self: center; width: min(340px, 100%); aspect-ratio: 9 / 18.5; border: 1px solid rgba(216,210,199,.25); border-radius: 38px; padding: 14px; background: #050505; box-shadow: 0 40px 80px rgba(0,0,0,.6); }
+.phone .scr { height: 100%; border-radius: 28px; background: #121211; overflow: hidden; padding: 26px 18px; font-size: 13px; }
+.phone .scr .k { font: 400 11px/1 var(--cond); letter-spacing: .3em; color: var(--muted); }
+.phone .scr h4 { margin: 8px 0 18px; font: 400 24px/1.1 var(--title); color: var(--text); }
+.phone .row { display: grid; grid-template-columns: 62px 1fr; gap: 8px; padding: 11px 0; border-top: 1px solid var(--line); }
+.phone .row b { font: 400 13px/1.3 var(--cond); letter-spacing: .08em; color: var(--warm); }
+.phone .row span { color: var(--text); line-height: 1.35; } .phone .row small { display: block; color: var(--muted); font-size: 11.5px; }
+.phone .ex { margin-top: 14px; color: var(--muted); font-size: 11px; text-align: center; }
+@media (max-width: 900px) { .plan .grid { grid-template-columns: 1fr; } }
+
+/* Real, not staged */
+.real { text-align: center; padding-block: clamp(100px, 14vw, 190px); }
+.real p.big { max-width: 22ch; margin: 0 auto; font: 400 clamp(32px, 4.6vw, 66px)/1.12 var(--title); color: var(--text); }
+.real p.small { margin: 26px auto 0; max-width: 50ch; color: var(--muted); }
+
+/* Recent weddings: 20 stills in black and white, colour when you point at one (phones: when it reaches the middle) */
+.work-h { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px 50px; flex-wrap: wrap; margin-bottom: clamp(36px, 5vw, 60px); }
+.work-h p { color: var(--muted); max-width: 36ch; }
+.stills { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+.stills button { padding: 0; border: 0; background: #111; cursor: zoom-in; overflow: hidden; }
+.stills img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; filter: grayscale(1) contrast(1.08); transition: filter .9s ease; }
+.stills button:hover img, .stills button:focus-visible img, .stills button.live img { filter: none; }
+.reel { position: relative; margin: 4px calc(-1 * var(--gut)); aspect-ratio: 2.39 / 1; overflow: hidden; background: #050505; }
+.reel video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 760px) { .stills { grid-template-columns: 1fr 1fr; } .reel { aspect-ratio: 4 / 3; } }
+
+/* What we do: one screen, a programme of services */
+.svc-h { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px 50px; flex-wrap: wrap; margin-bottom: clamp(36px, 5vw, 56px); }
+.svc-h p { color: var(--muted); max-width: 38ch; }
+.screen { position: relative; aspect-ratio: 2.39 / 1; overflow: hidden; background: #070707; touch-action: pan-y; }
+.screen .m { position: absolute; inset: 0; opacity: 0; transition: opacity .6s ease; }
+.screen .m.on { opacity: 1; }
+.screen .m img, .screen .m video { width: 100%; height: 100%; object-fit: cover; }
+.screen .m > img { object-position: 50% 28%; }
+.screen .m::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,.72) 0%, rgba(0,0,0,.25) 46%, rgba(0,0,0,0) 70%), linear-gradient(0deg, rgba(0,0,0,.5), rgba(0,0,0,0) 40%); }
+.screen .todo { display: grid; place-items: center; height: 100%; border: 1px dashed rgba(216,210,199,.25); font: 400 14px/1.5 var(--cond); letter-spacing: .2em; color: var(--muted); text-align: center; padding: 0 20px; }
+.quad { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 3px; height: 100%; background: #000; }
+.quad div { position: relative; overflow: hidden; } .quad img { filter: saturate(.85); }
+.quad span { position: absolute; left: 8px; top: 8px; font: 500 11px/1 var(--cond); letter-spacing: .2em; color: #fff; background: rgba(0,0,0,.6); padding: 5px 7px; }
+.quad .live { left: auto; right: 8px; } .quad .live::before { content: ''; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #E0453A; margin-right: 6px; vertical-align: 1px; }
+.cap { position: absolute; left: clamp(20px, 4vw, 56px); bottom: clamp(20px, 4vw, 52px); max-width: min(560px, 80%); z-index: 2; pointer-events: none; }
+.cap .g { font: 400 13px/1 var(--cond); letter-spacing: .35em; color: var(--warm); }
+.cap h3 { margin-top: 12px; font: 400 clamp(38px, 5vw, 76px)/1 var(--title); color: #fff; }
+.cap p { margin-top: 10px; font: 400 clamp(19px, 1.8vw, 24px)/1.3 var(--title); color: rgba(255,255,255,.85); }
+.count { position: absolute; right: clamp(16px, 3vw, 40px); bottom: clamp(16px, 3vw, 40px); z-index: 2; font: 400 13px/1 var(--cond); letter-spacing: .25em; color: rgba(255,255,255,.75); }
+.gets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 30px; list-style: none; margin: 0; padding: 22px 0 0; min-height: 70px; color: var(--text); font-size: 16px; }
+.gets li { padding: 10px 0 10px 18px; border-top: 1px solid var(--line); position: relative; }
+.gets li::before { content: ''; position: absolute; left: 0; top: 1.25em; width: 8px; height: 1px; background: var(--warm); }
+.prog { display: grid; grid-template-columns: 1fr 1fr 1.6fr 1fr; gap: 30px; margin-top: clamp(40px, 5vw, 64px); padding-top: 30px; border-top: 1px solid var(--line); }
+.prog h4 { margin: 0 0 14px; font: 400 13px/1 var(--cond); letter-spacing: .35em; color: var(--muted); font-weight: 400; }
+.prog .opts { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+.prog .big .opts { display: grid; grid-template-columns: 1fr 1fr; column-gap: 20px; }
+.prog button { background: none; border: 0; padding: 4px 0; text-align: left; cursor: pointer; font: 400 clamp(22px, 2vw, 28px)/1.2 var(--title); color: var(--muted); transition: color .2s; }
+.prog button:hover { color: var(--text); }
+.prog button[aria-pressed="true"] { color: var(--warm); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+@media (max-width: 900px) {
+  .screen { aspect-ratio: 4 / 5; }
+  .screen .m::after { background: linear-gradient(0deg, rgba(0,0,0,.8) 0%, rgba(0,0,0,.2) 55%, rgba(0,0,0,0) 75%); }
+  .gets { grid-template-columns: 1fr; }
+  .prog { grid-template-columns: 1fr 1fr; gap: 30px 20px; }
+  .prog .big { grid-column: 1 / -1; }
 }
 
-/* ---------- About (bone) ---------- */
-.about { background: var(--bone); padding: clamp(80px, 11vw, 150px) var(--gutter); }
-.about-grid { display: grid; grid-template-columns: 1fr 1.1fr 1fr; gap: clamp(20px, 4vw, 60px); max-width: 1180px; margin: 0 auto; align-items: start; }
-.about h2 { font-size: clamp(28px, 3vw, 42px); }
-.about .intro { grid-column: 1; }
-.about .intro .kicker { margin-top: 14px; max-width: 30ch; }
-.about .main { grid-column: 2; grid-row: 1 / 3; aspect-ratio: 4 / 5; margin-top: 70px; }
-.about .side1 { grid-column: 3; grid-row: 1; width: 52%; aspect-ratio: 3 / 4; justify-self: end; }
-.about .side2 { grid-column: 1; grid-row: 2; width: 46%; aspect-ratio: 3 / 4; margin: 60px 0 0 24%; }
-.about .copy { grid-column: 3; grid-row: 2; align-self: end; }
-.about .copy p { margin: 0 0 14px; }
-@media (max-width: 860px) {
-  .about-grid { grid-template-columns: 1fr 1fr; }
-  .about .intro, .about .copy { grid-column: 1 / -1; grid-row: auto; }
-  .about .main { grid-column: 1 / -1; grid-row: auto; margin-top: 0; }
-  .about .side1, .about .side2 { display: none; }
-}
+.end { text-align: center; padding-block: clamp(110px, 16vw, 220px); }
+.end h2 { font: 400 clamp(54px, 9vw, 140px)/.95 var(--title); margin-bottom: 40px; }
+footer { padding: 28px var(--gut) 34px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; color: var(--muted); font: 400 14px/1 var(--cond); letter-spacing: .15em; border-top: 1px solid var(--line); }
+footer > span:first-child { display: flex; flex-wrap: wrap; gap: 12px 22px; min-width: 0; }
+footer a { text-decoration: none; } footer a:hover { color: var(--text); }
 
-/* ---------- Promises (photo band) ---------- */
-.promises { position: relative; color: #fff; text-align: center; min-height: 440px; display: grid; place-items: center; padding: 90px var(--gutter); }
-.promises > .ph { position: absolute; inset: 0; }
-.promises::after { content: ''; position: absolute; inset: 0; background: rgba(30,27,24,.45); }
-.promises .in { position: relative; z-index: 1; max-width: 560px; }
-.promises h2 { font-size: clamp(30px, 3.2vw, 44px); margin-bottom: 20px; }
-.promises .slide { min-height: 4.5em; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; }
-.promises .ctl { display: flex; justify-content: center; align-items: center; gap: 22px; margin-top: 18px; font-size: 11px; letter-spacing: .12em; }
-.promises button { background: none; border: 0; color: inherit; cursor: pointer; font: inherit; font-size: 18px; padding: 6px 10px; }
+/* Lightbox */
+.lb { width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(0,0,0,.96); color: var(--text); }
+.lb[open] { display: grid; place-items: center; } .lb::backdrop { background: transparent; }
+.lb img { max-width: calc(100vw - 140px); max-height: calc(100dvh - 90px); object-fit: contain; }
+.lb button { position: absolute; background: none; border: 0; color: inherit; cursor: pointer; font: 400 15px var(--cond); letter-spacing: .2em; }
+.lb .x { top: 18px; right: var(--gut); padding: 8px 0; }
+.lb .p, .lb .n { top: 50%; transform: translateY(-50%); font: 400 60px/1 var(--title); padding: 10px 18px; letter-spacing: 0; }
+.lb .p { left: 6px; } .lb .n { right: 6px; }
+@media (max-width: 760px) { .lb img { max-width: 100vw; max-height: calc(100dvh - 150px); } .lb .p, .lb .n { top: auto; bottom: 24px; transform: none; } }
 
-/* ---------- Recent weddings (olive) ---------- */
-.archive { background: var(--olive); color: #F1EEE6; padding: clamp(80px, 11vw, 150px) var(--gutter); }
-.archive-grid { display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: clamp(20px, 4vw, 60px); max-width: 1180px; margin: 0 auto; align-items: start; }
-.archive .big { grid-row: 1 / 3; aspect-ratio: 3 / 4; }
-.archive .head h2 { font-size: clamp(30px, 3.4vw, 46px); }
-.archive .head .kicker { margin: 12px 0 18px; max-width: 30ch; }
-.archive .small { grid-column: 3; grid-row: 1; width: 62%; aspect-ratio: 4 / 5; justify-self: end; }
-.archive .quote { grid-column: 2 / 4; grid-row: 2; align-self: end; max-width: 46ch; }
-.archive .quote p { font-family: var(--serif); font-style: italic; font-size: clamp(20px, 2vw, 28px); line-height: 1.3; margin: 0 0 12px; }
-.strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(10px, 1.6vw, 22px); max-width: 1180px; margin: clamp(50px, 7vw, 90px) auto 0; }
-.strip .ph { aspect-ratio: 4 / 5; }
-.strip .ph:nth-child(even) { margin-top: 40px; }
-@media (max-width: 860px) {
-  .archive-grid { grid-template-columns: 1fr; }
-  .archive .big, .archive .small, .archive .quote { grid-column: auto; grid-row: auto; width: 100%; }
-  .archive .small { display: none; }
-  .strip { grid-template-columns: 1fr 1fr; }
-  .strip .ph:nth-child(even) { margin-top: 0; }
-}
-
-/* ---------- Closing + footer ---------- */
-.closing { background: var(--oxblood); color: #E9E1D8; text-align: center; padding: clamp(90px, 12vw, 160px) var(--gutter); }
-.closing h2 { font-size: clamp(40px, 6vw, 86px); margin-bottom: 18px; }
-.closing p { margin: 0 auto 30px; max-width: 42ch; }
-.btn { display: inline-block; text-decoration: none; text-transform: uppercase; letter-spacing: .14em; font-size: 11px; padding: 16px 30px; border: 1px solid currentColor; }
-.btn:hover { background: #E9E1D8; color: var(--oxblood); }
-.foot { background: var(--bone); padding: 34px var(--gutter); display: flex; flex-wrap: wrap; gap: 14px 28px; justify-content: space-between; align-items: center; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
-.foot .brand b { font-size: 34px; color: var(--ink); }
-.foot .brand span { color: var(--stone); }
-.foot nav { display: flex; gap: 22px; flex-wrap: wrap; }
-.foot a { text-decoration: none; }
-.hero-cta-phone { display: none; }
-/* phones: the words are centred, at the top (under the logo) or near the bottom — set per slide with mobilePlace.
-   The button stays in one place at the bottom, where the thumb is. */
-@media (max-width: 760px) {
-  .hero[data-place] .hero-copy { left: 50%; right: auto; translate: -50% 0; align-items: center; text-align: center; width: calc(100vw - 48px); }
-  .hero-copy .hero-cta { display: none; }
-  .hero-cta-phone { display: block; position: absolute; z-index: 2; left: 50%; translate: -50% 0; bottom: 80px; white-space: nowrap; padding: 13px 24px; background: rgba(0,0,0,.3); }
-  .hero[data-mplace="bottom"] .hero-copy { top: auto; bottom: 142px; }
-  .hero[data-mplace="top"] .hero-copy { top: 100px; bottom: auto; }
-  .hero-line { font-size: 26px; }
-}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .card { display: none; } .js .frame { clip-path: none; } .js .bar > *, .js .pause { opacity: 1; } .grain { animation: none; } .stills img, .screen .m { transition: none; } }
 </style>
+<script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
+<a class="skip" href="#main">Skip to the page</a>
+<div class="grain" aria-hidden="true"></div>
+<div class="card" aria-hidden="true"><img src="media/site/glaz-g.png" alt=""><span class="wm">GLAZ STUDIOS</span><span class="pr">PRESENTS</span></div>
 
-<header class="nav" id="nav">
-  <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="/about">About</a></li>
-    <li><a href="#services">Services</a></li>
-  </ul>
-  <a class="brand" href="/" aria-label="Glaz Studios home"><b>GLAZ</b><span>STUDIOS</span></a>
-  <button class="menu-btn" id="menu-btn" aria-expanded="false">Menu</button>
-  <ul>
-    <li><a href="#work">Weddings</a></li>
-    <li><a href="/faq">FAQ</a></li>
-    <li><a href="/book">Book your date</a></li>
-  </ul>
-</header>
+<section class="hero" id="hero" aria-label="Glaz Studios" style="padding:0">
+  <div class="bar t">
+    <a class="logo" href="./" aria-label="Glaz Studios, home">GLAZ STUDIOS</a>
+    <nav class="links" id="links" aria-label="Main"><a href="#your-day">YOUR DAY</a><a href="#work">WORK</a><a href="#services">SERVICES</a><a href="about">ABOUT</a><a href="faq">FAQ</a><a href="book">BOOK</a></nav>
+    <button class="menu" id="menu" type="button" aria-expanded="false" aria-controls="links">MENU</button>
+  </div>
+  <div class="frame"><video id="va" muted playsinline preload="auto" aria-hidden="true"></video><video id="vb" muted playsinline preload="auto" aria-hidden="true"></video></div>
+  <button class="pause" id="pause" type="button" aria-pressed="false" aria-label="Pause the film"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3v14H7zM14 5h3v14h-3z"/><path class="i-play" d="M8 5l11 7-11 7z"/></svg></button>
+  <div class="bar b">
+    <h1 class="sub-line">Your whole wedding day, from getting ready to the last song.</h1>
+    <a class="cta" href="book">CHECK YOUR DATE</a>
+  </div>
+</section>
 
-<main>
-  <section class="hero" aria-label="Glaz Studios" data-place="right" data-mplace="bottom">
-    <figure class="ph hero-slides" id="hero-slides"></figure>
-    <button class="hero-pause" id="hero-pause" aria-label="Pause the film" hidden>
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3v14H7zM14 5h3v14h-3z"/><path class="i-play" d="M8 5l11 7-11 7z"/></svg>
-    </button>
-    <div class="hero-copy" id="hero-copy">
-      <p class="hero-line" id="hero-line">Your wedding, the way it felt.</p>
-      <a class="hero-cta" href="/book">Check availability</a>
+<main id="main">
+  <section class="plan" id="your-day" aria-labelledby="day-h"><div class="wrap grid">
+    <div>
+      <h2 class="sec-h" id="day-h"><span class="kick">A PRIVATE LINK FOR EACH COUPLE</span>Your day, written down once</h2>
+      <p class="sec-p">No more sending timings to five different people. After you book, you get your own link to plan the day with us.</p>
+      <ol>
+        <li><h3>Write your day, hour by hour</h3><p>Where you both get ready, the ceremony, the entrance, the dances, the cake, and who to call on the day.</p></li>
+        <li><h3>Change it whenever plans change</h3><p>Open the same link any time. The latest version is the one we work from.</p></li>
+        <li><h3>Every camera has the same plan</h3><p>Each photographer and cinematographer opens the day on their phone, so nobody asks you for timings on your wedding day.</p></li>
+        <li><h3>We go over it together</h3><p>A few days before the wedding, we call you to walk through the whole day.</p></li>
+      </ol>
     </div>
-    <a class="hero-cta hero-cta-phone" href="/book">Check availability</a>
+    <div class="phone" aria-hidden="true"><div class="scr">
+      <p class="k">YOUR DAY</p><h4>Hour by hour</h4>
+      <div class="row"><b>2:00 PM</b><span>Bride getting ready<small>Home, with mum and sisters</small></span></div>
+      <div class="row"><b>3:30 PM</b><span>Groom getting ready<small>Hotel room</small></span></div>
+      <div class="row"><b>5:00 PM</b><span>First look<small>Hotel garden</small></span></div>
+      <div class="row"><b>6:30 PM</b><span>Ceremony<small>Church or hall</small></span></div>
+      <div class="row"><b>8:30 PM</b><span>Entrance<small>Ballroom</small></span></div>
+      <div class="row"><b>8:45 PM</b><span>First dance, father and daughter</span></div>
+      <div class="row"><b>10:00 PM</b><span>Cake</span></div>
+      <p class="ex">Example</p>
+    </div></div>
+  </div></section>
+
+  <section class="real" aria-labelledby="real-h">
+    <span class="kick" id="real-h">REAL, NOT STAGED</span>
+    <p class="big">We keep your day the way it really happened.</p>
+    <p class="small">We don’t pose you or ask you to do it again. We follow the whole day, start to end, and catch the moments as they come: the tears, the laughs and the dance floor.</p>
   </section>
 
-  <section class="welcome" id="services" aria-labelledby="welcome-h">
-    <div class="welcome-grid">
-      <h2 id="welcome-h">Welcome to Glaz Studios</h2>
-      <p class="lead kicker">Based in Cairo, travelling wherever you celebrate.<br>Weddings, engagements and everything in between.</p>
-      <figure class="ph p2" data-slot="welcome_right" data-tone="forest"></figure>
-      <figure class="ph p1" data-slot="welcome_left" data-tone="dress"></figure>
-      <div class="copy">
-        <p>Glaz means "eye" in Russian. Since 2013 ours have been on the laughs, the happy tears and the dance floor, the small moments nobody planned and everyone remembers.</p>
-        <p>Today photo, film, full coverage and a photo booth come from one team, under one contract, with one plan for your day. You enjoy it. We keep it.</p>
-      </div>
-      <figure class="ph print p3" data-slot="welcome_print" data-tone="field"></figure>
-    </div>
-    <ul class="services">
-      <li>Photography</li>
-      <li>Cinematography</li>
-      <li>Full Coverage</li>
-      <li>Media Coverage</li>
-      <li>Photo Booth</li>
-    </ul>
-    <a class="link" href="/book">Check your date</a>
-  </section>
+  <section id="work" aria-labelledby="work-h" style="padding-top:0"><div class="wrap">
+    <div class="work-h"><h2 class="sec-h" id="work-h"><span class="kick">STILLS</span>Recent weddings</h2><p>Shown in black and white. Tap a photo to see it as it was delivered.</p></div>
+    <div class="stills" id="stills-a"></div>
+    <div class="reel" id="reel"><video id="reel-v" muted loop playsinline preload="none" aria-hidden="true" poster="media/site/packages-bg-start.jpg"></video></div>
+    <div class="stills" id="stills-b"></div>
+  </div></section>
 
-  <section class="about" aria-labelledby="about-h">
-    <div class="about-grid">
-      <div class="intro">
-        <h2 id="about-h">Hi, we’re John<br>&amp; Peter</h2>
-        <p class="kicker">Photographer and filmmaker, partners in Glaz, and the people behind the camera at your wedding.</p>
-      </div>
-      <figure class="ph main" data-slot="about_main" data-tone="bw"></figure>
-      <figure class="ph side1" data-slot="about_side1" data-tone="dress"></figure>
-      <figure class="ph side2" data-slot="about_side2" data-tone="forest"></figure>
-      <div class="copy">
-        <p>John leads photography. Peter leads film. Together we run a crew that knows the plan for your day before we arrive, and we stay out of the way while we work.</p>
-        <p>We don’t stage your day. We look for the moments that happen on their own.</p>
-        <a class="link" href="/about">Get to know us</a>
-      </div>
+  <section id="services" aria-labelledby="svc-h"><div class="wrap">
+    <div class="svc-h"><h2 class="sec-h" id="svc-h"><span class="kick">WHAT WE DO</span>One team for the whole day</h2><p>Choose a service to see it. Every part of your day is planned together, so each camera knows its moment.</p></div>
+    <div class="screen" id="screen" aria-live="polite">
+      <div class="cap"><p class="g" id="cap-g"></p><h3 id="cap-h"></h3><p id="cap-p"></p></div>
+      <p class="count" id="count"></p>
     </div>
-  </section>
+    <ul class="gets" id="gets"></ul>
+    <div class="prog" id="prog" role="group" aria-label="Services"></div>
+  </div></section>
 
-  <section class="promises" aria-labelledby="prom-h">
-    <figure class="ph" data-slot="promises_bg" data-tone="forest"></figure>
-    <div class="in">
-      <h2 id="prom-h">Our promises</h2>
-      <div class="slide" id="slide" aria-live="polite"></div>
-      <div class="ctl"><button id="prev" aria-label="Previous">←</button><span id="count"></span><button id="next" aria-label="Next">→</button></div>
-    </div>
-  </section>
-
-  <section class="archive" id="work" aria-labelledby="arch-h">
-    <div class="archive-grid">
-      <figure class="ph big" data-slot="archive_big" data-tone="dress"></figure>
-      <div class="head">
-        <h2 id="arch-h">Recent weddings</h2>
-        <p class="kicker">A few of our favourite days, start to finish.</p>
-        <a class="link" href="/book">Book your date</a>
-      </div>
-      <figure class="ph small print" data-slot="archive_print" data-tone="dusk"></figure>
-      <div class="quote">
-        <p>We didn’t notice them all night, and then we saw the photos and cried.</p>
-        <span class="kicker">— Placeholder: a real quote from a couple goes here</span>
-      </div>
-    </div>
-    <div class="strip">
-      <figure class="ph" data-slot="strip1" data-tone="candle"></figure>
-      <figure class="ph" data-slot="strip2" data-tone="field"></figure>
-      <figure class="ph" data-slot="strip3" data-tone="bw"></figure>
-      <figure class="ph" data-slot="strip4" data-tone="dusk"></figure>
-    </div>
-  </section>
-
-  <section class="closing" aria-labelledby="close-h">
-    <h2 id="close-h">Tell us your date</h2>
-    <p>Dates are confirmed in the order deposits arrive. We reply within 24 hours.</p>
-    <a class="btn" href="/book">Check availability</a>
-  </section>
+  <section class="end" id="book" aria-labelledby="end-h"><h2 id="end-h">Tell us your date</h2><a class="cta" href="book">CHECK AVAILABILITY</a></section>
 </main>
 
-<footer class="foot">
-  <a class="brand" href="/" aria-label="Glaz Studios home"><b>GLAZ</b><span>STUDIOS</span></a>
-  <nav aria-label="Footer"><a href="/about">About</a><a href="/faq">FAQ</a><a href="/book">Book your date</a><a href="mailto:info@glazstudios.com">info@glazstudios.com</a></nav>
-</footer>
+<footer><span><a href="#your-day">YOUR DAY</a><a href="#work">WORK</a><a href="#services">SERVICES</a><a href="book">BOOK</a><a href="mailto:info@glazstudios.com">INFO@GLAZSTUDIOS.COM</a></span><span>GLAZ STUDIOS, CAIRO</span></footer>
+
+<dialog class="lb" id="lb" aria-label="Photo"><img id="lb-img" alt=""><button class="x" id="lb-x" type="button">CLOSE</button><button class="p" id="lb-p" type="button" aria-label="Previous photo">‹</button><button class="n" id="lb-n" type="button" aria-label="Next photo">›</button></dialog>
 
 <script>
-// =====================================================================
-// PHOTOS — upload each photo to GitHub in the folder  media/site/
-// with EXACTLY the file name below (for example  media/site/hero.jpg).
-// No code to change: once the file is there, the photo shows up.
-// A missing file shows a box that says which photo goes there.
-// =====================================================================
-const PHOTO_FOLDER = 'media/site/';
-
-// ---------- HERO (the big opening at the top) ----------
-// Plays in this order, then starts again from the top. Files go in  media/site/
-//   film:   the wide film for computers (1920x1080, under ~3 MB)
-//   mobile: the tall film for phones (1080x1920). If it is missing, phones show the wide one.
-//   poster: each film's first frame, shown at once while the film loads (hero-1.mp4 → hero-1-poster.jpg, made automatically by name)
-//   plays:  how many times the film plays before moving on
-//   photo:  a photo, shown for HERO_SECONDS. Wide for computers: 2400 x 1350 (16:9)
-//   mobilePhoto: (optional) a tall version for phones: 1080 x 1920 (9:16). Without it, phones crop the wide one.
-//   focus:  which part of the photo stays in view on computers / mobileFocus: on phones
-//           '50% 50%' middle,  '25% 50%' left side,  '75% 50%' right side,  '50% 30%' upper part
-//   line:   the words shown on this slide (the "Check availability" button is always under them)
-//   place:  where the words sit on computers: 'left', 'center' or 'right' (always near the bottom)
-//   mobilePlace: where they sit on phones: 'top' (under the logo) or 'bottom'
-//           Put the words where the photo is calm (sky, grass), not on faces.
-// To change the order, move the lines. To add a slide, copy a line and give it a new file name.
-const HERO = [
-  { film: 'hero-1.mp4', mobile: 'hero-1-mobile.mp4', plays: 1,
-    line: 'Your wedding, the way it felt.', place: 'right', mobilePlace: 'bottom' },
-  { photo: 'hero-2.jpg', focus: '50% 50%', mobileFocus: '40% 50%',
-    line: 'Some moments happen once. We make sure you keep them.', place: 'right', mobilePlace: 'top' },
-  { film: 'hero-3.mp4', mobile: 'hero-3-mobile.mp4', plays: 1,
-    line: 'The laughs you’ll want to hear again.', place: 'center', mobilePlace: 'bottom' },
-  { photo: 'hero-4.jpg', mobilePhoto: 'hero-4-mobile.jpg', focus: '50% 60%', mobileFocus: '45% 50%',
-    line: 'Every laugh, every tear, every dance.', place: 'right', mobilePlace: 'top' },
-];
-const HERO_SECONDS = 5;        // how long each photo stays
-const PHOTOS = {
-  hero:            'Hero — couple running or walking, wide, lots of movement',
-  welcome_right:   'Couple walking away, tall',
-  welcome_left:    'Bride detail: dress, flowers, tall',
-  welcome_print:   'Small print — landscape or venue',
-  about_main:      'John & Peter portrait, black & white',
-  about_side1:     'Detail — dress / veil',
-  about_side2:     'Behind the scenes, crew at work',
-  promises_bg:     'Wide landscape or venue, calm',
-  archive_big:     'Bride portrait with flowers, tall',
-  archive_print:   'Small print — golden hour couple',
-  strip1:          'Party / dinner',
-  strip2:          'Couple in nature',
-  strip3:          'Black & white emotion',
-  strip4:          'Dance floor',
-};
-const PROMISES = [
-  'We reply within 24 hours, with a clear price.',
-  'Your highlight in 5 days. Everything else in 25.',
-  'One team and one contract: photo, film, full coverage and photo booth.',
-  'Your crew knows the plan before we arrive. You never have to direct anyone.',
-];
-
-document.querySelectorAll('.ph[data-slot]').forEach((fig) => {
-  const slot = fig.dataset.slot, note = PHOTOS[slot] || slot;
-  const host = fig.classList.contains('print') ? Object.assign(document.createElement('div'), { className: 'inner ph' }) : fig;
-  if (host !== fig) { host.dataset.tone = fig.dataset.tone; fig.append(host); }
-  const tag = document.createElement('span'); tag.className = 'tag'; tag.textContent = `Photo · ${note} — ${slot}.jpg`;
-  const img = new Image(); img.alt = note; img.loading = slot === 'hero' ? 'eager' : 'lazy'; img.decoding = 'async';
-  img.onload = () => { fig.classList.add('has-img'); host.classList.add('has-img'); };
-  img.onerror = () => { img.remove(); host.append(tag); };
-  img.src = PHOTO_FOLDER + slot + '.jpg';
-  host.append(img);
-});
-
-// ---------- Hero: films and photos, one after the other ----------
 (() => {
-  const box = document.getElementById('hero-slides'), btn = document.getElementById('hero-pause');
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const saveData = !!(navigator.connection && navigator.connection.saveData);
-  const phone = matchMedia('(max-width: 760px)').matches;
-  const stillsOnly = reduce || saveData;   // no films: their first frames are shown as photos instead
-  let at = -1, timer = null, watchdog = null, paused = false, visible = true, plays = 0, waits = 0;
+  const $ = (id) => document.getElementById(id), root = document.documentElement;
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const phone = matchMedia('(max-width: 760px) and (orientation: portrait)').matches;
+  const touch = matchMedia('(hover: none)').matches;
+  const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-  // build one element per slide
-  const slides = HERO.map((s, n) => {
-    let el;
-    if (s.film && !stillsOnly) {
-      const files = (phone && s.mobile ? [s.mobile] : []).concat(s.film);
-      el = document.createElement('video');
-      Object.assign(el, { muted: true, playsInline: true, loop: false, preload: n === 0 ? 'auto' : 'none' });
-      el.setAttribute('muted', ''); el.setAttribute('playsinline', ''); el.setAttribute('aria-hidden', 'true');
-      let i = 0;
-      el.useNext = () => {
-        if (i >= files.length) { el.broken = true; return false; }
-        const f = files[i++];
-        el.poster = PHOTO_FOLDER + f.replace('.mp4', '-poster.jpg');
-        el.src = PHOTO_FOLDER + f;
-        return true;
-      };
-      el.addEventListener('error', () => { if (!el.useNext()) { if (slides[at] === el) next(); } else if (slides[at] === el) play(el); });
-      el.addEventListener('playing', () => clearTimeout(watchdog));
-      el.addEventListener('ended', () => {
-        if (slides[at] !== el || paused || !visible) return;
-        if (++plays < (s.plays || 1)) { el.currentTime = 0; play(el); } else next();
-      });
-      el.useNext();
-    } else {
-      const src = s.photo ? ((phone && s.mobilePhoto) || s.photo) : (phone && s.mobile ? s.mobile : s.film).replace('.mp4', '-poster.jpg');
-      el = new Image(); el.alt = ''; el.decoding = 'async';
-      el.style.objectPosition = (phone && s.mobileFocus) || s.focus || '50% 50%';
-      el.dataset.src = PHOTO_FOLDER + src;
-      el.onerror = () => { el.broken = true; if (slides[at] === el) next(); };
-      if (n === 0) el.src = el.dataset.src;
-    }
-    box.append(el);
-    return el;
-  });
-  const isFilm = (el) => el && el.tagName === 'VIDEO';
-  const play = (el) => el.play().catch(() => {});
+  // =========================================================
+  // RECENT WEDDINGS — 20 photos: the first 10 above the film, the rest below.
+  // To change one, put the new photo in media/work and change its name here.
+  // =========================================================
+  const WORK = [
+    ['gal-01', 'The groom lifting the bride against a clear sky'], ['gal-04', 'The bride dancing'], ['gal-08', 'The couple on the beach, the bride holding her bouquet'],
+    ['gal-02', 'The couple under falling confetti'], ['gal-15', 'The bride under a warm lamp in a red room'], ['gal-13', 'The grandfather laughing on the dance floor'],
+    ['gal-16', 'The bride raising her bouquet in a field'], ['gal-10', 'The groom lifting the bride under blue night light'], ['gal-17', 'The couple, forehead to forehead, by the sea'],
+    ['gal-03', 'The bride laughing with her arms up'],
+    ['gal-05', 'The bride at dusk by the water, her veil long behind her'], ['gal-09', 'The couple kissing under a white umbrella, a rainbow above'], ['gal-06', 'The bride and her friend laughing under the lights'],
+    ['gal-19', 'The groom carrying the bride’s veil on the terrace'], ['gal-14', 'The bride dancing with her friends'], ['gal-07', 'A guest in red laughing on the dance floor'],
+    ['gal-12', 'The bride smiling in the garden'], ['gal-11', 'The couple dancing with sparklers'], ['gal-18', 'A guest laughing on the dance floor'], ['gal-20', 'The bride dancing at the party'],
+  ];
+  const WORK_FILM = 'media/site/packages-bg.mp4';   // the wide film between the photos (no sound, loops)
+  const tile = ([f, alt]) => `<button><img src="media/work/${f}.jpg" alt="${esc(alt)}" loading="lazy" width="1067" height="1600"></button>`;
+  $('stills-a').innerHTML = WORK.slice(0, 10).map(tile).join('');
+  $('stills-b').innerHTML = WORK.slice(10).map(tile).join('');
 
-  // after the page has loaded, fetch the rest in the background
-  const loadRest = () => slides.forEach((el) => {
-    if (isFilm(el)) { if (el.preload !== 'auto') { el.preload = 'auto'; el.load(); } }
-    else if (!el.src) el.src = el.dataset.src;
-  });
-  document.readyState === 'complete' ? loadRest() : addEventListener('load', loadRest, { once: true });
+  // =========================================================
+  // WHAT WE DO — edit the words here.
+  // Each service shows media/services/<file>.mp4 (first) or <file>.jpg.
+  // Until you upload one, it shows `fallback`, or an empty frame.
+  // =========================================================
+  const GROUPS = [
+    { name: 'COVERAGE', items: [
+      { name: 'Photography', file: 'photography', fallback: 'media/work/gal-17.jpg', line: 'Every moment of your day, edited by hand.',
+        gets: ['One or two photographers', '4, 8 or 12 hours', 'Every photo in a private online gallery'] },
+      { name: 'Cinematography', file: 'cinematography', fallback: 'media/site/hero.mp4', line: 'Your day, cut like a film.',
+        gets: ['One or two cinematographers', '4, 8 or 12 hours', 'A highlight film and the full film of your day'] } ] },
+    { name: 'FILMS', items: [
+      { name: 'Long film', file: 'long-film', fallback: 'media/site/hero-1.mp4', line: 'Thirty minutes to an hour, told as one story.',
+        gets: ['One more camera on the day', 'Vows, speeches and family, nothing cut short', 'Your day in the order it happened'] },
+      { name: 'Party highlight', file: 'party-highlight', fallback: 'media/work/gal-06.jpg', line: 'The party, with its real sound. No music laid over it.',
+        gets: ['One more professional camera, only for the party', 'Your first dance, father and daughter, the groom and his mother, each filmed complete', 'Then the whole party and the dance floor, start to end'] } ] },
+    { name: 'THE BIG VIEW', big: true, items: [
+      { name: 'Full record in 4K', file: 'full-record', quad: ['media/work/reel-02.jpg', 'media/work/film-02.jpg', 'media/work/film-01.jpg', 'media/work/film-03.jpg'], line: 'Every camera, cut live.',
+        gets: ['Shoulder cameras for the party or the church', 'A mixer that cuts all the cameras live', 'Live streaming for family who can’t be there'] },
+      { name: 'Crane', file: 'crane', line: 'Sweeping shots over the hall.', gets: ['An operator and a camera on the crane'] },
+      { name: 'Wire camera', file: 'wire-camera', line: 'A camera gliding on a cable above your guests.', gets: ['The whole hall in one moving shot'] },
+      { name: 'Drone', file: 'drone', line: 'Your venue and your arrival, from the sky.', gets: ['Aerial shots of the venue and the entrance'] } ] },
+    { name: 'FOR YOUR GUESTS', items: [
+      { name: 'Media coverage', file: 'media-coverage', fallback: 'media/work/reel-04.jpg', line: 'Photos and clips for your pages, while the night is still going.', gets: ['Stories and posts during the event'] },
+      { name: 'Photo booth', file: 'photo-booth', line: 'A corner your guests will queue for.', gets: ['Four hours of photos for your guests'] } ] },
+  ];
+  const ALL = GROUPS.flatMap((g) => g.items.map((s) => ({ ...s, group: g.name })));
+  $('prog').innerHTML = GROUPS.map((g) => `<div class="${g.big ? 'big' : ''}"><h4>${g.name}</h4><div class="opts">${g.items.map((s) => `<button type="button" data-s="${ALL.findIndex((x) => x.name === s.name)}" aria-pressed="false">${esc(s.name)}</button>`).join('')}</div></div>`).join('');
 
-  const show = (i, first) => {
-    clearTimeout(timer); clearTimeout(watchdog);
-    const prev = slides[at], el = slides[i];
-    at = i; plays = 0; waits = 0;
-    if (first) { el.style.transition = 'none'; setTimeout(() => { el.style.transition = ''; }, 100); }
-    el.classList.add('on');
-    if (prev && prev !== el) {
-      prev.classList.remove('on');
-      if (isFilm(prev)) setTimeout(() => { if (slides[at] !== prev) prev.pause(); }, 1700);
-    }
-    box.classList.add('has-img');
-    setCopy(HERO[i], first);
-    run();
-  };
-  // the words for this slide: fade out, move, change, fade in
-  const hero = box.closest('.hero'), copy = document.getElementById('hero-copy'), lineEl = document.getElementById('hero-line');
-  let copyTimer = null;
-  const setCopy = (s, first) => {
-    const apply = () => {
-      if (s.line) lineEl.textContent = s.line;
-      hero.dataset.place = s.place || 'center';
-      hero.dataset.mplace = s.mobilePlace || 'bottom';
-      copy.classList.remove('hide');
+  // Build each service's picture once: uploaded video → uploaded photo → fallback → empty frame
+  const media = {};
+  const isVid = (p) => /\.mp4$/i.test(p);
+  let cur = -1;
+  function layer(i) {
+    if (media[i]) return media[i];
+    const s = ALL[i], el = document.createElement('div'); el.className = 'm';
+    const empty = () => { el.innerHTML = `<div class="todo">YOUR ${esc(s.name.toUpperCase())} SHOT GOES HERE</div>`; };
+    const vid = (src, next) => { const v = document.createElement('video'); Object.assign(v, { muted: true, loop: true, playsInline: true, preload: 'auto' }); v.setAttribute('aria-hidden', 'true');
+      v.onloadeddata = () => { el.innerHTML = ''; el.append(v); if (cur === i && !still) v.play().catch(() => {}); }; v.onerror = next; v.src = src; };
+    const pic = (src, next) => { const im = new Image(); im.alt = ''; im.onload = () => { el.innerHTML = ''; el.append(im); }; im.onerror = next; im.src = src; };
+    const fallback = () => {
+      if (s.quad) { el.innerHTML = `<div class="quad">${s.quad.map((q, k) => `<div><img src="${q}" alt=""><span>CAM ${k + 1}</span>${k === 0 ? '<span class="live">LIVE</span>' : ''}</div>`).join('')}</div>`; return; }
+      if (!s.fallback) return empty();
+      (isVid(s.fallback) ? vid : pic)(s.fallback, empty);
     };
-    clearTimeout(copyTimer);
-    if (first) { apply(); return; }
-    if (lineEl.textContent === s.line && hero.dataset.place === (s.place || 'center') && hero.dataset.mplace === (s.mobilePlace || 'bottom')) return;
-    copy.classList.add('hide');
-    copyTimer = setTimeout(apply, 550);
-  };
-  // what the current slide does next
-  const run = () => {
-    clearTimeout(timer); clearTimeout(watchdog);
-    const el = slides[at];
-    if (!el || paused || !visible) return;
-    if (isFilm(el)) {
-      if (!el.ended && el.currentTime > 0 && el.currentTime < el.duration) play(el);
-      else { el.currentTime = 0; play(el); }
-      // still not playing after a while (slow internet, or the phone blocks videos): keep its first frame for a moment, then move on
-      watchdog = setTimeout(() => { if (el.paused && slides[at] === el) next(); }, 8000);
-    } else if (!reduce) {
-      timer = setTimeout(next, HERO_SECONDS * 1000);
-    }
-  };
-  const next = () => {
-    for (let k = 1; k <= slides.length; k++) {
-      const j = (at + k) % slides.length, el = slides[j];
-      if (el.broken) continue;
-      if (!isFilm(el) && !(el.complete && el.naturalWidth)) {   // photo still loading: wait up to 4 s for it, then skip it this round
-        if (!el.src) el.src = el.dataset.src;
-        if (waits++ < 8) { timer = setTimeout(next, 500); return; }
-        waits = 0; continue;
-      }
-      if (j === at) { run(); return; }
-      show(j); return;
-    }
-    // nothing usable yet: try again shortly
-    timer = setTimeout(next, 1500);
-  };
-
-  // pause button
-  if (slides.length > 1 || isFilm(slides[0])) {
-    btn.hidden = false;
-    btn.setAttribute('aria-label', 'Pause');
-    btn.onclick = () => {
-      paused = !paused;
-      btn.classList.toggle('paused', paused);
-      btn.setAttribute('aria-label', paused ? 'Play' : 'Pause');
-      if (paused) { clearTimeout(timer); clearTimeout(watchdog); if (isFilm(slides[at])) slides[at].pause(); }
-      else run();
-    };
+    vid(`media/services/${s.file}.mp4`, () => pic(`media/services/${s.file}.jpg`, fallback));
+    $('screen').prepend(el);
+    return (media[i] = el);
   }
-  // stop when the hero is off screen
-  new IntersectionObserver(([e]) => {
-    visible = e.isIntersecting;
-    if (!visible) { clearTimeout(timer); clearTimeout(watchdog); if (isFilm(slides[at])) slides[at].pause(); }
-    else run();
-  }).observe(box);
+  function pick(i) {
+    if (i === cur) return;
+    const prev = media[cur]; cur = i;
+    const el = layer(i); requestAnimationFrame(() => el.classList.add('on'));
+    if (prev) { prev.classList.remove('on'); prev.querySelector('video')?.pause(); }
+    const v = el.querySelector('video'); if (v && !still) v.play().catch(() => {});
+    const s = ALL[i];
+    $('cap-g').textContent = s.group; $('cap-h').textContent = s.name; $('cap-p').textContent = s.line;
+    $('count').textContent = `${String(i + 1).padStart(2, '0')} / ${String(ALL.length).padStart(2, '0')}`;
+    $('gets').innerHTML = s.gets.map((x) => `<li>${esc(x)}</li>`).join('');
+    document.querySelectorAll('#prog button').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.s) === i)));
+    layer((i + 1) % ALL.length);   // get the next one ready
+  }
+  $('prog').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) pick(Number(b.dataset.s)); });
+  if (!touch) $('prog').addEventListener('mouseover', (e) => { const b = e.target.closest('button'); if (b) pick(Number(b.dataset.s)); });
+  // Swipe the screen on phones to move between services
+  let sx = null;
+  $('screen').addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; }, { passive: true });
+  $('screen').addEventListener('touchend', (e) => { if (sx == null) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 50) pick((cur + (dx < 0 ? 1 : -1) + ALL.length) % ALL.length); sx = null; });
+  // Start with Photography once the section is near
+  new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { o.disconnect(); pick(0); } }, { rootMargin: '600px 0px' }).observe($('services'));
+  // Videos play only while on screen
+  const reelV = $('reel-v');
+  new IntersectionObserver((es) => { if (es[0].isIntersecting) { if (!reelV.src) reelV.src = WORK_FILM; if (!still) reelV.play().catch(() => {}); } else reelV.pause(); }, { threshold: .2 }).observe($('reel'));
+  new IntersectionObserver((es) => { const v = media[cur]?.querySelector('video'); if (v) es[0].isIntersecting && !still ? v.play().catch(() => {}) : v.pause(); }, { threshold: .2 }).observe($('screen'));
 
-  if (slides.length) show(0, true);
+  // ---------- Hero film: the clips play one after the other ----------
+  const CLIPS = ['media/site/hero-1', 'media/site/hero'];
+  const src = (c) => `${c}${phone ? '-mobile' : ''}.mp4`;
+  const a = $('va'), b = $('vb'); let at = 0, front = a, back = b, paused = still;
+  a.poster = `${CLIPS[0]}${phone ? '-mobile' : ''}-poster.jpg`; a.src = src(CLIPS[0]); b.src = src(CLIPS[1]); a.classList.add('on');
+  [a, b].forEach((v) => {
+    v.addEventListener('loadedmetadata', () => { v.playbackRate = 0.7; });
+    v.addEventListener('ended', () => {
+      at = (at + 1) % CLIPS.length; [front, back] = [back, front];
+      front.currentTime = 0; if (!paused) front.play().catch(() => {});
+      front.classList.add('on'); back.classList.remove('on');
+      setTimeout(() => { back.src = src(CLIPS[(at + 1) % CLIPS.length]); back.load(); }, 1000);
+    });
+  });
+  if (!still) a.play().catch(() => {});
+  const pause = $('pause');
+  const setPaused = (p) => { paused = p; pause.setAttribute('aria-pressed', String(p)); pause.setAttribute('aria-label', p ? 'Play the film' : 'Pause the film'); p ? front.pause() : front.play().catch(() => {}); };
+  pause.addEventListener('click', () => setPaused(!paused));
+
+  // ---------- Intro ----------
+  if (still) root.classList.add('c1', 'c2', 'c3');
+  else { setTimeout(() => root.classList.add('c1'), 200); setTimeout(() => root.classList.add('c2'), 2600); setTimeout(() => root.classList.add('c3'), 4200); }
+
+  // ---------- Phone menu ----------
+  const menu = $('menu'), hero = $('hero');
+  const setMenu = (on) => { hero.classList.toggle('open', on); menu.setAttribute('aria-expanded', String(on)); menu.textContent = on ? 'CLOSE' : 'MENU'; document.body.style.overflow = on ? 'hidden' : ''; };
+  menu.addEventListener('click', () => setMenu(!hero.classList.contains('open')));
+  $('links').addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+
+  // ---------- Stills: on phones, the row in the middle of the screen turns to colour ----------
+  const shots = [...document.querySelectorAll('.stills button')];
+  if (touch) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle('live', e.isIntersecting)), { rootMargin: '-43% 0px -43% 0px' });
+    shots.forEach((s) => io.observe(s));
+  }
+  // Tap a photo to see it large, in colour
+  const lb = $('lb'), lbImg = $('lb-img'); let li = 0;
+  const show = (i) => { li = (i + shots.length) % shots.length; const im = shots[li].querySelector('img'); lbImg.src = im.currentSrc || im.src; lbImg.alt = im.alt; };
+  shots.forEach((s, i) => s.addEventListener('click', () => { show(i); lb.showModal(); }));
+  $('lb-x').onclick = () => lb.close(); $('lb-p').onclick = () => show(li - 1); $('lb-n').onclick = () => show(li + 1);
+  lb.addEventListener('click', (e) => { if (e.target === lb) lb.close(); });
+  lb.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') show(li - 1); if (e.key === 'ArrowRight') show(li + 1); });
+  let tx = null;
+  lb.addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', (e) => { if (tx == null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) show(li + (dx < 0 ? 1 : -1)); tx = null; });
 })();
-
-let at = 0;
-const slide = document.getElementById('slide'), count = document.getElementById('count');
-const show = () => { slide.textContent = PROMISES[at]; count.textContent = `${String(at + 1).padStart(2, '0')} / ${String(PROMISES.length).padStart(2, '0')}`; };
-document.getElementById('prev').onclick = () => { at = (at - 1 + PROMISES.length) % PROMISES.length; show(); };
-document.getElementById('next').onclick = () => { at = (at + 1) % PROMISES.length; show(); };
-show();
-
-const nav = document.getElementById('nav'), btn = document.getElementById('menu-btn');
-btn.onclick = () => { const o = nav.classList.toggle('open'); btn.setAttribute('aria-expanded', o); btn.textContent = o ? 'Close' : 'Menu'; document.body.style.overflow = o ? 'hidden' : ''; };
-nav.addEventListener('click', (e) => { if (e.target.closest('ul a') && nav.classList.contains('open')) btn.click(); });
 </script>
 </body>
 </html>
