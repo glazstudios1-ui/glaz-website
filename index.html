@@ -387,6 +387,5 @@ footer a { text-decoration: none; } footer a:hover { color: var(--text); }
   lb.addEventListener('touchend', (e) => { if (tx == null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) show(li + (dx < 0 ? 1 : -1)); tx = null; });
 })();
 </script>
-<script src="chat.js" defer></script>
 </body>
 </html>
