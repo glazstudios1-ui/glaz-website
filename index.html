@@ -178,21 +178,21 @@ footer a { text-decoration: none; } footer a:hover { color: var(--text); }
   <div class="frame"><video id="va" muted playsinline preload="auto" aria-hidden="true"></video><video id="vb" muted playsinline preload="auto" aria-hidden="true"></video></div>
   <button class="pause" id="pause" type="button" aria-pressed="false" aria-label="Pause the film"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3v14H7zM14 5h3v14h-3z"/><path class="i-play" d="M8 5l11 7-11 7z"/></svg></button>
   <div class="bar b">
-    <h1 class="sub-line">Your whole wedding day, from getting ready to the last song.</h1>
-    <a class="cta" href="book">CHECK YOUR DATE</a>
+    <h1 class="sub-line" data-k="hero.line">Your whole wedding day, from getting ready to the last song.</h1>
+    <a class="cta" href="book" data-k="hero.cta">CHECK YOUR DATE</a>
   </div>
 </section>
 
 <main id="main">
   <section class="plan" id="your-day" aria-labelledby="day-h"><div class="wrap grid">
     <div>
-      <h2 class="sec-h" id="day-h"><span class="kick">A PRIVATE LINK FOR EACH COUPLE</span>Your day, written down once</h2>
-      <p class="sec-p">No more sending timings to five different people. After you book, you get your own link to plan the day with us.</p>
+      <h2 class="sec-h" id="day-h"><span class="kick" data-k="plan.kicker">A PRIVATE LINK FOR EACH COUPLE</span><span data-k="plan.title">Your day, written down once</span></h2>
+      <p class="sec-p" data-k="plan.intro">No more sending timings to five different people. After you book, you get your own link to plan the day with us.</p>
       <ol>
-        <li><h3>Write your day, hour by hour</h3><p>Where you both get ready, the ceremony, the entrance, the dances, the cake, and who to call on the day.</p></li>
-        <li><h3>Change it whenever plans change</h3><p>Open the same link any time. The latest version is the one we work from.</p></li>
-        <li><h3>Every camera has the same plan</h3><p>Each photographer and cinematographer opens the day on their phone, so nobody asks you for timings on your wedding day.</p></li>
-        <li><h3>We go over it together</h3><p>A few days before the wedding, we call you to walk through the whole day.</p></li>
+        <li><h3 data-k="plan.steps.0.title">Write your day, hour by hour</h3><p data-k="plan.steps.0.text">Where you both get ready, the ceremony, the entrance, the dances, the cake, and who to call on the day.</p></li>
+        <li><h3 data-k="plan.steps.1.title">Change it whenever plans change</h3><p data-k="plan.steps.1.text">Open the same link any time. The latest version is the one we work from.</p></li>
+        <li><h3 data-k="plan.steps.2.title">Every camera has the same plan</h3><p data-k="plan.steps.2.text">Each photographer and cinematographer opens the day on their phone, so nobody asks you for timings on your wedding day.</p></li>
+        <li><h3 data-k="plan.steps.3.title">We go over it together</h3><p data-k="plan.steps.3.text">A few days before the wedding, we call you to walk through the whole day.</p></li>
       </ol>
     </div>
     <div class="phone" aria-hidden="true"><div class="scr">
@@ -208,21 +208,21 @@ footer a { text-decoration: none; } footer a:hover { color: var(--text); }
     </div></div>
   </div></section>
 
-  <section class="real" aria-labelledby="real-h">
-    <span class="kick" id="real-h">REAL, NOT STAGED</span>
-    <p class="big">We keep your day the way it really happened.</p>
-    <p class="small">We don’t pose you or ask you to do it again. We follow the whole day, start to end, and catch the moments as they come: the tears, the laughs and the dance floor.</p>
+  <section class="real" id="real" aria-labelledby="real-h">
+    <span class="kick" id="real-h" data-k="real.kicker">REAL, NOT STAGED</span>
+    <p class="big" data-k="real.big">We keep your day the way it really happened.</p>
+    <p class="small" data-k="real.small">We don’t pose you or ask you to do it again. We follow the whole day, start to end, and catch the moments as they come: the tears, the laughs and the dance floor.</p>
   </section>
 
   <section id="work" aria-labelledby="work-h" style="padding-top:0"><div class="wrap">
-    <div class="work-h"><h2 class="sec-h" id="work-h"><span class="kick">STILLS</span>Recent weddings</h2><p>Shown in black and white. Tap a photo to see it as it was delivered.</p></div>
+    <div class="work-h"><h2 class="sec-h" id="work-h"><span class="kick" data-k="work.kicker">STILLS</span><span data-k="work.title">Recent weddings</span></h2><p data-k="work.note">Shown in black and white. Tap a photo to see it as it was delivered.</p></div>
     <div class="stills" id="stills-a"></div>
     <div class="reel" id="reel"><video id="reel-v" muted loop playsinline preload="none" aria-hidden="true" poster="media/site/packages-bg-start.jpg"></video></div>
     <div class="stills" id="stills-b"></div>
   </div></section>
 
   <section id="services" aria-labelledby="svc-h"><div class="wrap">
-    <div class="svc-h"><h2 class="sec-h" id="svc-h"><span class="kick">WHAT WE DO</span>One team for the whole day</h2><p>Choose a service to see it. Every part of your day is planned together, so each camera knows its moment.</p></div>
+    <div class="svc-h"><h2 class="sec-h" id="svc-h"><span class="kick" data-k="svc.kicker">WHAT WE DO</span><span data-k="svc.title">One team for the whole day</span></h2><p data-k="svc.intro">Choose a service to see it. Every part of your day is planned together, so each camera knows its moment.</p></div>
     <div class="screen" id="screen" aria-live="polite">
       <div class="cap"><p class="g" id="cap-g"></p><h3 id="cap-h"></h3><p id="cap-p"></p></div>
       <p class="count" id="count"></p>
@@ -231,7 +231,7 @@ footer a { text-decoration: none; } footer a:hover { color: var(--text); }
     <div class="prog" id="prog" role="group" aria-label="Services"></div>
   </div></section>
 
-  <section class="end" id="book" aria-labelledby="end-h"><h2 id="end-h">Tell us your date</h2><a class="cta" href="book">CHECK AVAILABILITY</a></section>
+  <section class="end" id="book" aria-labelledby="end-h"><h2 id="end-h" data-k="end.title">Tell us your date</h2><a class="cta" href="book" data-k="end.cta">CHECK AVAILABILITY</a></section>
 </main>
 
 <footer><span><a href="#your-day">YOUR DAY</a><a href="#work">WORK</a><a href="#services">SERVICES</a><a href="book">BOOK</a><a href="mailto:info@glazstudios.com">INFO@GLAZSTUDIOS.COM</a></span><span>GLAZ STUDIOS, CAIRO</span></footer>
@@ -244,122 +244,180 @@ footer a { text-decoration: none; } footer a:hover { color: var(--text); }
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const phone = matchMedia('(max-width: 760px) and (orientation: portrait)').matches;
   const touch = matchMedia('(hover: none)').matches;
+  const PREVIEW = new URLSearchParams(location.search).has('preview');   // opened inside Dashboard → Website
   const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const clone = (o) => JSON.parse(JSON.stringify(o));
+  const getPath = (o, p) => p.split('.').reduce((a, k) => (a == null ? a : a[k]), o);
+  const setPath = (o, p, v) => { const ks = p.split('.'); let a = o; ks.slice(0, -1).forEach((k, i) => { if (a[k] == null) a[k] = /^\d+$/.test(ks[i + 1]) ? [] : {}; a = a[k]; }); a[ks[ks.length - 1]] = v; };
+  const merge = (base, over) => { if (Array.isArray(over) || typeof over !== 'object' || over == null) return over === undefined ? base : over;
+    const out = { ...base }; for (const k of Object.keys(over)) out[k] = (base && typeof base[k] === 'object' && !Array.isArray(base[k])) ? merge(base[k], over[k]) : over[k]; return out; };
+  const isVideo = (u) => /\.(mp4|webm|mov|m4v)(\?|$)/i.test(u || '');
 
   // =========================================================
-  // RECENT WEDDINGS — 20 photos: the first 10 above the film, the rest below.
-  // To change one, put the new photo in media/work and change its name here.
+  // The page's content. Edit it from Dashboard → Website (no code needed).
+  // What is written here is only the starting version, used until something is published.
   // =========================================================
-  const WORK = [
-    ['gal-01', 'The groom lifting the bride against a clear sky'], ['gal-04', 'The bride dancing'], ['gal-08', 'The couple on the beach, the bride holding her bouquet'],
-    ['gal-02', 'The couple under falling confetti'], ['gal-15', 'The bride under a warm lamp in a red room'], ['gal-13', 'The grandfather laughing on the dance floor'],
-    ['gal-16', 'The bride raising her bouquet in a field'], ['gal-10', 'The groom lifting the bride under blue night light'], ['gal-17', 'The couple, forehead to forehead, by the sea'],
-    ['gal-03', 'The bride laughing with her arms up'],
-    ['gal-05', 'The bride at dusk by the water, her veil long behind her'], ['gal-09', 'The couple kissing under a white umbrella, a rainbow above'], ['gal-06', 'The bride and her friend laughing under the lights'],
-    ['gal-19', 'The groom carrying the bride’s veil on the terrace'], ['gal-14', 'The bride dancing with her friends'], ['gal-07', 'A guest in red laughing on the dance floor'],
-    ['gal-12', 'The bride smiling in the garden'], ['gal-11', 'The couple dancing with sparklers'], ['gal-18', 'A guest laughing on the dance floor'], ['gal-20', 'The bride dancing at the party'],
-  ];
-  const WORK_FILM = 'media/site/packages-bg.mp4';   // the wide film between the photos (no sound, loops)
-  const tile = ([f, alt]) => `<button><img src="media/work/${f}.jpg" alt="${esc(alt)}" loading="lazy" width="1067" height="1600"></button>`;
-  $('stills-a').innerHTML = WORK.slice(0, 10).map(tile).join('');
-  $('stills-b').innerHTML = WORK.slice(10).map(tile).join('');
+  const DEFAULT = {
+    hero: { clips: [
+      { video: 'media/site/hero-1.mp4', mobile: 'media/site/hero-1-mobile.mp4', poster: 'media/site/hero-1-poster.jpg', mobilePoster: 'media/site/hero-1-mobile-poster.jpg' },
+      { video: 'media/site/hero.mp4', mobile: 'media/site/hero-mobile.mp4', poster: 'media/site/hero-poster.jpg', mobilePoster: 'media/site/hero-mobile-poster.jpg' } ] },
+    work: { film: 'media/site/packages-bg.mp4', filmPoster: 'media/site/packages-bg-start.jpg', photos: [
+      ['gal-01', 'The groom lifting the bride against a clear sky'], ['gal-04', 'The bride dancing'], ['gal-08', 'The couple on the beach, the bride holding her bouquet'],
+      ['gal-02', 'The couple under falling confetti'], ['gal-15', 'The bride under a warm lamp in a red room'], ['gal-13', 'The grandfather laughing on the dance floor'],
+      ['gal-16', 'The bride raising her bouquet in a field'], ['gal-10', 'The groom lifting the bride under blue night light'], ['gal-17', 'The couple, forehead to forehead, by the sea'],
+      ['gal-03', 'The bride laughing with her arms up'],
+      ['gal-05', 'The bride at dusk by the water, her veil long behind her'], ['gal-09', 'The couple kissing under a white umbrella, a rainbow above'], ['gal-06', 'The bride and her friend laughing under the lights'],
+      ['gal-19', 'The groom carrying the bride’s veil on the terrace'], ['gal-14', 'The bride dancing with her friends'], ['gal-07', 'A guest in red laughing on the dance floor'],
+      ['gal-12', 'The bride smiling in the garden'], ['gal-11', 'The couple dancing with sparklers'], ['gal-18', 'A guest laughing on the dance floor'], ['gal-20', 'The bride dancing at the party'],
+    ].map(([f, alt]) => ({ src: `media/work/${f}.jpg`, alt })) },
+    svc: { groups: [
+      { name: 'COVERAGE', items: [
+        { name: 'Photography', media: 'media/work/gal-17.jpg', line: 'Every moment of your day, edited by hand.', gets: ['One or two photographers', '4, 8 or 12 hours', 'Every photo in a private online gallery'] },
+        { name: 'Cinematography', media: 'media/site/hero.mp4', line: 'Your day, cut like a film.', gets: ['One or two cinematographers', '4, 8 or 12 hours', 'A highlight film and the full film of your day'] } ] },
+      { name: 'FILMS', items: [
+        { name: 'Long film', media: 'media/site/hero-1.mp4', line: 'Thirty minutes to an hour, told as one story.', gets: ['One more camera on the day', 'Vows, speeches and family, nothing cut short', 'Your day in the order it happened'] },
+        { name: 'Party highlight', media: 'media/work/gal-06.jpg', line: 'The party, with its real sound. No music laid over it.', gets: ['One more professional camera, only for the party', 'Your first dance, father and daughter, the groom and his mother, each filmed complete', 'Then the whole party and the dance floor, start to end'] } ] },
+      { name: 'THE BIG VIEW', big: true, items: [
+        { name: 'Full record in 4K', media: '', quad: ['media/work/reel-02.jpg', 'media/work/film-02.jpg', 'media/work/film-01.jpg', 'media/work/film-03.jpg'], line: 'Every camera, cut live.', gets: ['Shoulder cameras for the party or the church', 'A mixer that cuts all the cameras live', 'Live streaming for family who can’t be there'] },
+        { name: 'Crane', media: '', line: 'Sweeping shots over the hall.', gets: ['An operator and a camera on the crane'] },
+        { name: 'Wire camera', media: '', line: 'A camera gliding on a cable above your guests.', gets: ['The whole hall in one moving shot'] },
+        { name: 'Drone', media: '', line: 'Your venue and your arrival, from the sky.', gets: ['Aerial shots of the venue and the entrance'] } ] },
+      { name: 'FOR YOUR GUESTS', items: [
+        { name: 'Media coverage', media: 'media/work/reel-04.jpg', line: 'Photos and clips for your pages, while the night is still going.', gets: ['Stories and posts during the event'] },
+        { name: 'Photo booth', media: '', line: 'A corner your guests will queue for.', gets: ['Four hours of photos for your guests'] } ] } ] },
+  };
+  document.querySelectorAll('[data-k]').forEach((el) => setPath(DEFAULT, el.dataset.k, el.textContent));   // the words written in the page
+  let C = clone(DEFAULT);
 
-  // =========================================================
-  // WHAT WE DO — edit the words here.
-  // Each service shows media/services/<file>.mp4 (first) or <file>.jpg.
-  // Until you upload one, it shows `fallback`, or an empty frame.
-  // =========================================================
-  const GROUPS = [
-    { name: 'COVERAGE', items: [
-      { name: 'Photography', file: 'photography', fallback: 'media/work/gal-17.jpg', line: 'Every moment of your day, edited by hand.',
-        gets: ['One or two photographers', '4, 8 or 12 hours', 'Every photo in a private online gallery'] },
-      { name: 'Cinematography', file: 'cinematography', fallback: 'media/site/hero.mp4', line: 'Your day, cut like a film.',
-        gets: ['One or two cinematographers', '4, 8 or 12 hours', 'A highlight film and the full film of your day'] } ] },
-    { name: 'FILMS', items: [
-      { name: 'Long film', file: 'long-film', fallback: 'media/site/hero-1.mp4', line: 'Thirty minutes to an hour, told as one story.',
-        gets: ['One more camera on the day', 'Vows, speeches and family, nothing cut short', 'Your day in the order it happened'] },
-      { name: 'Party highlight', file: 'party-highlight', fallback: 'media/work/gal-06.jpg', line: 'The party, with its real sound. No music laid over it.',
-        gets: ['One more professional camera, only for the party', 'Your first dance, father and daughter, the groom and his mother, each filmed complete', 'Then the whole party and the dance floor, start to end'] } ] },
-    { name: 'THE BIG VIEW', big: true, items: [
-      { name: 'Full record in 4K', file: 'full-record', quad: ['media/work/reel-02.jpg', 'media/work/film-02.jpg', 'media/work/film-01.jpg', 'media/work/film-03.jpg'], line: 'Every camera, cut live.',
-        gets: ['Shoulder cameras for the party or the church', 'A mixer that cuts all the cameras live', 'Live streaming for family who can’t be there'] },
-      { name: 'Crane', file: 'crane', line: 'Sweeping shots over the hall.', gets: ['An operator and a camera on the crane'] },
-      { name: 'Wire camera', file: 'wire-camera', line: 'A camera gliding on a cable above your guests.', gets: ['The whole hall in one moving shot'] },
-      { name: 'Drone', file: 'drone', line: 'Your venue and your arrival, from the sky.', gets: ['Aerial shots of the venue and the entrance'] } ] },
-    { name: 'FOR YOUR GUESTS', items: [
-      { name: 'Media coverage', file: 'media-coverage', fallback: 'media/work/reel-04.jpg', line: 'Photos and clips for your pages, while the night is still going.', gets: ['Stories and posts during the event'] },
-      { name: 'Photo booth', file: 'photo-booth', line: 'A corner your guests will queue for.', gets: ['Four hours of photos for your guests'] } ] },
-  ];
-  const ALL = GROUPS.flatMap((g) => g.items.map((s) => ({ ...s, group: g.name })));
-  $('prog').innerHTML = GROUPS.map((g) => `<div class="${g.big ? 'big' : ''}"><h4>${g.name}</h4><div class="opts">${g.items.map((s) => `<button type="button" data-s="${ALL.findIndex((x) => x.name === s.name)}" aria-pressed="false">${esc(s.name)}</button>`).join('')}</div></div>`).join('');
+  // ---------- Words ----------
+  const drawTexts = () => document.querySelectorAll('[data-k]').forEach((el) => { const v = getPath(C, el.dataset.k); if (typeof v === 'string' && el.textContent !== v) el.textContent = v; });
 
-  // Build each service's picture once: uploaded video → uploaded photo → fallback → empty frame
-  const media = {};
-  const isVid = (p) => /\.mp4$/i.test(p);
-  let cur = -1;
+  // ---------- Recent weddings ----------
+  let shots = [];
+  const liveIO = touch ? new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle('live', e.isIntersecting)), { rootMargin: '-43% 0px -43% 0px' }) : null;
+  function drawWork() {
+    const ph = (C.work.photos || []).filter((p) => p && p.src), half = Math.ceil(ph.length / 2);
+    const tile = (p) => `<button><img src="${esc(p.src)}" alt="${esc(p.alt || 'A wedding by Glaz Studios')}" loading="lazy" width="1067" height="1600"></button>`;
+    $('stills-a').innerHTML = ph.slice(0, half).map(tile).join('');
+    $('stills-b').innerHTML = ph.slice(half).map(tile).join('');
+    shots = [...document.querySelectorAll('.stills button')];
+    shots.forEach((s, i) => { s.addEventListener('click', () => { show(i); lb.showModal(); }); liveIO?.observe(s); });
+    const v = $('reel-v');
+    $('reel').hidden = !C.work.film;
+    if (C.work.filmPoster) v.poster = C.work.filmPoster; else v.removeAttribute('poster');
+    if (v.dataset.src !== C.work.film) { v.dataset.src = C.work.film || ''; if (v.src) { v.src = C.work.film; if (reelOn && !still) v.play().catch(() => {}); } }
+  }
+  let reelOn = false;
+  new IntersectionObserver((es) => { const v = $('reel-v'); reelOn = es[0].isIntersecting;
+    if (reelOn) { if (!v.src && v.dataset.src) v.src = v.dataset.src; if (!still) v.play().catch(() => {}); } else v.pause(); }, { threshold: .2 }).observe($('reel'));
+
+  // ---------- What we do: one screen, a programme of services ----------
+  let ALL = [], media = {}, cur = -1;
+  function drawServices() {
+    const keep = ALL[cur]?.name;
+    document.querySelectorAll('#screen .m').forEach((m) => m.remove()); media = {}; cur = -1;
+    const groups = (C.svc.groups || []).map((g) => ({ ...g, items: (g.items || []).filter((s) => s && s.name && !s.hidden) })).filter((g) => g.items.length);
+    ALL = groups.flatMap((g) => g.items.map((s) => ({ ...s, group: g.name })));
+    let n = 0;
+    $('prog').innerHTML = groups.map((g) => `<div class="${g.big ? 'big' : ''}"><h4>${esc(g.name)}</h4><div class="opts">${g.items.map((s) => `<button type="button" data-s="${n++}" aria-pressed="false">${esc(s.name)}</button>`).join('')}</div></div>`).join('');
+    if (started || PREVIEW) pick(Math.max(0, ALL.findIndex((x) => x.name === keep)));
+  }
   function layer(i) {
     if (media[i]) return media[i];
     const s = ALL[i], el = document.createElement('div'); el.className = 'm';
-    const empty = () => { el.innerHTML = `<div class="todo">YOUR ${esc(s.name.toUpperCase())} SHOT GOES HERE</div>`; };
-    const vid = (src, next) => { const v = document.createElement('video'); Object.assign(v, { muted: true, loop: true, playsInline: true, preload: 'auto' }); v.setAttribute('aria-hidden', 'true');
-      v.onloadeddata = () => { el.innerHTML = ''; el.append(v); if (cur === i && !still) v.play().catch(() => {}); }; v.onerror = next; v.src = src; };
-    const pic = (src, next) => { const im = new Image(); im.alt = ''; im.onload = () => { el.innerHTML = ''; el.append(im); }; im.onerror = next; im.src = src; };
-    const fallback = () => {
-      if (s.quad) { el.innerHTML = `<div class="quad">${s.quad.map((q, k) => `<div><img src="${q}" alt=""><span>CAM ${k + 1}</span>${k === 0 ? '<span class="live">LIVE</span>' : ''}</div>`).join('')}</div>`; return; }
-      if (!s.fallback) return empty();
-      (isVid(s.fallback) ? vid : pic)(s.fallback, empty);
-    };
-    vid(`media/services/${s.file}.mp4`, () => pic(`media/services/${s.file}.jpg`, fallback));
+    const empty = () => { el.innerHTML = `<div class="todo">YOUR ${esc(String(s.name).toUpperCase())} SHOT GOES HERE</div>`; };
+    if (s.media && isVideo(s.media)) {
+      const v = document.createElement('video'); Object.assign(v, { muted: true, loop: true, playsInline: true, preload: 'auto' }); v.setAttribute('aria-hidden', 'true');
+      v.onloadeddata = () => { if (cur === i && !still) v.play().catch(() => {}); }; v.onerror = empty; v.src = s.media; el.append(v);
+    } else if (s.media) { const im = new Image(); im.alt = ''; im.onerror = empty; im.src = s.media; el.append(im); }
+    else if (s.quad?.length) el.innerHTML = `<div class="quad">${s.quad.map((q, k) => `<div><img src="${esc(q)}" alt=""><span>CAM ${k + 1}</span>${k === 0 ? '<span class="live">LIVE</span>' : ''}</div>`).join('')}</div>`;
+    else empty();
     $('screen').prepend(el);
     return (media[i] = el);
   }
   function pick(i) {
-    if (i === cur) return;
+    if (!ALL.length || i === cur) return;
     const prev = media[cur]; cur = i;
     const el = layer(i); requestAnimationFrame(() => el.classList.add('on'));
     if (prev) { prev.classList.remove('on'); prev.querySelector('video')?.pause(); }
     const v = el.querySelector('video'); if (v && !still) v.play().catch(() => {});
     const s = ALL[i];
-    $('cap-g').textContent = s.group; $('cap-h').textContent = s.name; $('cap-p').textContent = s.line;
+    $('cap-g').textContent = s.group; $('cap-h').textContent = s.name; $('cap-p').textContent = s.line || '';
     $('count').textContent = `${String(i + 1).padStart(2, '0')} / ${String(ALL.length).padStart(2, '0')}`;
-    $('gets').innerHTML = s.gets.map((x) => `<li>${esc(x)}</li>`).join('');
+    $('gets').innerHTML = (s.gets || []).filter(Boolean).map((x) => `<li>${esc(x)}</li>`).join('');
     document.querySelectorAll('#prog button').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.s) === i)));
     layer((i + 1) % ALL.length);   // get the next one ready
   }
   $('prog').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) pick(Number(b.dataset.s)); });
   if (!touch) $('prog').addEventListener('mouseover', (e) => { const b = e.target.closest('button'); if (b) pick(Number(b.dataset.s)); });
-  // Swipe the screen on phones to move between services
   let sx = null;
   $('screen').addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; }, { passive: true });
-  $('screen').addEventListener('touchend', (e) => { if (sx == null) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 50) pick((cur + (dx < 0 ? 1 : -1) + ALL.length) % ALL.length); sx = null; });
-  // Start with Photography once the section is near
-  new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { o.disconnect(); pick(0); } }, { rootMargin: '600px 0px' }).observe($('services'));
-  // Videos play only while on screen
-  const reelV = $('reel-v');
-  new IntersectionObserver((es) => { if (es[0].isIntersecting) { if (!reelV.src) reelV.src = WORK_FILM; if (!still) reelV.play().catch(() => {}); } else reelV.pause(); }, { threshold: .2 }).observe($('reel'));
+  $('screen').addEventListener('touchend', (e) => { if (sx == null || !ALL.length) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 50) pick((cur + (dx < 0 ? 1 : -1) + ALL.length) % ALL.length); sx = null; });
+  let started = false;
+  new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { o.disconnect(); started = true; if (cur < 0) pick(0); } }, { rootMargin: '600px 0px' }).observe($('services'));
   new IntersectionObserver((es) => { const v = media[cur]?.querySelector('video'); if (v) es[0].isIntersecting && !still ? v.play().catch(() => {}) : v.pause(); }, { threshold: .2 }).observe($('screen'));
 
   // ---------- Hero film: the clips play one after the other ----------
-  const CLIPS = ['media/site/hero-1', 'media/site/hero'];
-  const src = (c) => `${c}${phone ? '-mobile' : ''}.mp4`;
-  const a = $('va'), b = $('vb'); let at = 0, front = a, back = b, paused = still;
-  a.poster = `${CLIPS[0]}${phone ? '-mobile' : ''}-poster.jpg`; a.src = src(CLIPS[0]); b.src = src(CLIPS[1]); a.classList.add('on');
+  const a = $('va'), b = $('vb'); let clips = [], at = 0, front = a, back = b, paused = still, heroKey = '';
+  const srcOf = (c) => (phone && c.mobile) || c.video;
+  const posterOf = (c) => (phone && c.mobilePoster) || c.poster || '';
+  function drawHero() {
+    const list = (C.hero.clips || []).filter((c) => c && c.video);
+    const key = JSON.stringify(list.map(srcOf)); if (key === heroKey) return; heroKey = key; clips = list; at = 0;
+    [a, b].forEach((v) => { v.pause(); v.classList.remove('on'); v.removeAttribute('src'); v.load(); });
+    front = a; back = b; if (!clips.length) return;
+    a.poster = posterOf(clips[0]); a.src = srcOf(clips[0]); a.classList.add('on');
+    if (clips.length > 1) b.src = srcOf(clips[1]);
+    if (!paused) a.play().catch(() => {});
+  }
   [a, b].forEach((v) => {
     v.addEventListener('loadedmetadata', () => { v.playbackRate = 0.7; });
     v.addEventListener('ended', () => {
-      at = (at + 1) % CLIPS.length; [front, back] = [back, front];
+      if (clips.length < 2) { v.currentTime = 0; if (!paused) v.play().catch(() => {}); return; }
+      at = (at + 1) % clips.length; [front, back] = [back, front];
       front.currentTime = 0; if (!paused) front.play().catch(() => {});
       front.classList.add('on'); back.classList.remove('on');
-      setTimeout(() => { back.src = src(CLIPS[(at + 1) % CLIPS.length]); back.load(); }, 1000);
+      setTimeout(() => { back.src = srcOf(clips[(at + 1) % clips.length]); back.load(); }, 1000);
     });
   });
-  if (!still) a.play().catch(() => {});
   const pause = $('pause');
   const setPaused = (p) => { paused = p; pause.setAttribute('aria-pressed', String(p)); pause.setAttribute('aria-label', p ? 'Play the film' : 'Pause the film'); p ? front.pause() : front.play().catch(() => {}); };
   pause.addEventListener('click', () => setPaused(!paused));
 
+  // ---------- Draw everything ----------
+  function render() { drawTexts(); drawWork(); drawServices(); drawHero(); }
+
+  // Published content from the dashboard (the page shows its starting version if this can't load)
+  async function published() {
+    try {
+      const cfg = await import('./config.js');
+      if (!cfg.SUPABASE_KEY || cfg.SUPABASE_KEY.startsWith('PASTE_')) return null;
+      const r = await fetch(`${cfg.SUPABASE_URL}/rest/v1/site_content?id=eq.home&select=content`, { headers: { apikey: cfg.SUPABASE_KEY } });
+      if (!r.ok) return null;
+      return (await r.json())[0]?.content || null;
+    } catch (e) { return null; }
+  }
+  const timeout = (ms) => new Promise((r) => setTimeout(() => r('timeout'), ms));
+  (async () => {
+    const got = await Promise.race([published(), timeout(1200)]);
+    if (got && got !== 'timeout') C = merge(clone(DEFAULT), got);
+    render();
+    if (got === 'timeout') published().then((late) => { if (late) { C = merge(clone(DEFAULT), late); render(); } });
+    if (PREVIEW) parent.postMessage({ type: 'glaz-ready', content: C }, '*');
+  })();
+
+  // Live preview inside Dashboard → Website
+  if (PREVIEW) {
+    const ALLOWED = /^https:\/\/(glaz-dashboard[\w-]*\.vercel\.app|dashboard\.glazstudios\.com)$|^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
+    addEventListener('message', (e) => {
+      if (!ALLOWED.test(e.origin) || !e.data || typeof e.data !== 'object') return;
+      if (e.data.type === 'glaz-content' && e.data.content) { C = merge(clone(DEFAULT), e.data.content); render(); }
+      if (e.data.type === 'glaz-scroll' && /^[\w-]+$/.test(e.data.section || '')) document.getElementById(e.data.section)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
   // ---------- Intro ----------
-  if (still) root.classList.add('c1', 'c2', 'c3');
+  if (still || PREVIEW) root.classList.add('c1', 'c2', 'c3');
   else { setTimeout(() => root.classList.add('c1'), 200); setTimeout(() => root.classList.add('c2'), 2600); setTimeout(() => root.classList.add('c3'), 4200); }
 
   // ---------- Phone menu ----------
@@ -369,16 +427,9 @@ footer a { text-decoration: none; } footer a:hover { color: var(--text); }
   $('links').addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
   addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
 
-  // ---------- Stills: on phones, the row in the middle of the screen turns to colour ----------
-  const shots = [...document.querySelectorAll('.stills button')];
-  if (touch) {
-    const io = new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle('live', e.isIntersecting)), { rootMargin: '-43% 0px -43% 0px' });
-    shots.forEach((s) => io.observe(s));
-  }
-  // Tap a photo to see it large, in colour
+  // ---------- Tap a photo to see it large, in colour ----------
   const lb = $('lb'), lbImg = $('lb-img'); let li = 0;
-  const show = (i) => { li = (i + shots.length) % shots.length; const im = shots[li].querySelector('img'); lbImg.src = im.currentSrc || im.src; lbImg.alt = im.alt; };
-  shots.forEach((s, i) => s.addEventListener('click', () => { show(i); lb.showModal(); }));
+  function show(i) { li = (i + shots.length) % shots.length; const im = shots[li].querySelector('img'); lbImg.src = im.currentSrc || im.src; lbImg.alt = im.alt; }
   $('lb-x').onclick = () => lb.close(); $('lb-p').onclick = () => show(li - 1); $('lb-n').onclick = () => show(li + 1);
   lb.addEventListener('click', (e) => { if (e.target === lb) lb.close(); });
   lb.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') show(li - 1); if (e.key === 'ArrowRight') show(li + 1); });
