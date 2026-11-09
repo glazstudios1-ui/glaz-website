@@ -2,211 +2,347 @@
 <html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Book your date — Glaz Studios</title>
-<meta name="description" content="Glaz Studios — wedding photography, cinematography, full rec, crane, media coverage and photo booth in Egypt. Send a booking request.">
-<meta name="theme-color" content="#2A0B0C">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Courier+Prime:wght@400;700&display=swap">
-<link rel="stylesheet" href="site.css">
-<link rel="stylesheet" href="book-v2.css">
+<meta name="description" content="Book Glaz Studios for your wedding. Send your date and we reach you on WhatsApp within 24 hours.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Barlow+Condensed:wght@400;500&family=Barlow:wght@300;400&display=swap">
+<script>
+(function () {
+  var d = document.documentElement; d.classList.add('js');
+  try { if (sessionStorage.getItem('glaz-go')) { d.classList.add('arrive'); sessionStorage.removeItem('glaz-go'); } } catch (e) {}
+})();
+</script>
 <style>
-/* What the client chose on their packages link (shown above the form) */
-.picked { border: 1px solid var(--line); border-left: 2px solid var(--gold); padding: 14px 16px; margin: 0 0 22px; }
-.picked p { margin: 0; }
-.picked .k { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-.picked .v { margin-top: 4px; }
-.picked .t { margin-top: 10px; font-family: var(--serif); font-size: 22px; }
-.picked .t small { font-family: var(--sans); font-size: 12px; color: var(--muted); }
+:root {
+  color-scheme: dark;
+  --bg: #000; --panel: #0C0C0B; --field: #121211; --text: #D8D2C7; --bright: #F1EBDF; --muted: #8A847B; --warm: #E8DCC2; --line: rgba(216,210,199,.16); --bad: #E0705F; --good: #9DBB8E;
+  --title: 'Cormorant Garamond', Georgia, serif; --cond: 'Barlow Condensed', 'Arial Narrow', sans-serif; --sans: 'Barlow', system-ui, sans-serif; --mark: 'Bodoni Moda', Didot, 'Bodoni 72', serif;
+  --gut: clamp(18px, 4vw, 64px); --ease: cubic-bezier(.16, 1, .3, 1); --wipe: cubic-bezier(.77, 0, .18, 1);
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 300 16px/1.65 var(--sans); overflow-x: clip; -webkit-font-smoothing: antialiased; }
+a { color: inherit; } h1, h2, h3 { font-weight: 400; margin: 0; } p, ol, ul { margin: 0; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 1px solid var(--warm); outline-offset: 3px; }
+.grain { position: fixed; inset: -50%; z-index: 90; pointer-events: none; opacity: .06; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); animation: grain 1s steps(4) infinite; }
+@keyframes grain { 0% { transform: translate(0, 0); } 25% { transform: translate(-3%, 2%); } 50% { transform: translate(2%, -3%); } 75% { transform: translate(-2%, -1%); } }
+.kick { display: flex; align-items: center; gap: 14px; font: 500 12px/1.3 var(--cond); letter-spacing: .32em; text-transform: uppercase; color: rgba(241,235,223,.75); }
+.kick .ch { color: var(--warm); letter-spacing: .12em; }
+.kick .ch::after { content: ''; display: inline-block; width: 34px; height: 1px; background: currentColor; opacity: .5; vertical-align: middle; margin-left: 14px; }
+
+/* curtain between pages */
+#curtain { position: fixed; inset: 0; z-index: 130; background: #000; display: grid; place-items: center; pointer-events: none; transform: translateY(100%); }
+#curtain img { width: 44px; opacity: 0; transition: opacity .4s ease .2s; }
+.leaving #curtain { transform: none; transition: transform .7s var(--wipe); pointer-events: auto; } .leaving #curtain img { opacity: 1; }
+.arrive #curtain { transform: none; } .arrive #curtain img { opacity: 1; transition: none; }
+.arrived #curtain { transform: translateY(-100%); transition: transform 1s var(--wipe) .1s; } .arrived #curtain img { opacity: 0; transition: opacity .3s; }
+
+/* top bar (same as the home page) */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 60; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: calc(22px + env(safe-area-inset-top)) var(--gut) 22px; transition: background .4s, padding .4s, border-color .4s; border-bottom: 1px solid transparent; }
+.nav.solid { background: rgba(0,0,0,.72); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); padding-top: calc(14px + env(safe-area-inset-top)); padding-bottom: 14px; border-color: var(--line); }
+.logo { font: 400 19px/1 var(--mark); letter-spacing: .3em; margin-right: -.3em; text-decoration: none; color: var(--bright); white-space: nowrap; position: relative; z-index: 2; }
+.links { display: flex; align-items: center; gap: clamp(20px, 2.6vw, 40px); }
+.links a { font: 500 13px/1 var(--cond); letter-spacing: .26em; text-decoration: none; color: rgba(241,235,223,.78); padding: 6px 0; transition: color .3s; }
+.links a:hover { color: var(--bright); }
+.links a.book { border: 1px solid rgba(241,235,223,.45); padding: 11px 20px; border-radius: 999px; color: var(--bright); background: rgba(241,235,223,.08); }
+.menu { display: none; position: relative; z-index: 2; background: none; border: 0; padding: 10px 0; cursor: pointer; align-items: center; gap: 12px; font: 500 12px/1 var(--cond); letter-spacing: .28em; color: var(--bright); }
+.menu i { width: 26px; height: 10px; position: relative; display: inline-block; }
+.menu i::before, .menu i::after { content: ''; position: absolute; left: 0; right: 0; height: 1px; background: currentColor; transition: transform .5s var(--ease), top .5s var(--ease); }
+.menu i::before { top: 1px; } .menu i::after { top: 8px; }
+.open .menu i::before { top: 5px; transform: rotate(45deg); } .open .menu i::after { top: 5px; transform: rotate(-45deg); }
+.sheet { display: none; }
+
+/* ---------- Page ---------- */
+.bk { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); min-height: 100svh; }
+.side { position: sticky; top: 0; height: 100svh; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; gap: 26px; padding: 0 var(--gut) clamp(40px, 7vh, 80px); }
+.side .ph { position: absolute; inset: 0; background: url("media/work/gal-09.jpg") 50% 35% / cover; transform: scale(1.12); transition: transform 2.8s var(--ease); }
+.ready .side .ph { transform: none; }
+.side::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.1) 30%, rgba(0,0,0,.85) 78%, #000); }
+.side > *:not(.ph) { position: relative; z-index: 1; }
+.side h1 { font: 300 clamp(58px, 7.4vw, 124px)/.9 var(--title); letter-spacing: -.025em; color: var(--bright); max-width: 8ch; }
+.side .lead { color: rgba(241,235,223,.82); max-width: 40ch; }
+.how { list-style: none; padding: 0; display: grid; gap: 0; border-top: 1px solid rgba(241,235,223,.2); max-width: 520px; }
+.how li { display: grid; grid-template-columns: 46px 1fr; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(241,235,223,.2); }
+.how span { font: 300 24px/1 var(--title); color: var(--warm); }
+.how b { display: block; font: 500 12px/1.4 var(--cond); letter-spacing: .22em; text-transform: uppercase; color: var(--bright); }
+.how p { color: rgba(216,210,199,.75); font-size: 14px; margin-top: 2px; }
+.js .up { opacity: 0; transform: translateY(26px); transition: opacity 1s ease, transform 1.2s var(--ease); transition-delay: var(--d, 0s); }
+.ready .up { opacity: 1; transform: none; }
+
+.formcol { padding: calc(130px + env(safe-area-inset-top)) var(--gut) clamp(70px, 9vw, 120px); max-width: 760px; width: 100%; }
+.formcol h2 { font: 300 clamp(36px, 3.6vw, 54px)/1 var(--title); color: var(--bright); }
+.formcol .sub { color: var(--muted); margin: 14px 0 40px; max-width: 46ch; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 28px; }
+.field { display: flex; flex-direction: column; gap: 4px; padding: 18px 0 6px; position: relative; font: 500 11px/1.4 var(--cond); letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
+.field.full { grid-column: 1 / -1; }
+.field em { color: var(--warm); font-style: normal; }
+.field i { font-style: normal; letter-spacing: .1em; text-transform: none; font-family: var(--sans); font-weight: 300; }
+.field > span { display: inline; }
+input, select, textarea { width: 100%; background: transparent; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding: 12px 0 12px; font: 300 18px/1.4 var(--sans); letter-spacing: 0; text-transform: none; color: var(--bright); outline: none; transition: border-color .3s; -webkit-appearance: none; appearance: none; }
+textarea { resize: vertical; min-height: 92px; }
+input::placeholder, textarea::placeholder { color: #5d5a54; }
+input:focus, select:focus, textarea:focus { border-color: var(--warm); }
+select { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23E8DCC2' stroke-width='1.2'/%3E%3C/svg%3E") right 4px center no-repeat; padding-right: 26px; cursor: pointer; }
+select option { background: #111; color: var(--bright); }
+input[type="date"] { color-scheme: dark; min-height: 51px; }
+input[type="file"] { font-size: 14px; padding: 12px 0; }
+input[type="file"]::file-selector-button { font: 500 11px/1 var(--cond); letter-spacing: .2em; text-transform: uppercase; color: var(--bright); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 10px 16px; margin-right: 14px; cursor: pointer; }
+.invalid, input.invalid, select.invalid, textarea.invalid { border-color: var(--bad) !important; }
+.err { color: var(--bad); font: 300 13px/1.4 var(--sans); letter-spacing: 0; text-transform: none; min-height: 0; }
+.err:empty { display: none; }
+.hint { margin-top: 8px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; font: 300 13px/1.5 var(--sans); letter-spacing: 0; text-transform: none; color: var(--text); }
+.hint[hidden] { display: none; }
+.hint b { color: var(--warm); font-weight: 400; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.picked { border: 1px solid var(--line); border-left: 2px solid var(--warm); padding: 16px 18px; margin: 0 0 26px; border-radius: 0 10px 10px 0; background: rgba(232,220,194,.04); }
+.picked[hidden] { display: none; }
+.picked .k { font: 500 11px/1 var(--cond); letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
+.picked .v { margin-top: 6px; color: var(--bright); }
+.picked .t { margin-top: 10px; font: 300 26px/1.1 var(--title); color: var(--bright); }
+.picked .t small { font: 300 12px var(--sans); color: var(--muted); }
+.box { margin-top: 44px; padding: 26px clamp(18px, 3vw, 30px); border: 1px solid var(--line); border-radius: 14px; background: var(--panel); }
+.box h3 { font: 300 28px/1.1 var(--title); color: var(--bright); }
+.box h3 i { font-style: italic; color: var(--muted); font-size: 20px; }
+.box > p { color: var(--muted); margin-top: 8px; font-size: 15px; }
+.box ul { padding-left: 18px; margin-top: 12px; color: var(--muted); font-size: 15px; display: grid; gap: 6px; }
+.box ul b { color: var(--text); font-weight: 400; }
+.agree { display: flex; gap: 14px; align-items: flex-start; margin-top: 22px; cursor: pointer; color: var(--text); font-size: 15px; padding: 4px; border-radius: 8px; }
+.agree input { flex: none; width: 22px; height: 22px; padding: 0; border: 1px solid rgba(241,235,223,.4); border-radius: 6px; margin: 0; display: grid; place-items: center; cursor: pointer; }
+.agree input:checked { background: var(--warm); border-color: var(--warm); }
+.agree input:checked::after { content: ''; width: 10px; height: 6px; border: 2px solid #000; border-top: 0; border-right: 0; transform: rotate(-45deg) translate(1px, -1px); }
+.agree.invalid { outline: 1px solid var(--bad); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 14px; width: 100%; margin-top: 34px; padding: 22px 26px; border: 0; border-radius: 999px; background: var(--bright); color: #000; cursor: pointer; text-decoration: none; font: 500 13px/1 var(--cond); letter-spacing: .28em; text-transform: uppercase; transition: background .35s, gap .35s var(--ease); }
+.btn::after { content: '→'; font: 400 16px/1 var(--sans); letter-spacing: 0; }
+.btn:hover { background: var(--warm); gap: 22px; }
+.btn:disabled { opacity: .6; cursor: wait; }
+.btn.ghost { background: transparent; color: var(--bright); border: 1px solid rgba(241,235,223,.4); margin-top: 16px; padding: 16px 22px; }
+.btn.ghost::after { content: none; }
+.btn.ghost:hover { background: rgba(241,235,223,.08); }
+.btn[hidden] { display: none; }
+.pay-btn { width: auto; }
+.msg { margin-top: 16px; font-size: 15px; } .msg.err { color: var(--bad); } .msg a { color: var(--bright); }
+.done { padding-top: 10px; }
+.done[hidden] { display: none; }
+.done .tick { width: 66px; height: 66px; border-radius: 50%; border: 1px solid var(--warm); display: grid; place-items: center; color: var(--warm); font-size: 26px; }
+.done h2 { margin-top: 26px; }
+.done > p { color: var(--muted); margin-top: 14px; }
+.done > p b { color: var(--bright); font-weight: 400; }
+.next-steps { margin-top: 30px; padding: 0; list-style: none; counter-reset: n; border-top: 1px solid var(--line); }
+.next-steps li { counter-increment: n; display: grid; grid-template-columns: 46px 1fr; gap: 10px; padding: 16px 0; border-bottom: 1px solid var(--line); color: var(--muted); }
+.next-steps li::before { content: counter(n, decimal-leading-zero); font: 300 24px/1 var(--title); color: var(--warm); }
+.next-steps b { color: var(--bright); font-weight: 400; }
+.link { background: none; border: 0; padding: 0; margin-top: 22px; color: var(--muted); text-decoration: underline; cursor: pointer; font-size: 14px; display: block; }
+[hidden] { display: none !important; }
+
+footer { border-top: 1px solid var(--line); padding: 36px var(--gut) calc(26px + env(safe-area-inset-bottom)); display: flex; justify-content: space-between; align-items: center; gap: 18px 30px; flex-wrap: wrap; font: 500 12px/1.4 var(--cond); letter-spacing: .24em; color: var(--muted); }
+footer .logo { font-size: 16px; }
+footer nav { display: flex; gap: 14px 28px; flex-wrap: wrap; }
+footer a { text-decoration: none; } footer a:hover { color: var(--bright); }
+
+@media (max-width: 860px) {
+  .links { display: none; }
+  .menu { display: inline-flex; }
+  .sheet { display: flex; position: fixed; inset: 0; z-index: 1; flex-direction: column; padding: calc(110px + env(safe-area-inset-top)) var(--gut) calc(30px + env(safe-area-inset-bottom)); background: #000; clip-path: inset(0 0 100% 0); transition: clip-path .8s var(--wipe); visibility: hidden; }
+  .open .sheet { clip-path: inset(0 0 0 0); visibility: visible; }
+  .sheet ol { list-style: none; padding: 0; display: grid; }
+  .sheet li { border-bottom: 1px solid var(--line); overflow: hidden; }
+  .sheet li a { display: flex; align-items: baseline; gap: 18px; padding: 16px 0 14px; text-decoration: none; color: var(--bright); font: 300 50px/1 var(--title); transform: translateY(110%); transition: transform .9s var(--ease); }
+  .sheet li a small { font: 500 11px/1 var(--cond); letter-spacing: .2em; color: var(--warm); }
+  .sheet li a em { margin-left: auto; font: 400 20px/1 var(--sans); font-style: normal; color: var(--muted); }
+  .open .sheet li a { transform: none; }
+  .open .sheet li:nth-child(2) a { transition-delay: .07s; } .open .sheet li:nth-child(3) a { transition-delay: .14s; } .open .sheet li:nth-child(4) a { transition-delay: .21s; }
+  .sheet .sm { margin-top: auto; display: flex; justify-content: space-between; font: 500 11px/1.4 var(--cond); letter-spacing: .22em; color: var(--muted); }
+  .sheet .sm a { text-decoration: none; }
+  .nav.open { background: transparent; border-color: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .bk { grid-template-columns: minmax(0, 1fr); }
+  .side { position: relative; height: auto; min-height: 88svh; padding-top: 120px; }
+  .side::after { background: linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.25) 22%, rgba(0,0,0,.78) 46%, rgba(0,0,0,.92) 75%, #000); }
+  .side h1 { font-size: clamp(54px, 16vw, 84px); }
+  .formcol { padding-top: 56px; }
+  .grid { grid-template-columns: minmax(0, 1fr); }
+  footer { flex-direction: column; align-items: flex-start; }
+}
+@media (prefers-reduced-motion: reduce) { .grain { animation: none; } .js .up { opacity: 1; transform: none; transition: none; } .side .ph { transform: none; } }
 </style>
 </head>
 <body>
+<div class="grain" aria-hidden="true"></div>
+<div id="curtain" aria-hidden="true"><img src="media/site/glaz-g.png" alt=""></div>
 
-<header class="gnav" id="nav">
-  <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="/about">About</a></li>
-    <li><a href="/#services">Services</a></li>
-  </ul>
-  <a class="gbrand" href="/" aria-label="Glaz Studios home"><b>GLAZ</b><span>STUDIOS</span></a>
-  <button class="gmenu" id="menu-btn" type="button" aria-expanded="false">Menu</button>
-  <ul>
-    <li><a href="/#work">Weddings</a></li>
-    <li><a href="/faq">FAQ</a></li>
-    <li><a href="/book" aria-current="page">Book your date</a></li>
-  </ul>
+<header class="nav" id="nav">
+  <a class="logo" href="./" aria-label="Glaz Studios, home">GLAZ STUDIOS</a>
+  <nav class="links" aria-label="Main"><a href="./#work">WORK</a><a href="./#film">FILM</a><a href="./#moments">MOMENTS</a><a class="book" href="book" aria-current="page">BOOK</a></nav>
+  <button class="menu" id="menu" type="button" aria-expanded="false" aria-controls="sheet"><span id="menu-t">MENU</span><i aria-hidden="true"></i></button>
+  <div class="sheet" id="sheet">
+    <ol>
+      <li><a href="./"><small>01</small>Home<em>←</em></a></li>
+      <li><a href="./#work"><small>02</small>Work<em>←</em></a></li>
+      <li><a href="./#film"><small>03</small>Film<em>←</em></a></li>
+      <li><a href="./#moments"><small>04</small>Moments<em>←</em></a></li>
+    </ol>
+    <div class="sm"><a href="mailto:info@glazstudios.com">INFO@GLAZSTUDIOS.COM</a><span>CAIRO</span></div>
+  </div>
 </header>
 
-<main class="wrap">
-  <section class="intro">
-    <p class="eyebrow" data-i18n="eyebrow">Book your date</p>
-    <h1 data-i18n="title">Let us keep your day exactly as you lived it</h1>
-    <p class="lead" data-i18n="lead">Send us the details of your event and our team will reach you on WhatsApp to confirm the date and help you choose the right package.</p>
-
-    <ol class="steps">
-      <li><span>01</span><div><b data-i18n="s1t">Send your request</b><p data-i18n="s1d">Fill in the form in a minute.</p></div></li>
-      <li><span>02</span><div><b data-i18n="s2t">We confirm with you</b><p data-i18n="s2d">Our team contacts you on WhatsApp within 24 hours to confirm the date and package.</p></div></li>
-      <li><span>03</span><div><b data-i18n="s3t">We lock the day</b><p data-i18n="s3d">A 30% deposit secures your date; the balance is due on the event day.</p></div></li>
+<main class="bk">
+  <section class="side" aria-labelledby="bk-h">
+    <div class="ph"></div>
+    <p class="kick up" style="--d:.2s"><span class="ch">05</span><span>Bookings</span></p>
+    <h1 class="up" id="bk-h" style="--d:.3s">Tell us your date</h1>
+    <p class="lead up" style="--d:.45s">Send us the details of your day and we reach you on WhatsApp to confirm the date and help you choose your package.</p>
+    <ol class="how up" style="--d:.6s">
+      <li><span>01</span><div><b>Send your request</b><p>It takes a minute.</p></div></li>
+      <li><span>02</span><div><b>We confirm with you</b><p>We message you on WhatsApp within 24 hours.</p></div></li>
+      <li><span>03</span><div><b>We lock the day</b><p>A 30% deposit secures your date.</p></div></li>
     </ol>
-
-    <ul class="services" aria-label="Services">
-      <li>Photography</li>
-      <li>Cinematography</li>
-      <li>Full Coverage</li>
-      <li>Media Coverage</li>
-      <li>Photo Booth</li>
-    </ul>
   </section>
 
-  <section class="card" aria-labelledby="form-title">
-    <form id="booking" novalidate>
-      <h2 id="form-title" data-i18n="formTitle">Booking request</h2>
+  <section class="formcol" aria-labelledby="form-title">
+    <form id="booking" novalidate class="up" style="--d:.5s">
+      <h2 id="form-title">Booking request</h2>
+      <p class="sub">Fields with <em style="color:var(--warm);font-style:normal">*</em> are needed.</p>
       <div class="picked" id="picked" hidden aria-live="polite"></div>
 
       <div class="grid">
-        <label class="field full">
-          <span data-i18n="fName">Groom & Bride</span> <em>*</em>
-          <input name="full_name" autocomplete="off" required maxlength="100" data-i18n-ph="phName" placeholder="e.g. Ahmed & Sara">
-          <small class="err" data-err="full_name"></small>
-        </label>
+        <label class="field full"><span>Groom &amp; Bride <em>*</em></span>
+          <input name="full_name" autocomplete="off" required maxlength="100" placeholder="e.g. Ahmed &amp; Sara">
+          <small class="err" data-err="full_name"></small></label>
 
-        <label class="field">
-          <span data-i18n="fType">Event type</span> <em>*</em>
+        <label class="field"><span>Event type <em>*</em></span>
           <select name="event_type" required>
-            <option value="" data-i18n="choose">Choose</option>
-            <option value="Wedding" data-i18n="tWedding">Wedding</option>
-            <option value="Engagement" data-i18n="tEngagement">Engagement</option>
-            <option value="Religious Event" data-i18n="tReligious">Religious Event</option>
-            <option value="Destination Event" data-i18n="tDestination">Destination Event</option>
+            <option value="">Choose</option>
+            <option value="Wedding">Wedding</option>
+            <option value="Engagement">Engagement</option>
+            <option value="Religious Event">Religious Event</option>
+            <option value="Destination Event">Destination Event</option>
           </select>
           <small class="err" data-err="event_type"></small>
-          <small class="hint" id="travel-hint" hidden>🚗 Events outside Cairo include a <b>transportation fee</b> based on the location. We will confirm it with you.</small>
-        </label>
+          <small class="hint" id="travel-hint" hidden>Events outside Cairo include a <b>transportation fee</b> based on the location. We will confirm it with you.</small></label>
 
-        <label class="field">
-          <span data-i18n="fDate">Event date</span> <em>*</em>
+        <label class="field"><span>Event date <em>*</em></span>
           <input name="event_date" type="date" required>
-          <small class="err" data-err="event_date"></small>
-        </label>
+          <small class="err" data-err="event_date"></small></label>
 
-        <label class="field full">
-          <span data-i18n="fVenue">Venue</span> <em>*</em>
-          <input name="venue" maxlength="150" required data-i18n-ph="phVenue" placeholder="Hall, church or place – and the area">
-          <small class="err" data-err="venue"></small>
-        </label>
+        <label class="field full"><span>Venue <em>*</em></span>
+          <input name="venue" maxlength="150" required placeholder="Hall, church or place, and the area">
+          <small class="err" data-err="venue"></small></label>
 
-        <label class="field">
-          <span data-i18n="fPhone">Mobile (WhatsApp)</span> <em>*</em>
+        <label class="field"><span>Mobile (WhatsApp) <em>*</em></span>
           <input name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="01X XXXX XXXX" required maxlength="20">
-          <small class="err" data-err="phone"></small>
-        </label>
+          <small class="err" data-err="phone"></small></label>
 
-        <label class="field">
-          <span data-i18n="fPhone2">Second mobile</span> <i data-i18n="optional">(optional)</i>
+        <label class="field"><span>Second mobile <i>(optional)</i></span>
           <input name="phone2" type="tel" inputmode="tel" dir="ltr" placeholder="01X XXXX XXXX" maxlength="20">
-          <small class="err" data-err="phone2"></small>
-        </label>
+          <small class="err" data-err="phone2"></small></label>
 
-        <label class="field">
-          <span data-i18n="fEmail">Email</span> <em>*</em>
+        <label class="field"><span>Email <em>*</em></span>
           <input name="email" type="email" autocomplete="email" dir="ltr" required maxlength="120" placeholder="name@email.com">
-          <small class="err" data-err="email"></small>
-        </label>
+          <small class="err" data-err="email"></small></label>
 
-        <label class="field">
-          <span data-i18n="fPackage">Package you are interested in</span>
-          <select name="package_interest" id="packages">
-            <option value="" data-i18n="pkgUnsure">Not sure yet</option>
-          </select>
-        </label>
+        <label class="field"><span>Package you like</span>
+          <select name="package_interest" id="packages"><option value="">Not sure yet</option></select></label>
 
-        <label class="field full">
-          <span data-i18n="fSource">How did you hear about us?</span>
+        <label class="field full"><span>How did you hear about us?</span>
           <select name="source">
-            <option value="" data-i18n="choose">Choose</option>
+            <option value="">Choose</option>
             <option value="Instagram">Instagram</option>
             <option value="Facebook">Facebook</option>
             <option value="TikTok">TikTok</option>
-            <option value="Friend" data-i18n="srcFriend">Someone I know</option>
+            <option value="Friend">Someone I know</option>
             <option value="Google">Google</option>
-            <option value="Other" data-i18n="tOther">Other</option>
-          </select>
-        </label>
+            <option value="Other">Other</option>
+          </select></label>
 
-        <label class="field full">
-          <span data-i18n="fMsg">Anything else</span> <i data-i18n="optional">(optional)</i>
-          <textarea name="message" rows="3" maxlength="1500" data-i18n-ph="phMsg" placeholder="Hours, specific services, anything you would like us to know"></textarea>
-        </label>
+        <label class="field full"><span>Anything else <i>(optional)</i></span>
+          <textarea name="message" rows="3" maxlength="1500" placeholder="Hours, special moments, anything you would like us to know"></textarea></label>
 
-        <!-- spam trap: real people never see or fill this -->
         <div class="hp" aria-hidden="true"><input name="gz_hp_x9" tabindex="-1" autocomplete="new-password" data-lpignore="true" data-1p-ignore></div>
       </div>
 
-      <div class="deposit" aria-labelledby="deposit-title">
+      <div class="box" aria-labelledby="deposit-title">
         <h3 id="deposit-title">Deposit <i>(optional)</i></h3>
-        <p>Already transferred the deposit? Add the amount and upload the transfer screenshot so we can confirm your date faster.</p>
+        <p>Already transferred the deposit? Add the amount and the transfer screenshot so we can confirm your date faster.</p>
         <a class="btn ghost pay-btn" id="instapay" hidden target="_blank" rel="noopener">Pay the deposit with InstaPay ↗</a>
         <div class="grid">
-          <label class="field">
-            <span>Deposit amount (EGP)</span>
+          <label class="field"><span>Deposit amount (EGP)</span>
             <input name="deposit_amount" type="number" inputmode="numeric" min="1" step="1" placeholder="e.g. 6000" dir="ltr">
-            <small class="err" data-err="deposit_amount"></small>
-          </label>
-          <label class="field">
-            <span>Transfer screenshot</span>
+            <small class="err" data-err="deposit_amount"></small></label>
+          <label class="field"><span>Transfer screenshot</span>
             <input name="deposit_file" type="file" accept="image/*,application/pdf">
-            <small class="err" data-err="deposit_file"></small>
-          </label>
+            <small class="err" data-err="deposit_file"></small></label>
         </div>
       </div>
 
-      <div class="notes" aria-labelledby="notes-title">
-        <h3 id="notes-title" data-i18n="notesTitle">Important notes</h3>
+      <div class="box" aria-labelledby="notes-title">
+        <h3 id="notes-title">Good to know</h3>
         <ul>
-          <li data-i18n="n1">A <b>30%</b> deposit is required to secure your date.</li>
-          <li data-i18n="n2">The date is only confirmed once the deposit is received.</li>
-          <li data-i18n="n3">All photos will be delivered via a private <b>Online Gallery</b>.</li>
-          <li data-i18n="n4">The photographer reserves the right to feature selected images on social media and portfolio.</li>
-          <li data-i18n="n5">Events outside Cairo include a <b>transportation fee</b>, calculated based on the location.</li>
+          <li>A <b>30%</b> deposit is required to secure your date.</li>
+          <li>The date is only confirmed once the deposit is received.</li>
+          <li>All photos are delivered in a private <b>online gallery</b>.</li>
+          <li>We may share selected photos on our pages and portfolio.</li>
+          <li>Events outside Cairo include a <b>transportation fee</b>, based on the location.</li>
         </ul>
-        <label class="agree">
-          <input type="checkbox" name="agree" required>
-          <span data-i18n="agree">I have read and agree to the notes above</span>
-        </label>
+        <label class="agree"><input type="checkbox" name="agree" required><span>I have read and agree to the notes above</span></label>
         <small class="err" data-err="agree"></small>
       </div>
 
-      <button class="btn" type="submit" id="submit"><span data-i18n="send">Send booking request</span></button>
+      <button class="btn" type="submit" id="submit"><span>Send booking request</span></button>
       <p class="msg" id="msg" role="alert"></p>
     </form>
 
     <div class="done" id="done" hidden>
       <div class="tick" aria-hidden="true">✓</div>
-      <h2 data-i18n="doneTitle">We got your request</h2>
-      <p data-i18n="doneText">Thank you! Our team will contact you on <b>WhatsApp within 24 hours</b> to confirm your date.</p>
+      <h2>We got your request</h2>
+      <p>Thank you. We will message you on <b>WhatsApp within 24 hours</b> to confirm your date.</p>
       <ol class="next-steps">
-        <li><b>Within 24 hours</b> — we message you on WhatsApp. Please keep your phone close.</li>
-        <li><b>Event-day sheet &amp; agreement</b> — we send you a short sheet to fill (timings, Instagram accounts) and our simple agreement.</li>
-        <li><b>Deposit</b> — once the 30% deposit is received, your date is confirmed.</li>
+        <li><span><b>Within 24 hours</b>, we message you on WhatsApp. Please keep your phone close.</span></li>
+        <li><span><b>Your day and our agreement</b>: we send you your private link to plan the day, and our short agreement.</span></li>
+        <li><span><b>Deposit</b>: once the 30% deposit is received, your date is confirmed.</span></li>
       </ol>
       <a class="btn ghost pay-btn" id="instapay-done" hidden target="_blank" rel="noopener">Pay the deposit with InstaPay ↗</a>
-      <a class="btn ghost" id="wa" hidden target="_blank" rel="noopener"><span data-i18n="waBtn">Message us on WhatsApp</span></a>
-      <button class="link" type="button" id="again" data-i18n="again">Send another request</button>
+      <a class="btn ghost" id="wa" hidden target="_blank" rel="noopener"><span>Message us on WhatsApp</span></a>
+      <button class="link" type="button" id="again">Send another request</button>
     </div>
   </section>
 </main>
 
-<footer class="gfoot">
-  <a class="gbrand" href="/" aria-label="Glaz Studios home"><b>GLAZ</b><span>STUDIOS</span></a>
-  <nav aria-label="Footer"><a href="/about">About</a><a href="/faq">FAQ</a><a href="/book">Book your date</a><a href="mailto:info@glazstudios.com">info@glazstudios.com</a></nav>
-  <span class="yr">© <span id="yr"></span> Glaz Studios</span>
+<footer>
+  <a class="logo" href="./">GLAZ STUDIOS</a>
+  <nav aria-label="Footer"><a href="./#work">WORK</a><a href="./#your-day">YOUR DAY</a><a href="./#film">FILM</a><a href="mailto:info@glazstudios.com">INFO@GLAZSTUDIOS.COM</a></nav>
+  <span>© <span id="yr"></span> GLAZ STUDIOS · CAIRO</span>
 </footer>
 
 <script>
-// mobile menu (same as the home page)
-(() => { const nav = document.getElementById('nav'), btn = document.getElementById('menu-btn');
-  btn.onclick = () => { const o = nav.classList.toggle('open'); btn.setAttribute('aria-expanded', o); btn.textContent = o ? 'Close' : 'Menu'; document.body.style.overflow = o ? 'hidden' : ''; }; })();
+(() => {
+  const root = document.documentElement, nav = document.getElementById('nav'), menu = document.getElementById('menu');
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // arrive: lift the curtain, then show the page
+  if (root.classList.contains('arrive')) { requestAnimationFrame(() => { root.classList.add('arrived', 'ready'); }); setTimeout(() => root.classList.remove('arrive', 'arrived'), 1400); }
+  else requestAnimationFrame(() => requestAnimationFrame(() => root.classList.add('ready')));
+  addEventListener('scroll', () => nav.classList.toggle('solid', scrollY > 40), { passive: true });
+  const setMenu = (on) => { nav.classList.toggle('open', on); menu.setAttribute('aria-expanded', String(on)); document.getElementById('menu-t').textContent = on ? 'CLOSE' : 'MENU'; document.body.style.overflow = on ? 'hidden' : ''; };
+  menu.addEventListener('click', () => setMenu(!nav.classList.contains('open')));
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+  // a soft curtain between pages
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href]'); if (!a || still) return;
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank') return;
+    const u = new URL(a.href, location.href);
+    if (u.origin !== location.origin || /^mailto:|^tel:/.test(a.getAttribute('href'))) return;
+    if (u.pathname === location.pathname && u.hash) return;
+    e.preventDefault(); setMenu(false);
+    try { sessionStorage.setItem('glaz-go', '1'); } catch {}
+    root.classList.add('leaving');
+    setTimeout(() => { location.href = u.href; }, 720);
+  });
+  addEventListener('pageshow', (e) => { if (e.persisted) root.classList.remove('leaving'); });
+})();
 </script>
 <script type="module" src="book.js"></script>
 </body>
