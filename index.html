@@ -2,389 +2,803 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Glaz Studios — Wedding photography and films</title>
-<meta name="description" content="Glaz Studios: wedding photography and cinematography in Cairo. We cover your whole day and keep it the way it really happened.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Glaz Studios — Wedding films and photographs</title>
+<meta name="description" content="Glaz Studios: wedding cinematography and photography in Cairo. One team covers your whole day, from getting ready to the last song, the way it really happened.">
 <meta name="theme-color" content="#000000">
-<meta property="og:title" content="Glaz Studios — Wedding photography and films">
+<meta property="og:title" content="Glaz Studios — Wedding films and photographs">
 <meta property="og:description" content="Your whole wedding day, from getting ready to the last song, kept the way it really happened.">
 <meta property="og:image" content="media/site/hero-4.jpg">
 <link rel="icon" href="favicon.ico" sizes="48x48">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400&family=Cormorant+Garamond:wght@400;500&family=Barlow+Condensed:wght@400;500&family=Barlow:wght@300;400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Barlow+Condensed:wght@400;500&family=Barlow:wght@300;400&display=swap">
+<script>
+(function () {
+  var d = document.documentElement; d.classList.add('js');
+  try {
+    var calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!calm && !/[?&]preview=1/.test(location.search) && !sessionStorage.getItem('glaz-intro')) { d.classList.add('intro'); sessionStorage.setItem('glaz-intro', '1'); }
+  } catch (e) {}
+})();
+</script>
 <style>
-:root { color-scheme: dark; --bg: #000; --panel: #0C0C0B; --text: #D8D2C7; --muted: #8A847B; --warm: #E8DCC2; --line: rgba(216,210,199,.14);
-  --title: 'Cormorant Garamond', Georgia, serif; --cond: 'Barlow Condensed', 'Arial Narrow', sans-serif; --sans: 'Barlow', system-ui, sans-serif; --mark: 'Bodoni Moda', Didot, serif;
-  --gut: clamp(18px, 4vw, 60px); }
+:root {
+  color-scheme: dark;
+  --bg: #000; --bg2: #0A0A09; --panel: #111110; --text: #D8D2C7; --bright: #F1EBDF; --muted: #8A847B; --warm: #E8DCC2; --line: rgba(216,210,199,.14);
+  --title: 'Cormorant Garamond', Georgia, serif; --cond: 'Barlow Condensed', 'Arial Narrow', sans-serif; --sans: 'Barlow', system-ui, sans-serif; --mark: 'Bodoni Moda', Didot, 'Bodoni 72', serif;
+  --gut: clamp(18px, 4vw, 64px); --ease: cubic-bezier(.16, 1, .3, 1); --sec: clamp(96px, 14vw, 200px);
+}
 * { box-sizing: border-box; }
-html { background: var(--bg); scroll-behavior: smooth; }
+html { background: var(--bg); -webkit-text-size-adjust: 100%; }
 body { margin: 0; background: var(--bg); color: var(--text); font: 300 17px/1.65 var(--sans); overflow-x: clip; -webkit-font-smoothing: antialiased; }
-img, video { display: block; max-width: 100%; height: auto; }
-a { color: inherit; } h1, h2, h3 { font-weight: 400; margin: 0; } p { margin: 0; }
+img, video { display: block; max-width: 100%; }
+a { color: inherit; } h1, h2, h3, h4 { font-weight: 400; margin: 0; } p, ol, ul { margin: 0; }
+button { font: inherit; color: inherit; }
 :focus-visible { outline: 1px solid var(--warm); outline-offset: 4px; }
-.skip { position: absolute; left: 12px; top: -60px; z-index: 99; background: var(--warm); color: #000; padding: 10px 14px; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 200; background: var(--warm); color: #000; padding: 10px 14px; }
 .skip:focus { top: 12px; }
-.grain { position: fixed; inset: -50%; z-index: 40; pointer-events: none; opacity: .08; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); animation: grain 1s steps(4) infinite; }
+.intro body { overflow: hidden; }
+
+/* film grain over everything */
+.grain { position: fixed; inset: -50%; z-index: 90; pointer-events: none; opacity: .07; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); animation: grain 1s steps(4) infinite; }
 @keyframes grain { 0% { transform: translate(0, 0); } 25% { transform: translate(-3%, 2%); } 50% { transform: translate(2%, -3%); } 75% { transform: translate(-2%, -1%); } }
 
-/* ---------- Intro: studio card, then the letterbox opens ---------- */
-.card { position: fixed; inset: 0; z-index: 30; display: grid; place-content: center; justify-items: center; gap: 22px; pointer-events: none; }
-.card img { width: 58px; opacity: 0; transition: opacity 1s; }
-.card .wm { font: 400 15px/1 var(--mark); letter-spacing: .7em; text-indent: .7em; opacity: 0; transition: opacity 1s .25s; }
-.card .pr { font: 400 13px/1 var(--cond); letter-spacing: .4em; text-indent: .4em; color: var(--muted); opacity: 0; transition: opacity 1s .7s; }
-.c1 .card img, .c1 .card .wm, .c1 .card .pr { opacity: 1; animation: flicker 2.2s linear; }
-.c2 .card { opacity: 0; transition: opacity .7s; }
-.c3 .card { display: none; }
-@keyframes flicker { 0%, 100% { filter: brightness(1); } 8% { filter: brightness(.6); } 10% { filter: brightness(1.15); } 46% { filter: brightness(.85); } 48% { filter: brightness(1); } }
+/* shared type */
+.kick { display: flex; align-items: center; gap: 14px; font: 500 12px/1.3 var(--cond); letter-spacing: .32em; text-transform: uppercase; color: var(--muted); }
+.kick .ch { color: var(--warm); letter-spacing: .12em; }
+.kick .ch::after { content: ''; display: inline-block; width: 34px; height: 1px; background: currentColor; opacity: .5; vertical-align: middle; margin-left: 14px; }
+.h2 { font: 300 clamp(42px, 6.2vw, 96px)/.98 var(--title); letter-spacing: -.015em; color: var(--bright); margin-top: 26px; }
+.lede { color: var(--muted); max-width: 40ch; }
+.wrap { padding: 0 var(--gut); max-width: 1560px; margin: 0 auto; }
 
-.hero { --fh: min(100svh - 150px, 100vw / 2.39); position: relative; height: 100svh; min-height: 520px; }
-.frame { position: absolute; left: 0; right: 0; top: 50%; height: var(--fh); transform: translateY(-50%); overflow: hidden; background: #000; }
-.frame video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .9s; }
-.frame video.on { opacity: 1; }
-.js .frame { clip-path: inset(50% 0 50% 0); }
-.c2 .frame { clip-path: inset(0 0 0 0); transition: clip-path 1.8s cubic-bezier(.65, 0, .2, 1); }
-.bar { position: absolute; left: 0; right: 0; height: calc((100svh - var(--fh)) / 2); display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 0 var(--gut); }
-.bar.t { top: 0; } .bar.b { bottom: 0; }
-.js .bar > * { opacity: 0; } .c3 .bar > * { opacity: 1; transition: opacity 1s; }
-.logo { font: 400 14px/1 var(--mark); letter-spacing: .5em; text-decoration: none; white-space: nowrap; }
-nav.links { display: flex; gap: 30px; font: 400 15px/1 var(--cond); letter-spacing: .2em; }
-nav.links a { text-decoration: none; opacity: .8; } nav.links a:hover { opacity: 1; }
-.menu { display: none; background: none; border: 0; color: inherit; font: 400 15px var(--cond); letter-spacing: .2em; cursor: pointer; }
-.sub-line { font: 400 clamp(19px, 2vw, 26px)/1.3 var(--title); }
-.cta { display: inline-block; text-decoration: none; font: 500 14px/1 var(--cond); letter-spacing: .25em; padding: 15px 22px; color: #000; background: var(--warm); white-space: nowrap; }
-.cta:hover { background: #fff3da; }
-.pause { position: absolute; right: var(--gut); top: calc(50% + var(--fh) / 2 - 56px); width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,.45); background: rgba(0,0,0,.25); color: #fff; cursor: pointer; display: grid; place-items: center; }
-.pause svg { width: 13px; height: 13px; fill: currentColor; } .pause .i-play { display: none; } .pause[aria-pressed="true"] .i-play { display: block; } .pause[aria-pressed="true"] .i-pause { display: none; }
-.js .pause { opacity: 0; } .c3 .pause { opacity: 1; transition: opacity 1s; }
-@media (max-width: 760px) {
-  .hero { --fh: min(100svh - 240px, 135vw); }
-  .bar.b { flex-direction: column; align-items: flex-start; justify-content: center; gap: 14px; }
-  .menu { display: block; position: relative; z-index: 61; }
-  nav.links { position: fixed; inset: 0; z-index: 60; flex-direction: column; align-items: center; justify-content: center; gap: 30px; background: #000; font-size: 26px; opacity: 0; visibility: hidden; transition: .3s; }
-  .hero.open nav.links { opacity: 1; visibility: visible; }
-}
+/* reveal on scroll */
+.js [data-reveal] { opacity: 0; transform: translateY(34px); transition: opacity 1.1s var(--ease), transform 1.3s var(--ease); transition-delay: var(--d, 0s); }
+.js [data-reveal].in { opacity: 1; transform: none; }
+.split .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .1em; margin-bottom: -.1em; }
+.split .w > span { display: inline-block; }
+.js .split .w > span { transform: translateY(108%); transition: transform 1.15s var(--ease); transition-delay: calc(var(--i) * 45ms + var(--d, 0s)); }
+.js .split.in .w > span { transform: none; }
 
-/* ---------- Sections ---------- */
-section { padding: clamp(90px, 12vw, 160px) var(--gut); }
-.wrap { max-width: 1300px; margin: 0 auto; }
-.sec-h { font: 400 clamp(44px, 6vw, 92px)/1 var(--title); }
-.kick { display: block; font: 400 14px/1 var(--cond); letter-spacing: .35em; color: var(--muted); margin-bottom: 18px; }
-.sec-p { margin-top: 22px; max-width: 52ch; color: var(--muted); }
+/* ---------- Intro: the G, the name, then the curtain lifts ---------- */
+#intro { display: none; }
+.intro #intro { display: grid; position: fixed; inset: 0; z-index: 120; background: #000; place-content: center; justify-items: center; gap: 26px; animation: gone 0s 5s forwards; }
+#intro img { width: 64px; height: auto; opacity: 0; transform: scale(.92); filter: blur(10px); transition: opacity 1.2s var(--ease), transform 1.6s var(--ease), filter 1.2s var(--ease); }
+#intro .wm { font: 400 14px/1 var(--mark); letter-spacing: 1em; margin-right: -1em; color: var(--bright); opacity: 0; transition: letter-spacing 1.8s var(--ease) .25s, margin 1.8s var(--ease) .25s, opacity 1.2s ease .25s; }
+#intro .ln { width: 140px; height: 1px; background: rgba(255,255,255,.12); position: relative; overflow: hidden; }
+#intro .ln::after { content: ''; position: absolute; inset: 0; background: var(--warm); transform: scaleX(0); transform-origin: left; transition: transform 1.5s cubic-bezier(.65, 0, .35, 1) .3s; }
+.i1 #intro img { opacity: 1; transform: none; filter: none; }
+.i1 #intro .wm { opacity: 1; letter-spacing: .46em; margin-right: -.46em; }
+.i1 #intro .ln::after { transform: scaleX(1); }
+.i2 #intro { transform: translateY(-100%); transition: transform 1.05s cubic-bezier(.76, 0, .24, 1); }
+@keyframes gone { to { visibility: hidden; } }
 
-/* Your day, written down once: the private link */
-.plan { background: var(--panel); }
-.plan .grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(40px, 7vw, 110px); align-items: center; }
-.plan ol { list-style: none; margin: 36px 0 0; padding: 0; counter-reset: s; }
-.plan ol li { counter-increment: s; display: grid; grid-template-columns: 54px 1fr; gap: 6px 10px; padding: 18px 0; border-top: 1px solid var(--line); }
-.plan ol li::before { content: counter(s, decimal-leading-zero); font: 400 15px/1.6 var(--cond); letter-spacing: .2em; color: var(--muted); }
-.plan ol h3 { font: 400 22px/1.3 var(--title); color: var(--text); }
-.plan ol p { grid-column: 2; color: var(--muted); font-size: 15px; }
-.phone { justify-self: center; width: min(340px, 100%); aspect-ratio: 9 / 18.5; border: 1px solid rgba(216,210,199,.25); border-radius: 38px; padding: 14px; background: #050505; box-shadow: 0 40px 80px rgba(0,0,0,.6); }
-.phone .scr { height: 100%; border-radius: 28px; background: #121211; overflow: hidden; padding: 26px 18px; font-size: 13px; }
-.phone .scr .k { font: 400 11px/1 var(--cond); letter-spacing: .3em; color: var(--muted); }
-.phone .scr h4 { margin: 8px 0 18px; font: 400 24px/1.1 var(--title); color: var(--text); }
-.phone .row { display: grid; grid-template-columns: 62px 1fr; gap: 8px; padding: 11px 0; border-top: 1px solid var(--line); }
-.phone .row b { font: 400 13px/1.3 var(--cond); letter-spacing: .08em; color: var(--warm); }
-.phone .row span { color: var(--text); line-height: 1.35; } .phone .row small { display: block; color: var(--muted); font-size: 11.5px; }
-.phone .ex { margin-top: 14px; color: var(--muted); font-size: 11px; text-align: center; }
-@media (max-width: 900px) { .plan .grid { grid-template-columns: 1fr; } }
+/* ---------- Top bar ---------- */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 60; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: calc(22px + env(safe-area-inset-top)) var(--gut) 22px; transition: transform .6s var(--ease), background .4s, padding .4s, border-color .4s; border-bottom: 1px solid transparent; }
+.nav.solid { background: rgba(0,0,0,.72); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); padding-top: calc(14px + env(safe-area-inset-top)); padding-bottom: 14px; border-color: var(--line); }
+.nav.hide { transform: translateY(-101%); }
+.js .nav { opacity: 0; transition: opacity 1s ease .2s, transform .6s var(--ease), background .4s, padding .4s, border-color .4s; }
+.ready .nav { opacity: 1; }
+.logo { font: 400 19px/1 var(--mark); letter-spacing: .3em; margin-right: -.3em; text-decoration: none; color: var(--bright); white-space: nowrap; }
+.links { display: flex; align-items: center; gap: clamp(20px, 2.6vw, 40px); }
+.links a { font: 500 13px/1 var(--cond); letter-spacing: .26em; text-decoration: none; color: rgba(241,235,223,.78); position: relative; padding: 6px 0; transition: color .3s; }
+.links a::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .5s var(--ease); }
+.links a:hover { color: var(--bright); } .links a:hover::after { transform: scaleX(1); transform-origin: left; }
+.links a.book { border: 1px solid rgba(241,235,223,.45); padding: 11px 20px; border-radius: 999px; color: var(--bright); transition: background .35s, color .35s; }
+.links a.book::after { display: none; }
+.links a.book:hover { background: var(--bright); color: #000; }
+.menu { display: none; background: none; border: 0; padding: 8px 0; cursor: pointer; font: 500 13px/1 var(--cond); letter-spacing: .26em; color: var(--bright); }
 
-/* Real, not staged */
-.real { text-align: center; padding-block: clamp(100px, 14vw, 190px); }
-.real p.big { max-width: 22ch; margin: 0 auto; font: 400 clamp(32px, 4.6vw, 66px)/1.12 var(--title); color: var(--text); }
-.real p.small { margin: 26px auto 0; max-width: 50ch; color: var(--muted); }
+/* ---------- Hero ---------- */
+.hero { position: sticky; top: 0; z-index: 0; height: 100svh; min-height: 560px; overflow: hidden; background: #000; }
+.stage { position: absolute; inset: 0; overflow: hidden; }
+.stage .vids { position: absolute; inset: 0; transform: scale(1.14); transition: transform 2.6s var(--ease); }
+.ready .stage .vids { transform: none; }
+.stage video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.3s ease; }
+.stage video.on { opacity: 1; }
+.stage video.kb { animation: kb 7s var(--ease) both; }
+@keyframes kb { from { transform: scale(1.07); } to { transform: none; } }
+.stage .shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(0,0,0,.6) 0%, rgba(0,0,0,0) 24%, rgba(0,0,0,0) 42%, rgba(0,0,0,.82) 100%); }
+.tick { position: absolute; width: 18px; height: 18px; border: 0 solid rgba(255,255,255,.55); pointer-events: none; }
+.tick.a { left: var(--gut); top: 96px; border-width: 1px 0 0 1px; } .tick.b { right: var(--gut); top: 96px; border-width: 1px 1px 0 0; }
+.tick.c { left: var(--gut); bottom: 24px; border-width: 0 0 1px 1px; } .tick.d { right: var(--gut); bottom: 24px; border-width: 0 1px 1px 0; }
+.meta { position: absolute; right: calc(var(--gut) + 30px); top: 104px; display: flex; align-items: center; gap: 16px; font: 500 12px/1 var(--cond); letter-spacing: .2em; color: rgba(241,235,223,.85); }
+.rec { display: inline-flex; align-items: center; gap: 8px; }
+.rec::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #E0563F; animation: blink 1.6s steps(1) infinite; }
+@keyframes blink { 50% { opacity: .15; } }
+.tc { font-variant-numeric: tabular-nums; }
+.pause { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,255,255,.4); background: rgba(0,0,0,.25); color: #fff; cursor: pointer; display: grid; place-items: center; padding: 0; }
+.pause svg { width: 12px; height: 12px; fill: currentColor; } .pause .i-play { display: none; }
+.pause[aria-pressed="true"] .i-play { display: block; } .pause[aria-pressed="true"] .i-pause { display: none; }
+.copy { position: absolute; left: var(--gut); right: var(--gut); bottom: clamp(40px, 8vh, 88px); display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 18px 40px; }
+.copy .kick { grid-column: 1 / -1; color: rgba(241,235,223,.75); }
+.hero h1 { font: 300 clamp(58px, 9vw, 158px)/.9 var(--title); letter-spacing: -.025em; color: var(--bright); max-width: 11ch; }
+.hero h1 em, .end h2 em { font-style: italic; }
+.lower { display: grid; gap: 22px; justify-items: start; max-width: 340px; padding-bottom: 8px; }
+.lower p { color: rgba(241,235,223,.8); font-size: 16px; }
+.cta { display: inline-flex; align-items: center; gap: 14px; text-decoration: none; font: 500 13px/1 var(--cond); letter-spacing: .28em; color: #000; background: var(--bright); padding: 18px 26px; border-radius: 999px; transition: background .35s, gap .35s var(--ease); white-space: nowrap; }
+.cta::after { content: '→'; font: 400 16px/1 var(--sans); letter-spacing: 0; }
+.cta:hover { background: var(--warm); gap: 22px; }
+.js .hero .fade { opacity: 0; transform: translateY(14px); transition: opacity 1.2s ease, transform 1.4s var(--ease); transition-delay: var(--d, .8s); }
+.ready .hero .fade { opacity: 1; transform: none; }
+.ready .hero .split .w > span { transform: none; }
+.cue { position: absolute; left: 50%; bottom: 22px; width: 1px; height: 46px; background: rgba(255,255,255,.18); overflow: hidden; }
+.cue::after { content: ''; position: absolute; left: 0; top: -46px; width: 1px; height: 46px; background: var(--bright); animation: cue 2.2s var(--ease) infinite; }
+@keyframes cue { to { top: 46px; } }
 
-/* Recent weddings: 20 stills in black and white, colour when you point at one (phones: when it reaches the middle) */
-.work-h { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px 50px; flex-wrap: wrap; margin-bottom: clamp(36px, 5vw, 60px); }
-.work-h p { color: var(--muted); max-width: 36ch; }
-.stills { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
-.stills button { padding: 0; border: 0; background: #111; cursor: zoom-in; overflow: hidden; }
-.stills img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; filter: grayscale(1) contrast(1.08); transition: filter .9s ease; }
-.stills button:hover img, .stills button:focus-visible img, .stills button.live img { filter: none; }
-.reel { position: relative; margin: 4px calc(-1 * var(--gut)); aspect-ratio: 2.39 / 1; overflow: hidden; background: #050505; }
-.reel video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-@media (max-width: 760px) { .stills { grid-template-columns: 1fr 1fr; } .reel { aspect-ratio: 4 / 3; } }
+main { position: relative; z-index: 2; background: var(--bg); box-shadow: 0 -60px 120px rgba(0,0,0,.9); }
 
-/* What we do: one screen, a programme of services */
-.svc-h { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px 50px; flex-wrap: wrap; margin-bottom: clamp(36px, 5vw, 56px); }
-.svc-h p { color: var(--muted); max-width: 38ch; }
-.screen { position: relative; aspect-ratio: 2.39 / 1; overflow: hidden; background: #070707; touch-action: pan-y; }
-.screen .m { position: absolute; inset: 0; opacity: 0; transition: opacity .6s ease; }
-.screen .m.on { opacity: 1; }
-.screen .m img, .screen .m video { width: 100%; height: 100%; object-fit: cover; }
-.screen .m > img { object-position: 50% 28%; }
-.screen .m::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,.72) 0%, rgba(0,0,0,.25) 46%, rgba(0,0,0,0) 70%), linear-gradient(0deg, rgba(0,0,0,.5), rgba(0,0,0,0) 40%); }
-.screen .todo { display: grid; place-items: center; height: 100%; border: 1px dashed rgba(216,210,199,.25); font: 400 14px/1.5 var(--cond); letter-spacing: .2em; color: var(--muted); text-align: center; padding: 0 20px; }
-.quad { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 3px; height: 100%; background: #000; }
-.quad div { position: relative; overflow: hidden; } .quad img { filter: saturate(.85); }
-.quad span { position: absolute; left: 8px; top: 8px; font: 500 11px/1 var(--cond); letter-spacing: .2em; color: #fff; background: rgba(0,0,0,.6); padding: 5px 7px; }
-.quad .live { left: auto; right: 8px; } .quad .live::before { content: ''; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #E0453A; margin-right: 6px; vertical-align: 1px; }
-.cap { position: absolute; left: clamp(20px, 4vw, 56px); bottom: clamp(20px, 4vw, 52px); max-width: min(560px, 80%); z-index: 2; pointer-events: none; }
-.cap .g { font: 400 13px/1 var(--cond); letter-spacing: .35em; color: var(--warm); }
-.cap h3 { margin-top: 12px; font: 400 clamp(38px, 5vw, 76px)/1 var(--title); color: #fff; }
-.cap p { margin-top: 10px; font: 400 clamp(19px, 1.8vw, 24px)/1.3 var(--title); color: rgba(255,255,255,.85); }
-.count { position: absolute; right: clamp(16px, 3vw, 40px); bottom: clamp(16px, 3vw, 40px); z-index: 2; font: 400 13px/1 var(--cond); letter-spacing: .25em; color: rgba(255,255,255,.75); }
-.gets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 30px; list-style: none; margin: 0; padding: 22px 0 0; min-height: 70px; color: var(--text); font-size: 16px; }
-.gets li { padding: 10px 0 10px 18px; border-top: 1px solid var(--line); position: relative; }
-.gets li::before { content: ''; position: absolute; left: 0; top: 1.25em; width: 8px; height: 1px; background: var(--warm); }
-.prog { display: grid; grid-template-columns: 1fr 1fr 1.6fr 1fr; gap: 30px; margin-top: clamp(40px, 5vw, 64px); padding-top: 30px; border-top: 1px solid var(--line); }
-.prog h4 { margin: 0 0 14px; font: 400 13px/1 var(--cond); letter-spacing: .35em; color: var(--muted); font-weight: 400; }
-.prog .opts { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
-.prog .big .opts { display: grid; grid-template-columns: 1fr 1fr; column-gap: 20px; }
-.prog button { background: none; border: 0; padding: 4px 0; text-align: left; cursor: pointer; font: 400 clamp(22px, 2vw, 28px)/1.2 var(--title); color: var(--muted); transition: color .2s; }
-.prog button:hover { color: var(--text); }
-.prog button[aria-pressed="true"] { color: var(--warm); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
-@media (max-width: 900px) {
-  .screen { aspect-ratio: 4 / 5; }
-  .screen .m::after { background: linear-gradient(0deg, rgba(0,0,0,.8) 0%, rgba(0,0,0,.2) 55%, rgba(0,0,0,0) 75%); }
-  .gets { grid-template-columns: 1fr; }
-  .prog { grid-template-columns: 1fr 1fr; gap: 30px 20px; }
-  .prog .big { grid-column: 1 / -1; }
-}
+/* ---------- 01 Your day ---------- */
+.plan { padding: var(--sec) 0; }
+.plan .wrap { display: grid; grid-template-columns: 1.05fr .95fr; grid-template-areas: "head phone" "steps phone"; gap: 0 clamp(40px, 7vw, 120px); align-items: start; }
+.plan .head { grid-area: head; }
+.plan .head .lede { margin-top: 26px; }
+.plan .phone-wrap { grid-area: phone; position: sticky; top: 13vh; display: grid; place-items: center; padding: 20px 0; }
+.steps { grid-area: steps; list-style: none; padding: 0; margin-top: 56px; counter-reset: s; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 6px 10px; padding: 34px 0 36px; border-top: 1px solid var(--line); transition: opacity .6s ease; }
+.steps li:last-child { border-bottom: 1px solid var(--line); }
+.steps li::before { content: counter(s, decimal-leading-zero); grid-row: span 2; font: 300 40px/1 var(--title); color: var(--warm); }
+.steps h3 { font: 400 clamp(24px, 2.2vw, 30px)/1.2 var(--title); color: var(--bright); }
+.steps p { color: var(--muted); max-width: 46ch; }
+@media (min-width: 761px) { .steps.live li { opacity: .32; } .steps.live li.act { opacity: 1; } }
+.phone { width: min(320px, 78vw); aspect-ratio: 9 / 18.6; border-radius: 48px; padding: 12px; background: linear-gradient(145deg, #2a2926, #0b0b0a 40%, #1a1917); box-shadow: 0 50px 140px rgba(0,0,0,.9), 0 0 0 1px rgba(255,255,255,.08), inset 0 0 0 1px rgba(255,255,255,.06); position: relative; }
+.phone::before { content: ''; position: absolute; top: 24px; left: 50%; width: 92px; height: 26px; margin-left: -46px; border-radius: 20px; background: #000; z-index: 2; }
+.scr { height: 100%; border-radius: 37px; background: #0E0E0D; padding: 64px 20px 18px; overflow: hidden; position: relative; display: flex; flex-direction: column; }
+.scr .k { font: 500 10px/1 var(--cond); letter-spacing: .3em; color: var(--muted); }
+.scr h4 { font: 400 26px/1.1 var(--title); color: var(--bright); margin: 8px 0 18px; }
+.tl { position: relative; display: grid; gap: 4px; }
+.tl::before { content: ''; position: absolute; left: 54px; top: 10px; bottom: 10px; width: 1px; background: var(--line); }
+.tl .r { display: grid; grid-template-columns: 46px 1fr; gap: 16px; align-items: start; padding: 7px 8px 7px 0; border-radius: 10px; position: relative; transition: background .5s, opacity .6s, transform .8s var(--ease); }
+.js .tl .r { opacity: 0; transform: translateY(10px); }
+.tl.go .r { opacity: .55; transform: none; transition-delay: calc(var(--i) * 90ms); }
+.tl.go .r.now { opacity: 1; background: rgba(232,220,194,.07); transition-delay: 0s; }
+.tl .r::after { content: ''; position: absolute; left: 51px; top: 13px; width: 7px; height: 7px; border-radius: 50%; background: #3a3833; box-shadow: 0 0 0 3px #0E0E0D; transition: background .4s, box-shadow .4s; }
+.tl .r.now::after { background: var(--warm); box-shadow: 0 0 0 3px #0E0E0D, 0 0 14px rgba(232,220,194,.6); }
+.tl b { font: 500 11px/1.9 var(--cond); letter-spacing: .06em; color: var(--warm); text-align: right; white-space: nowrap; }
+.tl span { font-size: 13px; line-height: 1.35; color: var(--bright); padding-left: 8px; }
+.tl small { display: block; color: var(--muted); font-size: 11px; margin-top: 2px; }
+.scr .ex { margin-top: auto; text-align: center; font: 500 10px/1 var(--cond); letter-spacing: .3em; color: #4c4a45; padding-top: 12px; }
 
-.end { text-align: center; padding-block: clamp(110px, 16vw, 220px); }
-.end h2 { font: 400 clamp(54px, 9vw, 140px)/.95 var(--title); margin-bottom: 40px; }
-footer { padding: 28px var(--gut) 34px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; color: var(--muted); font: 400 14px/1 var(--cond); letter-spacing: .15em; border-top: 1px solid var(--line); }
-footer > span:first-child { display: flex; flex-wrap: wrap; gap: 12px 22px; min-width: 0; }
-footer a { text-decoration: none; } footer a:hover { color: var(--text); }
+/* ---------- 02 Real ---------- */
+.real { padding: calc(var(--sec) * .6) 0 var(--sec); }
+.real .wrap { max-width: 1400px; }
+.real .big { font: 300 clamp(36px, 5.4vw, 86px)/1.08 var(--title); letter-spacing: -.012em; color: var(--bright); margin-top: 36px; max-width: 21ch; }
+.real .big .rw { opacity: .14; transition: opacity .35s ease; }
+.real .big .rw.on { opacity: 1; }
+.no-js-words .real .big .rw { opacity: 1; }
+.real .small { color: var(--muted); max-width: 52ch; margin: 44px 0 0 auto; font-size: 18px; }
 
-/* Lightbox */
-.lb { width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(0,0,0,.96); color: var(--text); }
+/* service names rolling by */
+.ribbon { overflow: hidden; border-block: 1px solid var(--line); padding: clamp(18px, 3vw, 34px) 0; }
+.ribbon .track { display: flex; width: max-content; animation: slide var(--dur, 60s) linear infinite; }
+.ribbon span { font: 300 clamp(44px, 7vw, 110px)/1 var(--title); white-space: nowrap; color: var(--bright); padding-right: clamp(28px, 4vw, 64px); display: inline-flex; align-items: center; gap: clamp(28px, 4vw, 64px); }
+.ribbon span:nth-child(even) { font-style: italic; color: transparent; -webkit-text-stroke: 1px rgba(216,210,199,.55); }
+.ribbon span::after { content: ''; width: 9px; height: 9px; border-radius: 50%; background: var(--warm); opacity: .7; -webkit-text-stroke: 0; }
+@keyframes slide { to { transform: translateX(-50%); } }
+
+/* ---------- 03 Work ---------- */
+.work { padding: var(--sec) 0 0; }
+.work-h { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px 60px; flex-wrap: wrap; margin-bottom: clamp(48px, 7vw, 100px); }
+.collage { display: flex; gap: clamp(12px, 2.2vw, 32px); align-items: flex-start; }
+.collage .col { flex: 1; display: grid; gap: clamp(12px, 2.2vw, 32px); will-change: transform; }
+.collage .col:nth-child(2) { margin-top: clamp(70px, 16vh, 200px); }
+.collage .col:nth-child(3) { margin-top: clamp(24px, 6vh, 80px); }
+.shot { all: unset; display: block; position: relative; overflow: hidden; cursor: zoom-in; background: var(--panel); border-radius: 2px; }
+.shot img { width: 100%; height: auto; transition: transform 1.6s var(--ease), opacity .8s; }
+.shot:hover img { transform: scale(1.045); }
+.shot:focus-visible { outline: 1px solid var(--warm); outline-offset: 3px; }
+.film { position: relative; margin: clamp(90px, 13vw, 190px) 0; height: min(56.25vw, 92vh); overflow: hidden; background: #050505; clip-path: inset(var(--cy, 8%) var(--cx, 10%) round 4px); }
+.film video { width: 100%; height: 100%; object-fit: cover; transform: scale(var(--fs, 1.14)); }
+.film .lab { position: absolute; left: var(--gut); right: var(--gut); bottom: clamp(18px, 3vw, 36px); display: flex; justify-content: space-between; gap: 20px; font: 500 12px/1 var(--cond); letter-spacing: .28em; color: rgba(241,235,223,.85); }
+.film::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,.55), transparent 32%); pointer-events: none; }
+.film .lab { z-index: 2; }
+.rows { display: grid; gap: clamp(10px, 1.4vw, 18px); padding-bottom: var(--sec); }
+.row { overflow: hidden; }
+.row .track { display: flex; width: max-content; animation: slide var(--dur, 80s) linear infinite; }
+.row.rev .track { animation-direction: reverse; }
+.row:hover .track { animation-play-state: paused; }
+.row .shot { height: clamp(200px, 27vw, 400px); margin-right: clamp(10px, 1.4vw, 18px); flex: none; }
+.row .shot img { height: 100%; width: auto; }
+
+/* ---------- 04 Services ---------- */
+.svc { padding: var(--sec) 0; border-top: 1px solid var(--line); }
+.svc-h { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px 60px; flex-wrap: wrap; margin-bottom: clamp(40px, 6vw, 90px); }
+.svc-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); gap: clamp(36px, 6vw, 100px); align-items: start; }
+.slist { list-style: none; padding: 0; }
+.grp { font: 500 12px/1 var(--cond); letter-spacing: .32em; color: var(--muted); padding: 54px 0 16px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; }
+.grp:first-child { padding-top: 0; }
+.srow { all: unset; box-sizing: border-box; width: 100%; cursor: pointer; display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 8px 14px; padding: 28px 0 30px; border-bottom: 1px solid var(--line); opacity: .34; transition: opacity .5s ease; }
+.srow:focus-visible { outline: 1px solid var(--warm); outline-offset: 2px; }
+.srow.act { opacity: 1; }
+.srow .n { font: 500 13px/1 var(--cond); letter-spacing: .14em; color: var(--warm); padding-top: 12px; }
+.srow .nm { font: 300 clamp(34px, 3.5vw, 56px)/1 var(--title); letter-spacing: -.01em; color: var(--bright); transition: transform .7s var(--ease); display: block; }
+.srow.act .nm { transform: translateX(10px); font-style: italic; }
+.srow .ln { grid-column: 2; color: var(--text); font-size: 16px; }
+.srow .gt { grid-column: 2; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.srow .gt i { font: 400 13px/1.3 var(--sans); font-style: normal; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; }
+.screen { position: sticky; top: 12vh; height: 76vh; min-height: 420px; border-radius: 4px; overflow: hidden; background: var(--panel); }
+.screen .m { position: absolute; inset: 0; opacity: 0; transform: scale(1.05); transition: opacity .8s ease, transform 1.6s var(--ease); }
+.screen .m.on { opacity: 1; transform: none; }
+.screen .m > video, .screen .m > img { width: 100%; height: 100%; object-fit: cover; }
+.screen::after { content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(180deg, rgba(0,0,0,.55), transparent 22%, transparent 62%, rgba(0,0,0,.8)); }
+.screen .top, .screen .cap { position: absolute; left: 22px; right: 22px; z-index: 3; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; font: 500 12px/1 var(--cond); letter-spacing: .26em; color: rgba(241,235,223,.85); }
+.screen .top { top: 22px; align-items: center; }
+.screen .cap { bottom: 22px; }
+.screen .cap h3 { font: 300 clamp(30px, 3vw, 48px)/1 var(--title); letter-spacing: -.01em; color: var(--bright); font-style: italic; }
+.quad { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 3px; background: #000; }
+.quad div { position: relative; overflow: hidden; } .quad img { width: 100%; height: 100%; object-fit: cover; }
+.quad span { position: absolute; left: 10px; top: 10px; font: 500 10px/1 var(--cond); letter-spacing: .2em; background: rgba(0,0,0,.6); padding: 5px 7px; color: #fff; }
+.quad .live { left: auto; right: 10px; background: #B3261E; }
+.ph { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 14px; text-align: center; padding: 30px; background: radial-gradient(120% 90% at 50% 40%, #1d1b18, #090908 70%); }
+.ph img { width: clamp(70px, 9vw, 120px); height: auto; opacity: .1; margin-top: -40px; }
+.ph small { font: 500 11px/1.4 var(--cond); letter-spacing: .3em; color: var(--muted); }
+.ph .hint { color: var(--warm); letter-spacing: .12em; }
+
+/* ---------- Closing ---------- */
+.end { position: relative; min-height: 100svh; display: grid; place-content: center; justify-items: center; gap: 44px; text-align: center; overflow: hidden; padding: var(--sec) var(--gut); }
+.end .bg { position: absolute; inset: 0; background-size: cover; background-position: 50% 35%; opacity: .32; transform: scale(1.15); transition: transform 3s var(--ease); }
+.end.in .bg { transform: none; }
+.end::before { content: ''; position: absolute; inset: 0; z-index: 1; background: radial-gradient(70% 60% at 50% 50%, rgba(0,0,0,.25), #000 100%); }
+.end > * { position: relative; z-index: 2; }
+.end h2 { font: 300 clamp(60px, 11vw, 190px)/.9 var(--title); letter-spacing: -.025em; color: var(--bright); max-width: 10ch; }
+.end .note { font: 500 12px/1.4 var(--cond); letter-spacing: .3em; color: var(--muted); }
+
+footer { position: relative; z-index: 2; background: var(--bg); padding: clamp(60px, 8vw, 110px) var(--gut) calc(26px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); }
+.fw { font: 400 clamp(40px, 10.6vw, 200px)/.9 var(--mark); letter-spacing: .04em; white-space: nowrap; text-align: center; color: var(--bright); overflow: hidden; }
+.fl { display: flex; justify-content: space-between; align-items: center; gap: 18px 30px; flex-wrap: wrap; margin-top: clamp(40px, 6vw, 80px); padding-top: 24px; border-top: 1px solid var(--line); font: 500 12px/1.4 var(--cond); letter-spacing: .24em; color: var(--muted); }
+.fl nav { display: flex; gap: 14px 28px; flex-wrap: wrap; }
+.fl a { text-decoration: none; transition: color .3s; } .fl a:hover { color: var(--bright); }
+
+/* cursor label over photos and films */
+.cursor { position: fixed; left: 0; top: 0; z-index: 95; width: 86px; height: 86px; margin: -43px 0 0 -43px; border-radius: 50%; display: grid; place-items: center; pointer-events: none; background: rgba(241,235,223,.92); color: #000; font: 500 11px/1 var(--cond); letter-spacing: .24em; opacity: 0; transform: translate(-200px, -200px) scale(.4); transition: opacity .3s, scale .4s var(--ease); scale: .4; }
+.cursor.big { opacity: 1; scale: 1; }
+
+/* lightbox */
+.lb { border: 0; padding: 0; margin: 0; width: 100vw; height: 100dvh; max-width: none; max-height: none; background: rgba(0,0,0,.96); color: var(--text); }
 .lb[open] { display: grid; place-items: center; } .lb::backdrop { background: transparent; }
-.lb img { max-width: calc(100vw - 140px); max-height: calc(100dvh - 90px); object-fit: contain; }
-.lb button { position: absolute; background: none; border: 0; color: inherit; cursor: pointer; font: 400 15px var(--cond); letter-spacing: .2em; }
-.lb .x { top: 18px; right: var(--gut); padding: 8px 0; }
-.lb .p, .lb .n { top: 50%; transform: translateY(-50%); font: 400 60px/1 var(--title); padding: 10px 18px; letter-spacing: 0; }
+.lb img { max-width: 92vw; max-height: 88dvh; width: auto; height: auto; }
+.lb button { position: absolute; background: none; border: 0; color: inherit; cursor: pointer; font: 500 13px var(--cond); letter-spacing: .24em; }
+.lb .x { top: calc(18px + env(safe-area-inset-top)); right: var(--gut); padding: 8px 0; }
+.lb .p, .lb .n { top: 50%; transform: translateY(-50%); font: 300 60px/1 var(--title); padding: 10px 18px; letter-spacing: 0; }
 .lb .p { left: 6px; } .lb .n { right: 6px; }
-@media (max-width: 760px) { .lb img { max-width: 100vw; max-height: calc(100dvh - 150px); } .lb .p, .lb .n { top: auto; bottom: 24px; transform: none; } }
+.lb .ct { position: absolute; left: var(--gut); top: calc(26px + env(safe-area-inset-top)); font: 500 12px/1 var(--cond); letter-spacing: .24em; color: var(--muted); }
 
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .card { display: none; } .js .frame { clip-path: none; } .js .bar > *, .js .pause { opacity: 1; } .grain { animation: none; } .stills img, .screen .m { transition: none; } }
+/* ---------- Phones ---------- */
+@media (max-width: 760px) {
+  body { font-size: 16px; }
+  .logo { font-size: 16px; letter-spacing: .26em; }
+  .menu { display: block; position: relative; z-index: 2; }
+  .links { position: fixed; inset: 0; z-index: 1; flex-direction: column; align-items: flex-start; justify-content: center; gap: 6px; padding: 0 var(--gut); background: #000; opacity: 0; visibility: hidden; transition: opacity .4s, visibility .4s; }
+  .links a { font: 300 46px/1.25 var(--title); letter-spacing: 0; color: var(--bright); transform: translateY(20px); opacity: 0; transition: transform .7s var(--ease), opacity .7s; }
+  .links a::after { display: none; }
+  .links a.book { font: 500 14px/1 var(--cond); letter-spacing: .28em; margin-top: 30px; padding: 18px 28px; }
+  .open .links { opacity: 1; visibility: visible; }
+  .open .links a { transform: none; opacity: 1; }
+  .open .links a:nth-child(2) { transition-delay: .05s; } .open .links a:nth-child(3) { transition-delay: .1s; } .open .links a:nth-child(4) { transition-delay: .15s; } .open .links a:nth-child(5) { transition-delay: .2s; }
+  .open .nav, .nav.open { transform: none; background: transparent; border-color: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+
+  /* Hero on phones: the wide film is shown whole, framed like a cinema screen, never cropped */
+  .hero:not(.tall) { height: auto; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding: calc(84px + env(safe-area-inset-top)) 0 28px; }
+  .hero:not(.tall) .copy { display: contents; }
+  .hero:not(.tall) .copy .kick { order: 1; padding: 0 var(--gut); font-size: 11px; letter-spacing: .26em; }
+  .hero:not(.tall) h1 { order: 2; padding: 0 var(--gut); margin-top: 18px; font-size: clamp(48px, 14.6vw, 76px); }
+  .hero:not(.tall) .stage { order: 3; position: relative; inset: auto; width: 100%; aspect-ratio: 16 / 9; margin: 26px 0 0; }
+  .hero:not(.tall) .stage .shade { background: linear-gradient(0deg, rgba(0,0,0,.45), transparent 40%); }
+  .hero:not(.tall) .tick, .hero:not(.tall) .cue { display: none; }
+  .hero:not(.tall) .meta { top: auto; bottom: 12px; right: 12px; gap: 12px; font-size: 10px; }
+  .hero:not(.tall) .pause { width: 28px; height: 28px; }
+  .hero:not(.tall) .under { order: 4; display: flex; justify-content: space-between; padding: 12px var(--gut) 0; font: 500 10px/1 var(--cond); letter-spacing: .26em; color: var(--muted); }
+  .hero:not(.tall) .lower { order: 5; max-width: none; padding: 26px var(--gut) 0; gap: 22px; }
+  .hero:not(.tall) .lower .cta { width: 100%; justify-content: center; }
+  .hero.tall h1 { font-size: clamp(48px, 14vw, 72px); }
+  .hero.tall .copy { grid-template-columns: 1fr; }
+  .hero.tall .tick, .hero.tall .meta { display: none; }
+
+  .plan .wrap { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "phone" "steps"; }
+  .plan .phone-wrap { position: relative; top: 0; margin-top: 56px; }
+  .steps { margin-top: 40px; }
+  .steps li { grid-template-columns: 54px minmax(0, 1fr); padding: 26px 0 28px; }
+  .steps li::before { font-size: 32px; }
+  .real .small { margin-left: 0; font-size: 16px; }
+  .collage .col:nth-child(2) { margin-top: 64px; }
+  .film { height: 56.25vw; margin: 80px 0; }
+  .film .lab { font-size: 10px; letter-spacing: .22em; }
+  .row .shot { height: 210px; }
+  .svc-body { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .screen { order: -1; top: 0; height: auto; min-height: 0; aspect-ratio: 16 / 10; margin: 0 calc(var(--gut) * -1); border-radius: 0; z-index: 5; }
+  .screen .top, .screen .cap { left: 14px; right: 14px; font-size: 10px; }
+  .screen .top { top: 14px; } .screen .cap { bottom: 14px; }
+  .screen .cap h3 { font-size: 30px; }
+  .slist { padding-top: 26px; }
+  .grp { padding-top: 40px; }
+  .srow { grid-template-columns: 38px minmax(0, 1fr); padding: 22px 0 24px; }
+  .srow .nm { font-size: 34px; }
+  .srow .ln { font-size: 15px; }
+  .end h2 { font-size: clamp(56px, 17vw, 90px); }
+  .end .cta { width: 100%; justify-content: center; }
+  .fl { flex-direction: column; align-items: flex-start; }
+  .lb img { max-width: 100vw; max-height: calc(100dvh - 150px); }
+  .lb .p, .lb .n { top: auto; bottom: 24px; transform: none; }
+}
+@media (min-width: 761px) { .hero .under { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .grain, .ribbon .track, .row .track, .cue::after, .rec::before { animation: none; }
+  .js [data-reveal], .js .hero .fade, .js .split .w > span, .js .tl .r, .js .nav { opacity: 1; transform: none; transition: none; }
+  .stage .vids { transform: none; } .row { overflow-x: auto; } .ribbon { display: none; }
+  .real .big .rw { opacity: 1; } .film { clip-path: none; } .film video { transform: none; }
+}
 </style>
-<script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to the page</a>
 <div class="grain" aria-hidden="true"></div>
-<div class="card" aria-hidden="true"><img src="media/site/glaz-g.png" alt=""><span class="wm">GLAZ STUDIOS</span><span class="pr">PRESENTS</span></div>
+<div id="intro" aria-hidden="true"><img src="media/site/glaz-g.png" alt=""><span class="wm">GLAZ STUDIOS</span><span class="ln"></span></div>
 
-<section class="hero" id="hero" aria-label="Glaz Studios" style="padding:0">
-  <div class="bar t">
-    <a class="logo" href="./" aria-label="Glaz Studios, home">GLAZ STUDIOS</a>
-    <nav class="links" id="links" aria-label="Main"><a href="#your-day">YOUR DAY</a><a href="#work">WORK</a><a href="#services">SERVICES</a><a href="about">ABOUT</a><a href="faq">FAQ</a><a href="book">BOOK</a></nav>
-    <button class="menu" id="menu" type="button" aria-expanded="false" aria-controls="links">MENU</button>
+<header class="nav" id="nav">
+  <a class="logo" href="./" aria-label="Glaz Studios, home">GLAZ STUDIOS</a>
+  <nav class="links" id="links" aria-label="Main"><a href="#work">WORK</a><a href="#services">SERVICES</a><a href="about">ABOUT</a><a href="faq">FAQ</a><a class="book" href="book">BOOK</a></nav>
+  <button class="menu" id="menu" type="button" aria-expanded="false" aria-controls="links">MENU</button>
+</header>
+
+<section class="hero" id="hero" data-sec="hero" aria-label="Glaz Studios">
+  <div class="stage" id="stage">
+    <div class="vids"><video id="va" muted playsinline preload="auto" aria-hidden="true"></video><video id="vb" muted playsinline preload="auto" aria-hidden="true"></video></div>
+    <div class="shade"></div>
+    <span class="tick a"></span><span class="tick b"></span><span class="tick c"></span><span class="tick d"></span>
+    <div class="meta fade" style="--d:1.4s"><span class="rec">REC</span><span class="tc" id="tc">00:00:00:00</span><button class="pause" id="pause" type="button" aria-pressed="false" aria-label="Pause the film"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M6 4h4v16H6zM14 4h4v16h-4z"/><path class="i-play" d="M7 4l13 8-13 8z"/></svg></button></div>
   </div>
-  <div class="frame"><video id="va" muted playsinline preload="auto" aria-hidden="true"></video><video id="vb" muted playsinline preload="auto" aria-hidden="true"></video></div>
-  <button class="pause" id="pause" type="button" aria-pressed="false" aria-label="Pause the film"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3v14H7zM14 5h3v14h-3z"/><path class="i-play" d="M8 5l11 7-11 7z"/></svg></button>
-  <div class="bar b">
-    <h1 class="sub-line">Your whole wedding day, from getting ready to the last song.</h1>
-    <a class="cta" href="book">CHECK YOUR DATE</a>
+  <div class="copy" id="copy">
+    <p class="kick fade" style="--d:.5s"><span data-k="hero.kicker">Wedding films &amp; photographs · Cairo</span></p>
+    <h1 class="split" data-k="hero.title" style="--d:.6s">Your day, as it happened.</h1>
+    <div class="lower fade" style="--d:1.2s">
+      <p data-k="hero.line">Your whole wedding day, from getting ready to the last song.</p>
+      <a class="cta" href="book" data-k="hero.cta">CHECK YOUR DATE</a>
+    </div>
   </div>
+  <div class="under fade" style="--d:1.4s" aria-hidden="true"><span>NOW SHOWING</span><span id="clipn">01 / 02</span></div>
+  <span class="cue" aria-hidden="true"></span>
 </section>
 
 <main id="main">
-  <section class="plan" id="your-day" aria-labelledby="day-h"><div class="wrap grid">
-    <div>
-      <h2 class="sec-h" id="day-h"><span class="kick">A PRIVATE LINK FOR EACH COUPLE</span>Your day, written down once</h2>
-      <p class="sec-p">No more sending timings to five different people. After you book, you get your own link to plan the day with us.</p>
-      <ol>
-        <li><h3>Write your day, hour by hour</h3><p>Where you both get ready, the ceremony, the entrance, the dances, the cake, and who to call on the day.</p></li>
-        <li><h3>Change it whenever plans change</h3><p>Open the same link any time. The latest version is the one we work from.</p></li>
-        <li><h3>Every camera has the same plan</h3><p>Each photographer and cinematographer opens the day on their phone, so nobody asks you for timings on your wedding day.</p></li>
-        <li><h3>We go over it together</h3><p>A few days before the wedding, we call you to walk through the whole day.</p></li>
-      </ol>
+  <section class="plan" id="your-day" data-sec="plan your-day" aria-labelledby="day-h"><div class="wrap">
+    <div class="head">
+      <p class="kick" data-reveal><span class="ch">01</span><span data-k="plan.kicker">A private link for each couple</span></p>
+      <h2 class="h2 split" id="day-h" data-reveal data-k="plan.title">Your day, written down once</h2>
+      <p class="lede" data-reveal style="--d:.15s" data-k="plan.intro">No more sending timings to five different people. After you book, you get your own link to plan the day with us.</p>
     </div>
-    <div class="phone" aria-hidden="true"><div class="scr">
+    <div class="phone-wrap" data-reveal style="--d:.1s"><div class="phone" aria-hidden="true"><div class="scr">
       <p class="k">YOUR DAY</p><h4>Hour by hour</h4>
-      <div class="row"><b>2:00 PM</b><span>Bride getting ready<small>Home, with mum and sisters</small></span></div>
-      <div class="row"><b>3:30 PM</b><span>Groom getting ready<small>Hotel room</small></span></div>
-      <div class="row"><b>5:00 PM</b><span>First look<small>Hotel garden</small></span></div>
-      <div class="row"><b>6:30 PM</b><span>Ceremony<small>Church or hall</small></span></div>
-      <div class="row"><b>8:30 PM</b><span>Entrance<small>Ballroom</small></span></div>
-      <div class="row"><b>8:45 PM</b><span>First dance, father and daughter</span></div>
-      <div class="row"><b>10:00 PM</b><span>Cake</span></div>
-      <p class="ex">Example</p>
-    </div></div>
+      <div class="tl" id="tl">
+        <div class="r" style="--i:0"><b>2:00 PM</b><span>Bride getting ready<small>Home, with mum and sisters</small></span></div>
+        <div class="r" style="--i:1"><b>3:30 PM</b><span>Groom getting ready<small>Hotel room</small></span></div>
+        <div class="r" style="--i:2"><b>5:00 PM</b><span>First look<small>Hotel garden</small></span></div>
+        <div class="r" style="--i:3"><b>6:30 PM</b><span>Ceremony<small>Church or hall</small></span></div>
+        <div class="r" style="--i:4"><b>8:30 PM</b><span>Entrance<small>Ballroom</small></span></div>
+        <div class="r" style="--i:5"><b>8:45 PM</b><span>First dance<small>Then father and daughter</small></span></div>
+        <div class="r" style="--i:6"><b>10:00 PM</b><span>Cake</span></div>
+      </div>
+      <p class="ex">EXAMPLE</p>
+    </div></div></div>
+    <ol class="steps" id="steps">
+      <li data-reveal><h3 data-k="plan.steps.0.title">Write your day, hour by hour</h3><p data-k="plan.steps.0.text">Where you both get ready, the ceremony, the entrance, the dances, the cake, and who to call on the day.</p></li>
+      <li data-reveal><h3 data-k="plan.steps.1.title">Change it whenever plans change</h3><p data-k="plan.steps.1.text">Open the same link any time. The latest version is the one we work from.</p></li>
+      <li data-reveal><h3 data-k="plan.steps.2.title">Every camera has the same plan</h3><p data-k="plan.steps.2.text">Each photographer and cinematographer opens the day on their phone, so nobody asks you for timings on your wedding day.</p></li>
+      <li data-reveal><h3 data-k="plan.steps.3.title">We go over it together</h3><p data-k="plan.steps.3.text">A few days before the wedding, we call you to walk through the whole day.</p></li>
+    </ol>
   </div></section>
 
-  <section class="real" aria-labelledby="real-h">
-    <span class="kick" id="real-h">REAL, NOT STAGED</span>
-    <p class="big">We keep your day the way it really happened.</p>
-    <p class="small">We don’t pose you or ask you to do it again. We follow the whole day, start to end, and catch the moments as they come: the tears, the laughs and the dance floor.</p>
+  <section class="real" id="real" data-sec="real" aria-labelledby="real-h"><div class="wrap">
+    <p class="kick" id="real-h" data-reveal><span class="ch">02</span><span data-k="real.kicker">Real, not staged</span></p>
+    <p class="big" id="realbig" data-k="real.big">We keep your day the way it really happened.</p>
+    <p class="small" data-reveal data-k="real.small">We don’t pose you or ask you to do it again. We follow the whole day, start to end, and catch the moments as they come: the tears, the laughs and the dance floor.</p>
+  </div></section>
+
+  <div class="ribbon" id="ribbon" aria-hidden="true"><div class="track" id="ribbon-t"></div></div>
+
+  <section class="work" id="work" data-sec="work" aria-labelledby="work-h">
+    <div class="wrap">
+      <div class="work-h">
+        <div><p class="kick" data-reveal><span class="ch">03</span><span data-k="work.kicker">Selected work</span></p><h2 class="h2 split" id="work-h" data-reveal data-k="work.title">Recent weddings</h2></div>
+        <p class="lede" data-reveal style="--d:.15s" data-k="work.note">A few frames from recent weddings. Tap any photo to see it larger.</p>
+      </div>
+      <div class="collage" id="collage"></div>
+    </div>
+    <div class="film" id="film" data-cursor="FILM"><video id="film-v" muted loop playsinline preload="none" aria-hidden="true"></video><div class="lab"><span>FROM OUR FILMS</span><span class="tc" id="ftc">00:00:00:00</span></div></div>
+    <div class="rows" id="rows"></div>
   </section>
 
-  <section id="work" aria-labelledby="work-h" style="padding-top:0"><div class="wrap">
-    <div class="work-h"><h2 class="sec-h" id="work-h"><span class="kick">STILLS</span>Recent weddings</h2><p>Shown in black and white. Tap a photo to see it as it was delivered.</p></div>
-    <div class="stills" id="stills-a"></div>
-    <div class="reel" id="reel"><video id="reel-v" muted loop playsinline preload="none" aria-hidden="true" poster="media/site/packages-bg-start.jpg"></video></div>
-    <div class="stills" id="stills-b"></div>
-  </div></section>
-
-  <section id="services" aria-labelledby="svc-h"><div class="wrap">
-    <div class="svc-h"><h2 class="sec-h" id="svc-h"><span class="kick">WHAT WE DO</span>One team for the whole day</h2><p>Choose a service to see it. Every part of your day is planned together, so each camera knows its moment.</p></div>
-    <div class="screen" id="screen" aria-live="polite">
-      <div class="cap"><p class="g" id="cap-g"></p><h3 id="cap-h"></h3><p id="cap-p"></p></div>
-      <p class="count" id="count"></p>
+  <section class="svc" id="services" data-sec="svc services" aria-labelledby="svc-h"><div class="wrap">
+    <div class="svc-h">
+      <div><p class="kick" data-reveal><span class="ch">04</span><span data-k="svc.kicker">What we do</span></p><h2 class="h2 split" id="svc-h" data-reveal data-k="svc.title">One team for the whole day</h2></div>
+      <p class="lede" data-reveal style="--d:.15s" data-k="svc.intro">Every part of your day is planned together, so each camera knows its moment.</p>
     </div>
-    <ul class="gets" id="gets"></ul>
-    <div class="prog" id="prog" role="group" aria-label="Services"></div>
+    <div class="svc-body">
+      <ul class="slist" id="slist"></ul>
+      <div class="screen" id="screen" aria-live="polite">
+        <div class="top"><span class="rec" id="sgrp"></span><span class="tc" id="scount"></span></div>
+        <div class="cap"><h3 id="sname"></h3></div>
+      </div>
+    </div>
   </div></section>
 
-  <section class="end" id="book" aria-labelledby="end-h"><h2 id="end-h">Tell us your date</h2><a class="cta" href="book">CHECK AVAILABILITY</a></section>
+  <section class="end" id="book" data-sec="end book" aria-labelledby="end-h">
+    <div class="bg" id="end-bg"></div>
+    <p class="kick" data-reveal><span class="ch">05</span><span>Bookings</span></p>
+    <h2 class="split" id="end-h" data-reveal data-k="end.title">Tell us your date</h2>
+    <a class="cta" href="book" data-reveal style="--d:.3s" data-k="end.cta">CHECK AVAILABILITY</a>
+    <p class="note" data-reveal style="--d:.4s">CAIRO, AND WHEREVER YOU CELEBRATE</p>
+  </section>
 </main>
 
-<footer><span><a href="#your-day">YOUR DAY</a><a href="#work">WORK</a><a href="#services">SERVICES</a><a href="book">BOOK</a><a href="mailto:info@glazstudios.com">INFO@GLAZSTUDIOS.COM</a></span><span>GLAZ STUDIOS, CAIRO</span></footer>
+<footer>
+  <p class="fw" aria-hidden="true">GLAZ STUDIOS</p>
+  <div class="fl">
+    <nav aria-label="Footer"><a href="#your-day">YOUR DAY</a><a href="#work">WORK</a><a href="#services">SERVICES</a><a href="book">BOOK</a><a href="mailto:info@glazstudios.com">INFO@GLAZSTUDIOS.COM</a></nav>
+    <span>© <span id="yr">2026</span> GLAZ STUDIOS · CAIRO</span>
+  </div>
+</footer>
 
-<dialog class="lb" id="lb" aria-label="Photo"><img id="lb-img" alt=""><button class="x" id="lb-x" type="button">CLOSE</button><button class="p" id="lb-p" type="button" aria-label="Previous photo">‹</button><button class="n" id="lb-n" type="button" aria-label="Next photo">›</button></dialog>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+<dialog class="lb" id="lb" aria-label="Photo"><span class="ct" id="lb-ct"></span><img id="lb-img" alt=""><button class="x" id="lb-x" type="button">CLOSE</button><button class="p" id="lb-p" type="button" aria-label="Previous photo">‹</button><button class="n" id="lb-n" type="button" aria-label="Next photo">›</button></dialog>
 
 <script>
 (() => {
-  const $ = (id) => document.getElementById(id), root = document.documentElement;
+  const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const root = document.documentElement;
+  const PREVIEW = new URLSearchParams(location.search).get('preview') === '1';
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const phone = matchMedia('(max-width: 760px) and (orientation: portrait)').matches;
-  const touch = matchMedia('(hover: none)').matches;
+  const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const phoneMQ = matchMedia('(max-width: 760px)');
   const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const pad = (n) => String(n).padStart(2, '0');
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const clone = (o) => JSON.parse(JSON.stringify(o));
+  const isObj = (v) => v && typeof v === 'object' && !Array.isArray(v);
+  const getP = (o, p) => p.split('.').reduce((a, k) => (a == null ? undefined : a[k]), o);
+  const setP = (o, p, v) => { const ks = p.split('.'); let a = o; ks.slice(0, -1).forEach((k, i) => { if (a[k] == null) a[k] = /^\d+$/.test(ks[i + 1]) ? [] : {}; a = a[k]; }); a[ks[ks.length - 1]] = v; };
+  const merge = (a, b) => { if (!isObj(b)) return a; for (const k in b) { if (isObj(b[k]) && isObj(a[k])) merge(a[k], b[k]); else if (b[k] != null) a[k] = b[k]; } return a; };
+  const isVid = (p) => /\.(mp4|webm|mov)(\?|$)/i.test(p || '');
+  $('#yr').textContent = new Date().getFullYear();
 
   // =========================================================
-  // RECENT WEDDINGS — 20 photos: the first 10 above the film, the rest below.
-  // To change one, put the new photo in media/work and change its name here.
+  // Starting content. The dashboard's Website page edits these;
+  // what is published there replaces them.
   // =========================================================
   const WORK = [
     ['gal-01', 'The groom lifting the bride against a clear sky'], ['gal-04', 'The bride dancing'], ['gal-08', 'The couple on the beach, the bride holding her bouquet'],
     ['gal-02', 'The couple under falling confetti'], ['gal-15', 'The bride under a warm lamp in a red room'], ['gal-13', 'The grandfather laughing on the dance floor'],
     ['gal-16', 'The bride raising her bouquet in a field'], ['gal-10', 'The groom lifting the bride under blue night light'], ['gal-17', 'The couple, forehead to forehead, by the sea'],
-    ['gal-03', 'The bride laughing with her arms up'],
-    ['gal-05', 'The bride at dusk by the water, her veil long behind her'], ['gal-09', 'The couple kissing under a white umbrella, a rainbow above'], ['gal-06', 'The bride and her friend laughing under the lights'],
-    ['gal-19', 'The groom carrying the bride’s veil on the terrace'], ['gal-14', 'The bride dancing with her friends'], ['gal-07', 'A guest in red laughing on the dance floor'],
-    ['gal-12', 'The bride smiling in the garden'], ['gal-11', 'The couple dancing with sparklers'], ['gal-18', 'A guest laughing on the dance floor'], ['gal-20', 'The bride dancing at the party'],
+    ['gal-03', 'The bride laughing with her arms up'], ['gal-05', 'The bride at dusk by the water, her veil long behind her'], ['gal-09', 'The couple kissing under a white umbrella, a rainbow above'],
+    ['gal-06', 'The bride and her friend laughing under the lights'], ['gal-19', 'The groom carrying the bride’s veil on the terrace'], ['gal-14', 'The bride dancing with her friends'],
+    ['gal-07', 'A guest in red laughing on the dance floor'], ['gal-12', 'The bride smiling in the garden'], ['gal-11', 'The couple dancing with sparklers'],
+    ['gal-18', 'A guest laughing on the dance floor'], ['gal-20', 'The bride dancing at the party'],
   ];
-  const WORK_FILM = 'media/site/packages-bg.mp4';   // the wide film between the photos (no sound, loops)
-  const tile = ([f, alt]) => `<button><img src="media/work/${f}.jpg" alt="${esc(alt)}" loading="lazy" width="1067" height="1600"></button>`;
-  $('stills-a').innerHTML = WORK.slice(0, 10).map(tile).join('');
-  $('stills-b').innerHTML = WORK.slice(10).map(tile).join('');
+  const DEFAULT = {
+    hero: { clips: [{ video: 'media/site/hero-1.mp4', poster: 'media/site/hero-1-poster.jpg' }, { video: 'media/site/hero.mp4', poster: 'media/site/hero-poster.jpg' }] },
+    work: { photos: WORK.map(([f, alt]) => ({ src: `media/work/${f}.jpg`, alt })), film: 'media/site/packages-bg.mp4', filmPoster: 'media/site/packages-bg-start.jpg' },
+    svc: { groups: [
+      { name: 'COVERAGE', items: [
+        { name: 'Photography', file: 'photography', media: 'media/work/gal-17.jpg', line: 'Every moment of your day, edited by hand.', gets: ['One or two photographers', '4, 8 or 12 hours', 'Every photo in a private online gallery'] },
+        { name: 'Cinematography', file: 'cinematography', media: 'media/site/hero.mp4', line: 'Your day, cut like a film.', gets: ['One or two cinematographers', '4, 8 or 12 hours', 'A highlight film and the full film of your day'] } ] },
+      { name: 'FILMS', items: [
+        { name: 'Long film', file: 'long-film', media: 'media/site/hero-1.mp4', line: 'Thirty minutes to an hour, told as one story.', gets: ['One more camera on the day', 'Vows, speeches and family, nothing cut short', 'Your day in the order it happened'] },
+        { name: 'Party highlight', file: 'party-highlight', media: 'media/work/gal-06.jpg', line: 'The party, with its real sound. No music laid over it.', gets: ['One more professional camera, only for the party', 'Your first dance, father and daughter, the groom and his mother, each filmed complete', 'Then the whole party and the dance floor, start to end'] } ] },
+      { name: 'THE BIG VIEW', items: [
+        { name: 'Full record in 4K', file: 'full-record', quad: ['media/work/reel-02.jpg', 'media/work/film-02.jpg', 'media/work/film-01.jpg', 'media/work/film-03.jpg'], line: 'Every camera, cut live.', gets: ['Shoulder cameras for the party or the church', 'A mixer that cuts all the cameras live', 'Live streaming for family who can’t be there'] },
+        { name: 'Crane', file: 'crane', line: 'Sweeping shots over the hall.', gets: ['An operator and a camera on the crane'] },
+        { name: 'Wire camera', file: 'wire-camera', line: 'A camera gliding on a cable above your guests.', gets: ['The whole hall in one moving shot'] },
+        { name: 'Drone', file: 'drone', line: 'Your venue and your arrival, from the sky.', gets: ['Aerial shots of the venue and the entrance'] } ] },
+      { name: 'FOR YOUR GUESTS', items: [
+        { name: 'Media coverage', file: 'media-coverage', media: 'media/work/reel-04.jpg', line: 'Photos and clips for your pages, while the night is still going.', gets: ['Stories and posts during the event'] },
+        { name: 'Photo booth', file: 'photo-booth', line: 'A corner your guests will queue for.', gets: ['Four hours of photos for your guests'] } ] },
+    ] },
+    end: { image: 'media/work/gal-17.jpg' },
+  };
+  $$('[data-k]').forEach((el) => setP(DEFAULT, el.dataset.k, el.textContent.trim()));
 
-  // =========================================================
-  // WHAT WE DO — edit the words here.
-  // Each service shows media/services/<file>.mp4 (first) or <file>.jpg.
-  // Until you upload one, it shows `fallback`, or an empty frame.
-  // =========================================================
-  const GROUPS = [
-    { name: 'COVERAGE', items: [
-      { name: 'Photography', file: 'photography', fallback: 'media/work/gal-17.jpg', line: 'Every moment of your day, edited by hand.',
-        gets: ['One or two photographers', '4, 8 or 12 hours', 'Every photo in a private online gallery'] },
-      { name: 'Cinematography', file: 'cinematography', fallback: 'media/site/hero.mp4', line: 'Your day, cut like a film.',
-        gets: ['One or two cinematographers', '4, 8 or 12 hours', 'A highlight film and the full film of your day'] } ] },
-    { name: 'FILMS', items: [
-      { name: 'Long film', file: 'long-film', fallback: 'media/site/hero-1.mp4', line: 'Thirty minutes to an hour, told as one story.',
-        gets: ['One more camera on the day', 'Vows, speeches and family, nothing cut short', 'Your day in the order it happened'] },
-      { name: 'Party highlight', file: 'party-highlight', fallback: 'media/work/gal-06.jpg', line: 'The party, with its real sound. No music laid over it.',
-        gets: ['One more professional camera, only for the party', 'Your first dance, father and daughter, the groom and his mother, each filmed complete', 'Then the whole party and the dance floor, start to end'] } ] },
-    { name: 'THE BIG VIEW', big: true, items: [
-      { name: 'Full record in 4K', file: 'full-record', quad: ['media/work/reel-02.jpg', 'media/work/film-02.jpg', 'media/work/film-01.jpg', 'media/work/film-03.jpg'], line: 'Every camera, cut live.',
-        gets: ['Shoulder cameras for the party or the church', 'A mixer that cuts all the cameras live', 'Live streaming for family who can’t be there'] },
-      { name: 'Crane', file: 'crane', line: 'Sweeping shots over the hall.', gets: ['An operator and a camera on the crane'] },
-      { name: 'Wire camera', file: 'wire-camera', line: 'A camera gliding on a cable above your guests.', gets: ['The whole hall in one moving shot'] },
-      { name: 'Drone', file: 'drone', line: 'Your venue and your arrival, from the sky.', gets: ['Aerial shots of the venue and the entrance'] } ] },
-    { name: 'FOR YOUR GUESTS', items: [
-      { name: 'Media coverage', file: 'media-coverage', fallback: 'media/work/reel-04.jpg', line: 'Photos and clips for your pages, while the night is still going.', gets: ['Stories and posts during the event'] },
-      { name: 'Photo booth', file: 'photo-booth', line: 'A corner your guests will queue for.', gets: ['Four hours of photos for your guests'] } ] },
-  ];
-  const ALL = GROUPS.flatMap((g) => g.items.map((s) => ({ ...s, group: g.name })));
-  $('prog').innerHTML = GROUPS.map((g) => `<div class="${g.big ? 'big' : ''}"><h4>${g.name}</h4><div class="opts">${g.items.map((s) => `<button type="button" data-s="${ALL.findIndex((x) => x.name === s.name)}" aria-pressed="false">${esc(s.name)}</button>`).join('')}</div></div>`).join('');
-
-  // Build each service's picture once: uploaded video → uploaded photo → fallback → empty frame
-  const media = {};
-  const isVid = (p) => /\.mp4$/i.test(p);
-  let cur = -1;
-  function layer(i) {
-    if (media[i]) return media[i];
-    const s = ALL[i], el = document.createElement('div'); el.className = 'm';
-    const empty = () => { el.innerHTML = `<div class="todo">YOUR ${esc(s.name.toUpperCase())} SHOT GOES HERE</div>`; };
-    const vid = (src, next) => { const v = document.createElement('video'); Object.assign(v, { muted: true, loop: true, playsInline: true, preload: 'auto' }); v.setAttribute('aria-hidden', 'true');
-      v.onloadeddata = () => { el.innerHTML = ''; el.append(v); if (cur === i && !still) v.play().catch(() => {}); }; v.onerror = next; v.src = src; };
-    const pic = (src, next) => { const im = new Image(); im.alt = ''; im.onload = () => { el.innerHTML = ''; el.append(im); }; im.onerror = next; im.src = src; };
-    const fallback = () => {
-      if (s.quad) { el.innerHTML = `<div class="quad">${s.quad.map((q, k) => `<div><img src="${q}" alt=""><span>CAM ${k + 1}</span>${k === 0 ? '<span class="live">LIVE</span>' : ''}</div>`).join('')}</div>`; return; }
-      if (!s.fallback) return empty();
-      (isVid(s.fallback) ? vid : pic)(s.fallback, empty);
-    };
-    vid(`media/services/${s.file}.mp4`, () => pic(`media/services/${s.file}.jpg`, fallback));
-    $('screen').prepend(el);
-    return (media[i] = el);
+  // Words written for the old page that no longer fit this one
+  function tidy(c) {
+    if (/black and white/i.test(c.work?.note || '')) c.work.note = DEFAULT.work.note;
+    if (c.svc && /^Choose a service to see it\.\s*/i.test(c.svc.intro || '')) c.svc.intro = c.svc.intro.replace(/^Choose a service to see it\.\s*/i, '') || DEFAULT.svc.intro;
+    if (c.work && /^stills$/i.test(c.work.kicker || '')) c.work.kicker = DEFAULT.work.kicker;
+    return c;
   }
-  function pick(i) {
-    if (i === cur) return;
-    const prev = media[cur]; cur = i;
-    const el = layer(i); requestAnimationFrame(() => el.classList.add('on'));
-    if (prev) { prev.classList.remove('on'); prev.querySelector('video')?.pause(); }
-    const v = el.querySelector('video'); if (v && !still) v.play().catch(() => {});
-    const s = ALL[i];
-    $('cap-g').textContent = s.group; $('cap-h').textContent = s.name; $('cap-p').textContent = s.line;
-    $('count').textContent = `${String(i + 1).padStart(2, '0')} / ${String(ALL.length).padStart(2, '0')}`;
-    $('gets').innerHTML = s.gets.map((x) => `<li>${esc(x)}</li>`).join('');
-    document.querySelectorAll('#prog button').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.s) === i)));
-    layer((i + 1) % ALL.length);   // get the next one ready
-  }
-  $('prog').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) pick(Number(b.dataset.s)); });
-  if (!touch) $('prog').addEventListener('mouseover', (e) => { const b = e.target.closest('button'); if (b) pick(Number(b.dataset.s)); });
-  // Swipe the screen on phones to move between services
-  let sx = null;
-  $('screen').addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; }, { passive: true });
-  $('screen').addEventListener('touchend', (e) => { if (sx == null) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 50) pick((cur + (dx < 0 ? 1 : -1) + ALL.length) % ALL.length); sx = null; });
-  // Start with Photography once the section is near
-  new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { o.disconnect(); pick(0); } }, { rootMargin: '600px 0px' }).observe($('services'));
-  // Videos play only while on screen
-  const reelV = $('reel-v');
-  new IntersectionObserver((es) => { if (es[0].isIntersecting) { if (!reelV.src) reelV.src = WORK_FILM; if (!still) reelV.play().catch(() => {}); } else reelV.pause(); }, { threshold: .2 }).observe($('reel'));
-  new IntersectionObserver((es) => { const v = media[cur]?.querySelector('video'); if (v) es[0].isIntersecting && !still ? v.play().catch(() => {}) : v.pause(); }, { threshold: .2 }).observe($('screen'));
+  let C = clone(DEFAULT);
 
-  // ---------- Hero film: the clips play one after the other ----------
-  const CLIPS = ['media/site/hero-1', 'media/site/hero'];
-  const src = (c) => `${c}${phone ? '-mobile' : ''}.mp4`;
-  const a = $('va'), b = $('vb'); let at = 0, front = a, back = b, paused = still;
-  a.poster = `${CLIPS[0]}${phone ? '-mobile' : ''}-poster.jpg`; a.src = src(CLIPS[0]); b.src = src(CLIPS[1]); a.classList.add('on');
-  [a, b].forEach((v) => {
-    v.addEventListener('loadedmetadata', () => { v.playbackRate = 0.7; });
+  // ---------- words ----------
+  function split(el) {
+    const words = el.textContent.trim().split(/\s+/);
+    el.innerHTML = words.map((w, i) => `<span class="w"><span style="--i:${i}">${esc(w)}</span></span>`).join(' ');
+  }
+  function drawTexts() {
+    $$('[data-k]').forEach((el) => { const v = getP(C, el.dataset.k); if (typeof v === 'string') el.textContent = v; });
+    $$('.split').forEach(split);
+    const big = $('#realbig');
+    big.innerHTML = big.textContent.trim().split(/\s+/).map((w) => `<span class="rw">${esc(w)}</span>`).join(' ');
+    words = $$('.rw', big);
+  }
+  let words = [];
+
+  // ---------- hero film ----------
+  const va = $('#va'), vb = $('#vb'), hero = $('#hero');
+  let order = [], at = 0, front = va, back = vb, paused = still, heroKey = '', swapT = 0;
+  function drawHero() {
+    const clips = (C.hero?.clips || []).filter((c) => c && c.video);
+    // A phone version is used only when it was made for phones (uploaded from the dashboard).
+    const tall = phoneMQ.matches && clips.length > 0 && clips.every((c) => c.mobile && !/^media\/site\//.test(c.mobile));
+    hero.classList.toggle('tall', tall);
+    order = clips.map((c) => ({ src: tall ? c.mobile : c.video, poster: (tall ? c.mobilePoster : c.poster) || '' }));
+    const key = JSON.stringify(order);
+    if (key === heroKey) return;
+    heroKey = key; at = 0; front = va; back = vb; clearTimeout(swapT);
+    va.classList.add('on'); vb.classList.remove('on');
+    $('#clipn').textContent = `01 / ${pad(Math.max(1, order.length))}`;
+    if (!order.length) { va.removeAttribute('src'); vb.removeAttribute('src'); va.load(); return; }
+    va.loop = order.length === 1; vb.loop = false;
+    va.poster = order[0].poster; va.src = order[0].src; va.load();
+    if (order.length > 1) { vb.poster = order[1].poster; vb.src = order[1].src; vb.load(); } else vb.removeAttribute('src');
+    kick(va); if (!paused) va.play().catch(() => {});
+  }
+  const kick = (v) => { if (still) return; v.classList.remove('kb'); void v.offsetWidth; v.classList.add('kb'); };
+  [va, vb].forEach((v) => {
+    v.addEventListener('loadedmetadata', () => { v.playbackRate = 0.75; });
     v.addEventListener('ended', () => {
-      at = (at + 1) % CLIPS.length; [front, back] = [back, front];
-      front.currentTime = 0; if (!paused) front.play().catch(() => {});
+      if (v !== front || order.length < 2) return;
+      at = (at + 1) % order.length; [front, back] = [back, front];
+      front.currentTime = 0; kick(front); if (!paused) front.play().catch(() => {});
       front.classList.add('on'); back.classList.remove('on');
-      setTimeout(() => { back.src = src(CLIPS[(at + 1) % CLIPS.length]); back.load(); }, 1000);
+      $('#clipn').textContent = `${pad(at + 1)} / ${pad(order.length)}`;
+      swapT = setTimeout(() => { const n = order[(at + 1) % order.length]; back.poster = n.poster; back.src = n.src; back.load(); }, 1400);
     });
   });
-  if (!still) a.play().catch(() => {});
-  const pause = $('pause');
-  const setPaused = (p) => { paused = p; pause.setAttribute('aria-pressed', String(p)); pause.setAttribute('aria-label', p ? 'Play the film' : 'Pause the film'); p ? front.pause() : front.play().catch(() => {}); };
-  pause.addEventListener('click', () => setPaused(!paused));
+  const pauseBtn = $('#pause');
+  const setPaused = (p) => { paused = p; pauseBtn.setAttribute('aria-pressed', String(p)); pauseBtn.setAttribute('aria-label', p ? 'Play the film' : 'Pause the film'); p ? front.pause() : front.play().catch(() => {}); };
+  pauseBtn.addEventListener('click', () => setPaused(!paused));
+  let heroSeen = true;
+  new IntersectionObserver((es) => { heroSeen = es[0].isIntersecting; if (!heroSeen) front.pause(); else if (!paused) front.play().catch(() => {}); }).observe(hero);
 
-  // ---------- Intro ----------
-  if (still) root.classList.add('c1', 'c2', 'c3');
-  else { setTimeout(() => root.classList.add('c1'), 200); setTimeout(() => root.classList.add('c2'), 2600); setTimeout(() => root.classList.add('c3'), 4200); }
+  // running timecode, like a camera monitor
+  const t0 = performance.now(), tcs = [$('#tc'), $('#ftc')];
+  const tcText = (ms) => { const f = Math.floor(ms / (1000 / 24)); const s = Math.floor(f / 24); return `${pad(Math.floor(s / 3600))}:${pad(Math.floor(s / 60) % 60)}:${pad(s % 60)}:${pad(f % 24)}`; };
+  setInterval(() => { const t = tcText(performance.now() - t0); tcs.forEach((el) => { el.textContent = t; }); }, 84);
 
-  // ---------- Phone menu ----------
-  const menu = $('menu'), hero = $('hero');
-  const setMenu = (on) => { hero.classList.toggle('open', on); menu.setAttribute('aria-expanded', String(on)); menu.textContent = on ? 'CLOSE' : 'MENU'; document.body.style.overflow = on ? 'hidden' : ''; };
-  menu.addEventListener('click', () => setMenu(!hero.classList.contains('open')));
-  $('links').addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
-  addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
-
-  // ---------- Stills: on phones, the row in the middle of the screen turns to colour ----------
-  const shots = [...document.querySelectorAll('.stills button')];
-  if (touch) {
-    const io = new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle('live', e.isIntersecting)), { rootMargin: '-43% 0px -43% 0px' });
-    shots.forEach((s) => io.observe(s));
+  // ---------- work ----------
+  let photos = [], filmSrc = '';
+  const shot = (p, i, lazy = true) => `<button class="shot" type="button" data-i="${i}" data-cursor="VIEW" aria-label="${esc(p.alt || 'Open photo')}"><img ${lazy ? 'loading="lazy"' : ''} decoding="async" src="${esc(p.src)}" alt="${esc(p.alt || '')}" width="1067" height="1600"></button>`;
+  function drawWork() {
+    photos = (C.work?.photos || []).filter((p) => p && p.src);
+    const cols = phoneMQ.matches ? 2 : 3, first = photos.slice(0, 6), rest = photos.slice(6);
+    const colHtml = Array.from({ length: cols }, (_, c) => `<div class="col" data-speed="${[0.06, -0.1, 0.03][c]}">${first.map((p, i) => (i % cols === c ? shot(p, i) : '')).join('')}</div>`);
+    $('#collage').innerHTML = colHtml.join('');
+    const a = [], b = [];
+    rest.forEach((p, k) => (k % 2 ? b : a).push([p, k + 6]));
+    const rowHtml = (list, rev) => {
+      if (!list.length) return '';
+      let fill = [...list]; while (fill.length < 8) fill = fill.concat(list);
+      const half = fill.map(([p, i]) => shot(p, i)).join('');
+      return `<div class="row${rev ? ' rev' : ''}"><div class="track" style="--dur:${fill.length * 6}s">${half}${half}</div></div>`;
+    };
+    $('#rows').innerHTML = rowHtml(a, false) + rowHtml(b, true);
+    $('#rows').style.display = rest.length ? '' : 'none';
+    const film = $('#film'), fv = $('#film-v');
+    film.style.display = C.work?.film ? '' : 'none';
+    if (C.work?.film !== filmSrc) { filmSrc = C.work?.film || ''; fv.poster = C.work?.filmPoster || ''; fv.removeAttribute('src'); fv.load(); fv.dataset.src = filmSrc; if (filmNear) loadFilm(); }
+    const endImg = C.end?.image || photos[8]?.src || photos[0]?.src || '';
+    $('#end-bg').style.backgroundImage = endImg ? `url("${endImg.replace(/"/g, '%22')}")` : 'none';
   }
-  // Tap a photo to see it large, in colour
-  const lb = $('lb'), lbImg = $('lb-img'); let li = 0;
-  const show = (i) => { li = (i + shots.length) % shots.length; const im = shots[li].querySelector('img'); lbImg.src = im.currentSrc || im.src; lbImg.alt = im.alt; };
-  shots.forEach((s, i) => s.addEventListener('click', () => { show(i); lb.showModal(); }));
-  $('lb-x').onclick = () => lb.close(); $('lb-p').onclick = () => show(li - 1); $('lb-n').onclick = () => show(li + 1);
+  let filmNear = false;
+  const loadFilm = () => { const fv = $('#film-v'); if (fv.dataset.src && !fv.getAttribute('src')) { fv.src = fv.dataset.src; } if (!still) fv.play().catch(() => {}); };
+  new IntersectionObserver((es) => { filmNear = es[0].isIntersecting; filmNear ? loadFilm() : $('#film-v').pause(); }, { rootMargin: '300px 0px' }).observe($('#film'));
+
+  // lightbox
+  const lb = $('#lb'), lbImg = $('#lb-img'); let li = 0;
+  const show = (i) => { li = (i + photos.length) % photos.length; lbImg.src = photos[li].src; lbImg.alt = photos[li].alt || ''; $('#lb-ct').textContent = `${pad(li + 1)} / ${pad(photos.length)}`; };
+  $('#work').addEventListener('click', (e) => { const s = e.target.closest('.shot'); if (!s) return; show(Number(s.dataset.i)); lb.showModal(); });
+  $('#lb-x').onclick = () => lb.close(); $('#lb-p').onclick = () => show(li - 1); $('#lb-n').onclick = () => show(li + 1);
   lb.addEventListener('click', (e) => { if (e.target === lb) lb.close(); });
   lb.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') show(li - 1); if (e.key === 'ArrowRight') show(li + 1); });
   let tx = null;
   lb.addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; }, { passive: true });
   lb.addEventListener('touchend', (e) => { if (tx == null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) show(li + (dx < 0 ? 1 : -1)); tx = null; });
+
+  // ---------- services ----------
+  let ALL = [], media = {}, cur = -1, rowsEls = [];
+  const screen = $('#screen');
+  function drawServices() {
+    const groups = (C.svc?.groups || []).map((g) => ({ name: g.name || g.title || '', items: (g.items || []).filter((s) => s && s.name && !s.hidden) })).filter((g) => g.items.length);
+    ALL = groups.flatMap((g) => g.items.map((s) => ({ ...s, group: g.name, gets: Array.isArray(s.gets) ? s.gets : String(s.gets || '').split('\n') })));
+    Object.values(media).forEach((el) => el.remove()); media = {}; cur = -1;
+    let k = 0;
+    $('#slist').innerHTML = groups.map((g) => `<li class="grp"><span>${esc(g.name)}</span><span>${pad(g.items.length)}</span></li>` + g.items.map(() => {
+      const s = ALL[k], i = k++;
+      return `<li><button class="srow" type="button" data-s="${i}"><span class="n">${pad(i + 1)}</span><span class="nm">${esc(s.name)}</span><span class="ln">${esc(s.line || '')}</span><span class="gt">${s.gets.filter((x) => x && x.trim()).map((x) => `<i>${esc(x.trim())}</i>`).join('')}</span></button></li>`;
+    }).join('')).join('');
+    rowsEls = $$('#slist .srow');
+    $('#ribbon-t').style.setProperty('--dur', `${Math.max(30, ALL.length * 7)}s`);
+    const names = ALL.map((s) => `<span>${esc(s.name)}</span>`).join('');
+    $('#ribbon-t').innerHTML = ALL.length ? names + names : '';
+    screen.style.display = ALL.length ? '' : 'none';
+    if (ALL.length && svcNear) pick(0);
+  }
+  function layer(i) {
+    if (media[i]) return media[i];
+    const s = ALL[i], el = document.createElement('div'); el.className = 'm';
+    const empty = () => { el.innerHTML = `<div class="ph"><img src="media/site/glaz-g.png" alt=""><small>GLAZ STUDIOS · ${pad(i + 1)}</small>${PREVIEW ? '<small class="hint">ADD A PHOTO OR VIDEO FROM THE DASHBOARD</small>' : ''}</div>`; };
+    const vid = (src, next) => { const v = document.createElement('video'); Object.assign(v, { muted: true, loop: true, playsInline: true, preload: 'auto' }); v.setAttribute('aria-hidden', 'true');
+      v.onloadeddata = () => { el.innerHTML = ''; el.append(v); if (cur === i && !still && svcSeen) v.play().catch(() => {}); }; v.onerror = next; v.src = src; };
+    const pic = (src, next) => { const im = new Image(); im.alt = ''; im.decoding = 'async'; im.onload = () => { el.innerHTML = ''; el.append(im); }; im.onerror = next; im.src = src; };
+    const quad = () => { el.innerHTML = `<div class="quad">${s.quad.map((q, n) => `<div><img src="${esc(q)}" alt=""><span>CAM ${n + 1}</span>${n === 0 ? '<span class="live">LIVE</span>' : ''}</div>`).join('')}</div>`; };
+    empty();
+    if (s.media) (isVid(s.media) ? vid : pic)(s.media, s.quad ? quad : empty);
+    else if (s.quad && s.quad.length) quad();
+    else if (s.file && !PREVIEW) vid(`media/services/${s.file}.mp4`, () => pic(`media/services/${s.file}.jpg`, empty));
+    screen.prepend(el);
+    return (media[i] = el);
+  }
+  function pick(i) {
+    if (i === cur || !ALL[i]) return;
+    const prev = media[cur]; cur = i;
+    const el = layer(i); requestAnimationFrame(() => el.classList.add('on'));
+    if (prev) { prev.classList.remove('on'); prev.querySelector('video')?.pause(); }
+    const v = el.querySelector('video'); if (v && !still) v.play().catch(() => {});
+    $('#sgrp').textContent = ALL[i].group; $('#sname').textContent = ALL[i].name;
+    $('#scount').textContent = `${pad(i + 1)} / ${pad(ALL.length)}`;
+    rowsEls.forEach((b, n) => b.classList.toggle('act', n === i));
+    if (ALL[i + 1]) layer(i + 1);
+  }
+  $('#slist').addEventListener('click', (e) => { const b = e.target.closest('.srow'); if (!b) return; pick(Number(b.dataset.s)); if (phoneMQ.matches) b.scrollIntoView({ block: 'center', behavior: still ? 'auto' : 'smooth' }); });
+  if (fine) $('#slist').addEventListener('mouseover', (e) => { const b = e.target.closest('.srow'); if (b) pick(Number(b.dataset.s)); });
+  let svcNear = false, svcSeen = false;
+  new IntersectionObserver((es) => { svcNear = es[0].isIntersecting; if (svcNear && cur < 0 && ALL.length) pick(0); }, { rootMargin: '600px 0px' }).observe($('#services'));
+  new IntersectionObserver((es) => { svcSeen = es[0].isIntersecting; const v = media[cur]?.querySelector('video'); if (v) svcSeen && !still ? v.play().catch(() => {}) : v.pause(); }, { threshold: .15 }).observe(screen);
+
+  // ---------- the phone in "Your day": the day plays hour by hour ----------
+  const tl = $('#tl'), tlRows = $$('.r', tl); let tlAt = -1, tlTimer = 0;
+  new IntersectionObserver((es) => {
+    if (es[0].isIntersecting) { tl.classList.add('go'); if (!tlTimer && !still) { const step = () => { tlRows.forEach((r) => r.classList.remove('now')); tlAt = (tlAt + 1) % tlRows.length; tlRows[tlAt].classList.add('now'); }; setTimeout(step, 900); tlTimer = setInterval(step, 1700); } }
+    else { clearInterval(tlTimer); tlTimer = 0; }
+  }, { threshold: .3 }).observe(tl);
+  if (still) tl.classList.add('go');
+
+  // ---------- reveal on scroll ----------
+  const rio = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); rio.unobserve(e.target); } }), { rootMargin: '0px 0px -12% 0px' });
+  const watchReveals = () => { $$('[data-reveal]:not(.in), .end:not(.in)').forEach((el) => rio.observe(el)); };
+
+  // ---------- scroll-linked motion ----------
+  const nav = $('#nav'), stage = $('#stage'), copy = $('#copy'), steps = $('#steps'), realSec = $('#real'), collage = $('#collage'), film = $('#film'), svcSec = $('#services');
+  let lastY = scrollY, ticking = false;
+  function frame() {
+    ticking = false;
+    const y = scrollY, vh = innerHeight, hb = hero.offsetHeight, phone = phoneMQ.matches;
+    // top bar
+    nav.classList.toggle('solid', y > hb - 90);
+    if (!root.classList.contains('menu-open')) {
+      if (y > lastY + 6 && y > hb * .6) nav.classList.add('hide'); else if (y < lastY - 6 || y < 40) nav.classList.remove('hide');
+    }
+    lastY = y;
+    if (!still) {
+      // hero sinks back as the page rises over it
+      if (y < hb * 1.1) {
+        const p = clamp(y / hb);
+        if (!phone || hero.classList.contains('tall')) { stage.style.transform = `scale(${1 - p * .06})`; stage.style.opacity = String(1 - p * .55); copy.style.transform = `translateY(${-p * 70}px)`; copy.style.opacity = String(1 - p * 1.3); }
+        else { stage.style.transform = ''; stage.style.opacity = ''; copy.style.transform = ''; copy.style.opacity = ''; }
+      }
+      // words light up as you read
+      const rr = realSec.getBoundingClientRect();
+      if (rr.top < vh && rr.bottom > 0 && words.length) {
+        const p = clamp((vh * .82 - rr.top) / (rr.height * .62));
+        const n = Math.round(p * words.length);
+        words.forEach((w, i) => w.classList.toggle('on', i < n));
+      }
+      // photos drift at different speeds
+      const cr = collage.getBoundingClientRect();
+      if (cr.top < vh && cr.bottom > 0) {
+        const off = cr.top + cr.height / 2 - vh / 2;
+        $$('.col', collage).forEach((c) => { c.style.transform = `translate3d(0, ${off * Number(c.dataset.speed) * (phone ? .6 : 1)}px, 0)`; });
+      }
+      // the film opens up to the full width
+      const fr = film.getBoundingClientRect();
+      if (fr.top < vh && fr.bottom > 0) {
+        const p = clamp((vh - fr.top) / (vh * .85));
+        film.style.setProperty('--cx', `${(1 - p) * (phone ? 5 : 10)}%`);
+        film.style.setProperty('--cy', `${(1 - p) * (phone ? 4 : 9)}%`);
+        film.style.setProperty('--fs', String(1.14 - p * .14));
+      }
+    }
+    // steps: the one in the middle of the screen is lit
+    if (!phone) {
+      const sr = steps.getBoundingClientRect();
+      if (sr.top < vh && sr.bottom > 0) {
+        steps.classList.add('live');
+        let best = 0, bd = 1e9;
+        $$('li', steps).forEach((li, i) => { const r = li.getBoundingClientRect(); const d = Math.abs(r.top + r.height / 2 - vh * .5); if (d < bd) { bd = d; best = i; } });
+        $$('li', steps).forEach((li, i) => li.classList.toggle('act', i === best));
+      }
+    } else steps.classList.remove('live');
+    // services: the row being read is the one on the screen
+    const sr2 = svcSec.getBoundingClientRect();
+    if (sr2.top < vh && sr2.bottom > 0 && rowsEls.length && !hovering) {
+      const sb = phone ? screen.getBoundingClientRect().bottom : 0;
+      const line = phone ? sb + (vh - sb) * .3 : vh * .5;
+      let best = -1, bd = 1e9;
+      rowsEls.forEach((b, i) => { const r = b.getBoundingClientRect(); const d = Math.abs(r.top + r.height / 2 - line); if (d < bd) { bd = d; best = i; } });
+      if (best >= 0) pick(best);
+    }
+  }
+  let hovering = false;
+  if (fine) { $('#slist').addEventListener('mouseenter', () => { hovering = true; }); $('#slist').addEventListener('mouseleave', () => { hovering = false; }); }
+  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } };
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll);
+
+  // ---------- cursor label ----------
+  if (fine && !still) {
+    const cu = $('#cursor'); let x = -200, y = -200, cx = x, cy = y, raf = 0;
+    const loop = () => { cx += (x - cx) * .22; cy += (y - cy) * .22; cu.style.transform = `translate(${cx}px, ${cy}px)`; raf = Math.abs(x - cx) + Math.abs(y - cy) > .3 ? requestAnimationFrame(loop) : 0; };
+    addEventListener('mousemove', (e) => {
+      x = e.clientX; y = e.clientY;
+      const t = e.target.closest('[data-cursor]');
+      cu.classList.toggle('big', !!t); if (t) cu.textContent = t.dataset.cursor;
+      if (!raf) raf = requestAnimationFrame(loop);
+    }, { passive: true });
+    document.addEventListener('mouseleave', () => cu.classList.remove('big'));
+  }
+
+  // ---------- phone menu ----------
+  const menu = $('#menu');
+  const setMenu = (on) => { nav.classList.toggle('open', on); root.classList.toggle('menu-open', on); menu.setAttribute('aria-expanded', String(on)); menu.textContent = on ? 'CLOSE' : 'MENU'; document.body.style.overflow = on ? 'hidden' : ''; if (on) nav.classList.remove('hide'); };
+  menu.addEventListener('click', () => setMenu(!nav.classList.contains('open')));
+  $('#links').addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+
+  // ---------- draw everything ----------
+  function render() {
+    drawTexts(); drawHero(); drawWork(); drawServices();
+    watchReveals();
+    if (PREVIEW || still) $$('[data-reveal], .split, .end').forEach((el) => el.classList.add('in'));
+    frame();
+  }
+  phoneMQ.addEventListener('change', () => { heroKey = ''; render(); });
+
+  async function published() {
+    try {
+      const cfg = await import('./config.js');
+      const r = await fetch(`${cfg.SUPABASE_URL}/rest/v1/site_content?select=id,content`, { headers: { apikey: cfg.SUPABASE_KEY } });
+      if (!r.ok) return null;
+      const rows = await r.json();
+      const row = rows.find((x) => x.id === 'home') || rows[0];
+      return row && isObj(row.content) ? row.content : null;
+    } catch { return null; }
+  }
+
+  // intro: the G, the name, then the curtain lifts
+  const start = () => { root.classList.add('ready'); };
+  if (root.classList.contains('intro')) {
+    setTimeout(() => root.classList.add('i1'), 120);
+    setTimeout(() => { root.classList.add('i2'); start(); }, 2000);
+    setTimeout(() => root.classList.remove('intro', 'i1', 'i2'), 3200);
+  } else requestAnimationFrame(() => requestAnimationFrame(start));
+
+  if (PREVIEW) {
+    // Live preview inside the dashboard's Website page
+    const ALLOWED = /^https:\/\/(glaz-dashboard[\w-]*\.vercel\.app|dashboard\.glazstudios\.com)$|^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
+    addEventListener('message', (e) => {
+      if (!ALLOWED.test(e.origin)) return;
+      const d = e.data || {};
+      if (d.type === 'glaz-content') { C = tidy(merge(clone(DEFAULT), d.content || {})); render(); }
+      if (d.type === 'glaz-scroll' && d.section) document.querySelector(`[data-sec~="${String(d.section).replace(/[^\w-]/g, '')}"]`)?.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+
+  let drawn = false;
+  const go = (content) => { if (content) C = tidy(merge(clone(DEFAULT), content)); render(); drawn = true; if (PREVIEW) parent.postMessage({ type: 'glaz-ready', content: C }, '*'); };
+  const pub = published();
+  Promise.race([pub, new Promise((r) => setTimeout(() => r(undefined), 1500))]).then((c) => {
+    go(c);
+    if (c === undefined) pub.then((late) => { if (late && drawn && !PREVIEW) { C = tidy(merge(clone(DEFAULT), late)); render(); } });
+  });
 })();
 </script>
 </body>
