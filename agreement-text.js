@@ -44,7 +44,7 @@ export function agreementHTML(b) {
     ${row('Balance due on the event day', egp(Math.max(total - paid, 0)))}
   </table>
   <ol>
-    <li>A <b>30% deposit</b> reserves the date. The date is confirmed only once the deposit reaches the Studio.</li>
+    <li>A <b>50% deposit</b> reserves the date. The date is confirmed only once the deposit reaches the Studio.</li>
     <li>The deposit is <b>non-refundable</b>, because the Studio turns down other bookings for that date.</li>
     <li>The <b>balance is paid in full on the event day</b>, before coverage ends.</li>
     <li>Payment is by InstaPay, bank transfer or cash.</li>

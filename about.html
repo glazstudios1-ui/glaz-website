@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>About us — Glaz Studios</title>
+<meta name="description" content="Glaz Studios is a wedding photography and film studio in Cairo. Glaz means eye: one team that keeps your whole day the way it really happened.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Barlow+Condensed:wght@400;500&family=Barlow:wght@300;400&display=swap">
+<link rel="stylesheet" href="glaz.css">
+<script>
+(function () { var d = document.documentElement; d.classList.add('js');
+  try { if (sessionStorage.getItem('glaz-go')) { d.classList.add('arrive'); sessionStorage.removeItem('glaz-go'); } } catch (e) {} })();
+</script>
+<style>
+.ab-hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; gap: 24px; padding: 0 var(--gut) clamp(46px, 8vh, 90px); overflow: hidden; }
+.ab-hero .ph { position: absolute; inset: 0; background: url("media/site/hero-2.jpg") 50% 40% / cover; transform: scale(1.12); transition: transform 3s var(--ease); }
+.ready .ab-hero .ph { transform: none; }
+.ab-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.05) 30%, rgba(0,0,0,.35) 60%, #000); }
+.ab-hero > *:not(.ph) { position: relative; z-index: 1; }
+.ab-hero .kick { color: rgba(241,235,223,.8); }
+.ab-hero h1 { font: 300 clamp(64px, 11vw, 190px)/.9 var(--title); letter-spacing: -.03em; color: var(--bright); }
+.ab-hero h1 em { font-style: italic; color: var(--warm); }
+.js .ab-hero .up { opacity: 0; transform: translateY(26px); transition: opacity 1.1s ease, transform 1.3s var(--ease); transition-delay: var(--d, .2s); }
+.ready .ab-hero .up { opacity: 1; transform: none; }
+.wrap { padding: 0 var(--gut); max-width: 1500px; margin: 0 auto; }
+.sec { padding: clamp(90px, 13vw, 190px) 0; }
+.intro { display: grid; grid-template-columns: 1.15fr .85fr; gap: 40px clamp(40px, 7vw, 120px); align-items: end; }
+.intro .big { font: 300 clamp(40px, 5.2vw, 84px)/1.05 var(--title); letter-spacing: -.012em; color: var(--bright); }
+.intro .big em { font-style: italic; color: var(--warm); }
+.intro p.txt { color: var(--muted); font-size: 18px; max-width: 44ch; }
+.team { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1px solid var(--line); }
+.person { padding: clamp(36px, 5vw, 70px) clamp(0px, 3vw, 50px) clamp(36px, 5vw, 70px) 0; border-bottom: 1px solid var(--line); }
+.person + .person { padding-left: clamp(24px, 4vw, 60px); border-left: 1px solid var(--line); }
+.person .role { font: 500 12px/1 var(--cond); letter-spacing: .3em; color: var(--warm); }
+.person h3 { font: 300 clamp(48px, 6vw, 96px)/1 var(--title); color: var(--bright); margin: 18px 0 18px; letter-spacing: -.02em; }
+.person p { color: var(--muted); max-width: 38ch; }
+.strip { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: clamp(8px, 1.4vw, 18px); }
+.strip img { width: 100%; height: clamp(260px, 42vw, 640px); object-fit: cover; object-position: 50% 30%; }
+.strip img:nth-child(2) { margin-top: clamp(40px, 8vw, 120px); }
+.believe { list-style: none; padding: 0; margin-top: clamp(40px, 6vw, 80px); display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(28px, 4vw, 60px); counter-reset: b; }
+.believe li { counter-increment: b; border-top: 1px solid var(--line); padding-top: 26px; }
+.believe li::before { content: counter(b, decimal-leading-zero); display: block; font: 300 44px/1 var(--title); color: var(--warm); margin-bottom: 22px; }
+.believe h3 { font: 400 clamp(26px, 2.4vw, 34px)/1.15 var(--title); color: var(--bright); margin-bottom: 12px; }
+.believe p { color: var(--muted); }
+.h2 { font: 300 clamp(42px, 6vw, 96px)/.98 var(--title); letter-spacing: -.015em; color: var(--bright); margin-top: 22px; }
+.cover { list-style: none; padding: 0; margin-top: clamp(36px, 5vw, 70px); border-top: 1px solid var(--line); }
+.cover li { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: clamp(18px, 2.4vw, 30px) 0; border-bottom: 1px solid var(--line); }
+.cover b { font: 300 clamp(32px, 4.4vw, 68px)/1 var(--title); color: var(--bright); letter-spacing: -.01em; }
+.cover span { color: var(--muted); text-align: right; max-width: 34ch; font-size: 15px; }
+.close { text-align: center; display: grid; justify-items: center; gap: 36px; }
+.close h2 { font: 300 clamp(56px, 9vw, 150px)/.92 var(--title); letter-spacing: -.025em; color: var(--bright); }
+@media (max-width: 860px) {
+  .intro, .team { grid-template-columns: 1fr; }
+  .person + .person { padding-left: 0; border-left: 0; }
+  .strip { grid-template-columns: 1fr 1fr; } .strip img:first-child { grid-column: 1 / -1; height: 70vw; } .strip img:nth-child(2) { margin-top: 0; } .strip img { height: 64vw; }
+  .believe { grid-template-columns: 1fr; }
+  .cover li { flex-direction: column; gap: 6px; } .cover span { text-align: left; }
+  .close .cta { width: 100%; justify-content: center; }
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div id="curtain" aria-hidden="true"><img src="media/site/glaz-g.png" alt=""></div>
+<header class="nav" id="nav">
+  <a class="logo" href="./" aria-label="Glaz Studios, home">GLAZ STUDIOS</a>
+  <nav class="links" aria-label="Main"><a href="about" aria-current="page">ABOUT</a><a href="faq">FAQ</a><a class="book" href="book">BOOK</a></nav>
+  <button class="menu" id="menu" type="button" aria-expanded="false" aria-controls="sheet"><span id="menu-t">MENU</span><i aria-hidden="true"></i></button>
+  <div class="sheet" id="sheet">
+    <div class="bgp" id="sheet-bg"></div>
+    <ol>
+      <li><a href="./"><small>01</small>Home<em>→</em></a></li>
+      <li><a href="about" aria-current="page"><small>02</small>About us<em>→</em></a></li>
+      <li><a href="faq"><small>03</small>FAQ<em>→</em></a></li>
+    </ol>
+    <a class="cta" href="book">BOOK YOUR DATE</a>
+    <div class="sm"><a href="mailto:info@glazstudios.com">INFO@GLAZSTUDIOS.COM</a><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener">INSTAGRAM ↗</a></div>
+  </div>
+</header>
+<main>
+  <section class="ab-hero" aria-labelledby="ab-h">
+    <div class="ph"></div>
+    <p class="kick up" style="--d:.2s"><span class="ch">About us</span><span>Glaz Studios</span></p>
+    <h1 class="up" id="ab-h" style="--d:.35s">Glaz means <em>eye</em>.</h1>
+  </section>
+
+  <section class="sec"><div class="wrap intro">
+    <p class="big" data-reveal>A wedding passes in one day. We are the <em>eye</em> that keeps it.</p>
+    <p class="txt" data-reveal style="--d:.15s">Glaz Studios is a photography and film studio in Cairo. We photograph and film weddings as one team, from the first hour of getting ready to the last song, and we keep what really happened: the people, the light and the feeling of the day.</p>
+  </div></section>
+
+  <section class="wrap" aria-label="One studio, two crafts">
+    <div class="team">
+      <article class="person" data-reveal><p class="role">GLAZ STUDIOS</p><h3>Photography</h3><p>Our photographers work as one team on your day, and every photo is edited by hand in one look, so your whole gallery feels like one story.</p></article>
+      <article class="person" data-reveal style="--d:.12s"><p class="role">GLAZ STUDIOS</p><h3>Film</h3><p>Our cinematographers work side by side with the photographers, from the same plan, so your film and your photos tell the same day.</p></article>
+    </div>
+  </section>
+
+  <section class="sec" aria-hidden="true"><div class="wrap strip">
+    <img loading="lazy" src="media/work/gal-17.jpg" alt="" data-reveal>
+    <img loading="lazy" src="media/work/gal-13.jpg" alt="" data-reveal style="--d:.1s">
+    <img loading="lazy" src="media/work/gal-04.jpg" alt="" data-reveal style="--d:.2s">
+  </div></section>
+
+  <section class="wrap" aria-labelledby="bl-h">
+    <p class="kick" data-reveal><span class="ch">01</span><span>What we believe</span></p>
+    <h2 class="h2" id="bl-h" data-reveal>How we work</h2>
+    <ol class="believe">
+      <li data-reveal><h3>Real, not staged</h3><p>We don’t pose you or ask you to do it again. We catch the moments as they come: the tears, the laughs and the dance floor.</p></li>
+      <li data-reveal style="--d:.1s"><h3>The whole day, start to end</h3><p>From getting ready to the last song, we follow the day as one story, so nothing in between is lost.</p></li>
+      <li data-reveal style="--d:.2s"><h3>One team, one plan</h3><p>You write your day once on your private link. Every photographer and cinematographer works from the same plan.</p></li>
+    </ol>
+  </section>
+
+  <section class="sec" aria-labelledby="cv-h"><div class="wrap">
+    <p class="kick" data-reveal><span class="ch">02</span><span>What we cover</span></p>
+    <h2 class="h2" id="cv-h" data-reveal>Everything your day needs</h2>
+    <ul class="cover">
+      <li data-reveal><b>Photography</b><span>One or two photographers, every photo edited by hand.</span></li>
+      <li data-reveal><b>Cinematography</b><span>Your day cut as a film, with a highlight and the full film.</span></li>
+      <li data-reveal><b>Full coverage in 4K</b><span>Shoulder cameras, crane, drone, wire camera, a live mixer and live streaming.</span></li>
+      <li data-reveal><b>Media coverage</b><span>Photos and clips for your pages while the night is still going.</span></li>
+      <li data-reveal><b>Photo booth</b><span>A corner your guests will queue for.</span></li>
+    </ul>
+  </div></section>
+
+  <section class="sec close" aria-labelledby="cl-h">
+    <p class="kick" data-reveal><span>Bookings</span></p>
+    <h2 id="cl-h" data-reveal>Tell us your date</h2>
+    <a class="cta" href="book" data-reveal style="--d:.2s">CHECK AVAILABILITY</a>
+  </section>
+</main>
+<section class="ig" aria-labelledby="ig-h">
+  <div class="ig-head">
+    <div><p class="kick"><span>Follow us on Instagram</span></p><h2 id="ig-h"><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener">@glazstudios</a></h2></div>
+    <a class="cta ghost out" href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener">FOLLOW US</a>
+  </div>
+  <div class="ig-grid"><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener" aria-label="Open our Instagram"><img loading="lazy" decoding="async" src="media/work/gal-01.jpg" alt=""><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="#fff"/></svg></a><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener" aria-label="Open our Instagram"><img loading="lazy" decoding="async" src="media/work/gal-15.jpg" alt=""><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="#fff"/></svg></a><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener" aria-label="Open our Instagram"><img loading="lazy" decoding="async" src="media/work/gal-02.jpg" alt=""><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="#fff"/></svg></a><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener" aria-label="Open our Instagram"><img loading="lazy" decoding="async" src="media/work/gal-10.jpg" alt=""><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="#fff"/></svg></a><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener" aria-label="Open our Instagram"><img loading="lazy" decoding="async" src="media/work/gal-13.jpg" alt=""><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="#fff"/></svg></a><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener" aria-label="Open our Instagram"><img loading="lazy" decoding="async" src="media/work/gal-05.jpg" alt=""><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="#fff"/></svg></a></div>
+</section>
+<footer class="foot">
+  <p class="fw" aria-hidden="true">GLAZ STUDIOS</p>
+  <div class="fl">
+    <nav aria-label="Footer"><a href="./">HOME</a><a href="about">ABOUT</a><a href="faq">FAQ</a><a href="book">BOOK</a></nav>
+    <nav aria-label="Contact"><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener">INSTAGRAM ↗</a><a href="mailto:info@glazstudios.com">INFO@GLAZSTUDIOS.COM</a></nav>
+    <span>© <span data-yr>2026</span> GLAZ STUDIOS · CAIRO</span>
+  </div>
+</footer>
+<script src="glaz.js" defer></script>
+</body>
+</html>

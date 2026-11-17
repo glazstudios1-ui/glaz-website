@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Questions — Glaz Studios</title>
+<meta name="description" content="Answers about booking Glaz Studios: deposit, packages, planning your day, delivery and more.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Barlow+Condensed:wght@400;500&family=Barlow:wght@300;400&display=swap">
+<link rel="stylesheet" href="glaz.css">
+<script>
+(function () { var d = document.documentElement; d.classList.add('js');
+  try { if (sessionStorage.getItem('glaz-go')) { d.classList.add('arrive'); sessionStorage.removeItem('glaz-go'); } } catch (e) {} })();
+</script>
+<style>
+.wrap { padding: 0 var(--gut); max-width: 1500px; margin: 0 auto; }
+.fq { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 40px clamp(40px, 7vw, 120px); padding-top: calc(150px + env(safe-area-inset-top)); padding-bottom: clamp(90px, 12vw, 170px); align-items: start; }
+.fq-side { position: sticky; top: 130px; display: grid; gap: 24px; align-content: start; }
+.fq-side h1 { font: 300 clamp(60px, 8vw, 132px)/.9 var(--title); letter-spacing: -.025em; color: var(--bright); }
+.fq-side h1 em { font-style: italic; color: var(--warm); }
+.fq-side p { color: var(--muted); max-width: 34ch; }
+.fq-side .acts { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+.js .fq-side .up { opacity: 0; transform: translateY(24px); transition: opacity 1.1s ease, transform 1.3s var(--ease); transition-delay: var(--d, .2s); }
+.ready .fq-side .up { opacity: 1; transform: none; }
+.grp { font: 500 12px/1 var(--cond); letter-spacing: .32em; text-transform: uppercase; color: var(--warm); padding: 56px 0 18px; }
+.grp:first-child { padding-top: 6px; }
+.qs { border-top: 1px solid var(--line); }
+.qa { border-bottom: 1px solid var(--line); }
+.qa h3 { margin: 0; }
+.qa button { all: unset; box-sizing: border-box; width: 100%; cursor: pointer; display: grid; grid-template-columns: 46px minmax(0, 1fr) 24px; gap: 12px; align-items: baseline; padding: 26px 0; }
+.qa button:focus-visible { outline: 1px solid var(--warm); outline-offset: 4px; }
+.qa .n { font: 500 12px/1 var(--cond); letter-spacing: .14em; color: var(--muted); }
+.qa .q { font: 300 clamp(24px, 2.4vw, 34px)/1.2 var(--title); color: var(--bright); transition: color .3s; }
+.qa button:hover .q { color: var(--warm); }
+.qa i { position: relative; width: 16px; height: 16px; align-self: center; }
+.qa i::before, .qa i::after { content: ''; position: absolute; left: 0; right: 0; top: 7.5px; height: 1px; background: var(--bright); transition: transform .5s var(--ease); }
+.qa i::after { transform: rotate(90deg); }
+.qa.open i::after { transform: rotate(0); }
+.qa .a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .6s var(--ease); }
+.qa.open .a { grid-template-rows: 1fr; }
+.qa .a > div { overflow: hidden; }
+.qa .a p { padding: 0 40px 30px 58px; color: var(--text); max-width: 62ch; opacity: 0; transform: translateY(-6px); transition: opacity .5s ease, transform .6s var(--ease); }
+.qa.open .a p { opacity: 1; transform: none; transition-delay: .1s; }
+.qa .a a { color: var(--warm); }
+@media (max-width: 860px) {
+  .fq { grid-template-columns: minmax(0, 1fr); padding-top: calc(120px + env(safe-area-inset-top)); }
+  .fq-side { position: static; }
+  .fq-side .acts .cta { flex: 1; justify-content: center; }
+  .qa button { grid-template-columns: 34px minmax(0, 1fr) 20px; padding: 22px 0; }
+  .qa .a p { padding: 0 0 24px 46px; }
+}
+@media (prefers-reduced-motion: reduce) { .qa .a, .qa .a p { transition: none; } }
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div id="curtain" aria-hidden="true"><img src="media/site/glaz-g.png" alt=""></div>
+<header class="nav" id="nav">
+  <a class="logo" href="./" aria-label="Glaz Studios, home">GLAZ STUDIOS</a>
+  <nav class="links" aria-label="Main"><a href="about">ABOUT</a><a href="faq" aria-current="page">FAQ</a><a class="book" href="book">BOOK</a></nav>
+  <button class="menu" id="menu" type="button" aria-expanded="false" aria-controls="sheet"><span id="menu-t">MENU</span><i aria-hidden="true"></i></button>
+  <div class="sheet" id="sheet">
+    <div class="bgp" id="sheet-bg"></div>
+    <ol>
+      <li><a href="./"><small>01</small>Home<em>→</em></a></li>
+      <li><a href="about"><small>02</small>About us<em>→</em></a></li>
+      <li><a href="faq" aria-current="page"><small>03</small>FAQ<em>→</em></a></li>
+    </ol>
+    <a class="cta" href="book">BOOK YOUR DATE</a>
+    <div class="sm"><a href="mailto:info@glazstudios.com">INFO@GLAZSTUDIOS.COM</a><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener">INSTAGRAM ↗</a></div>
+  </div>
+</header>
+<main class="wrap fq">
+  <aside class="fq-side">
+    <p class="kick up" style="--d:.15s"><span class="ch">FAQ</span><span>Glaz Studios</span></p>
+    <h1 class="up" style="--d:.3s">Questions, <em>answered</em>.</h1>
+    <p class="up" style="--d:.45s">Everything couples ask us before they book. If your question isn’t here, send it to us and we answer within a day.</p>
+    <div class="acts up" style="--d:.6s"><a class="cta" href="book">BOOK YOUR DATE</a><a class="cta ghost" href="mailto:info@glazstudios.com">ASK US</a></div>
+  </aside>
+  <section aria-label="Questions"><h2 class="grp" data-reveal>Booking and payment</h2><div class="qs"><div class="qa" data-reveal><h3><button type="button" aria-expanded="false" aria-controls="a1" id="q1"><span class="n">01</span><span class="q">How do we book our date?</span><i aria-hidden="true"></i></button></h3>
+<div class="a" id="a1" role="region" aria-labelledby="q1"><div><p>Send us your details on the <a href="book">booking page</a>. It takes a minute. We message you on WhatsApp within 24 hours to confirm the date with you.</p></div></div></div><div class="qa" data-reveal><h3><button type="button" aria-expanded="false" aria-controls="a2" id="q2"><span class="n">02</span><span class="q">When is our date confirmed?</span><i aria-hidden="true"></i></button></h3>
+<div class="a" id="a2" role="region" aria-labelledby="q2"><div><p>Your date is confirmed once we receive a 50% deposit. Until then the date stays open for other couples.</p></div></div></div><div class="qa" data-reveal><h3><button type="button" aria-expanded="false" aria-controls="a3" id="q3"><span class="n">03</span><span class="q">How do we pay the deposit?</span><i aria-hidden="true"></i></button></h3>
+<div class="a" id="a3" role="region" aria-labelledby="q3"><div><p>By InstaPay. You can add the amount and the transfer screenshot on the booking page, or send it to us on WhatsApp.</p></div></div></div><div class="qa" data-reveal><h3><button type="button" aria-expanded="false" aria-controls="a4" id="q4"><span class="n">04</span><span class="q">When do we pay the rest?</span><i aria-hidden="true"></i></button></h3>
+<div class="a" id="a4" role="region" aria-labelledby="q4"><div><p>The rest is paid on or before the wedding day.</p></div></div></div><div class="qa" data-reveal><h3><button type="button" aria-expanded="false" aria-controls="a5" id="q5"><span class="n">05</span><span class="q">Where can we see your packages and prices?</span><i aria-hidden="true"></i></button></h3>
+<div class="a" id="a5" role="region" aria-labelledby="q5"><div><p>Coverage comes in 4, 8 or 12 hours, with one or two cameras, for photography, film or both, and you can add more to it. Tell us your date and we send you your own private packages link with every price.</p></div></div></div></div><h2 class="grp" data-reveal>Your day</h2><div class="qs"><div class="qa" data-reveal><h3><button type="button" aria-expanded="false" aria-controls="a6" id="q6"><span class="n">06</span><span class="q">Can we book photography only, or film only?</span><i aria-hidden="true"></i></button></h3>
+<div class="a" id="a6" role="region" aria-labelledby="q6"><div><p>Yes. You can book photography, film, or both together.</p></div></div></div><div class="qa" data-reveal><h3><button type="button" aria-expanded="false" aria-controls="a7" id="q7"><span class="n">07</span><span class="q">Do you offer a drone, a crane or live streaming?</span><i aria-hidden="true"></i></button></h3>
+<div class="a" id="a7" role="region" aria-labelledby="q7"><div><p>Yes. A drone, a crane, a wire camera, shoulder cameras, a live mixer and live streaming can all be added. You will find them in your packages link.</p></div></div></div><div class="qa" data-reveal><h3><button type="button" aria-expanded="false" aria-controls="a8" id="q8"><span class="n">08</span><span class="q">How do you plan the day with us?</span><i aria-hidden="true"></i></button></h3>
+<div class="a" id="a8" role="region" aria-labelledby="q8"><div><p>After you book, you get a private link where you write your day hour by hour: where you both get ready, the ceremony, the entrance, the dances and who to call. Every photographer and cinematographer works from it, and a few days before the wedding we call you to go over the whole day.</p></div></div></div><div class="qa" data-reveal><h3><button type="button" aria-expanded="false" aria-controls="a9" id="q9"><span class="n">09</span><span class="q">Will you pose us all day?</span><i aria-hidden="true"></i></button></h3>
+<div class="a" id="a9" role="region" aria-labelledby="q9"><div><p>No. We keep your day the way it really happened, and we follow it from start to end. You enjoy your wedding, and we catch the moments as they come.</p></div></div></div><div class="qa" data-reveal><h3><button type="button" aria-expanded="false" aria-controls="a10" id="q10"><span class="n">10</span><span class="q">Can we add hours on the day?</span><i aria-hidden="true"></i></button></h3>
+<div class="a" id="a10" role="region" aria-labelledby="q10"><div><p>Yes. If the day runs longer, we can stay, and the extra hours are added to your balance.</p></div></div></div><div class="qa" data-reveal><h3><button type="button" aria-expanded="false" aria-controls="a11" id="q11"><span class="n">11</span><span class="q">Do you work outside Cairo?</span><i aria-hidden="true"></i></button></h3>
+<div class="a" id="a11" role="region" aria-labelledby="q11"><div><p>Yes, wherever you celebrate. Weddings outside Cairo include a transportation fee based on the place. We confirm it with you before you book.</p></div></div></div></div><h2 class="grp" data-reveal>After the wedding</h2><div class="qs"><div class="qa" data-reveal><h3><button type="button" aria-expanded="false" aria-controls="a12" id="q12"><span class="n">12</span><span class="q">When do we receive our photos and films?</span><i aria-hidden="true"></i></button></h3>
+<div class="a" id="a12" role="region" aria-labelledby="q12"><div><p>Everything is delivered within 25 days after the wedding.</p></div></div></div><div class="qa" data-reveal><h3><button type="button" aria-expanded="false" aria-controls="a13" id="q13"><span class="n">13</span><span class="q">How do we receive them?</span><i aria-hidden="true"></i></button></h3>
+<div class="a" id="a13" role="region" aria-labelledby="q13"><div><p>In your own private online gallery, ready to view and download.</p></div></div></div><div class="qa" data-reveal><h3><button type="button" aria-expanded="false" aria-controls="a14" id="q14"><span class="n">14</span><span class="q">Will you share our photos?</span><i aria-hidden="true"></i></button></h3>
+<div class="a" id="a14" role="region" aria-labelledby="q14"><div><p>We may share a few of our favourite photos on our pages and in our portfolio.</p></div></div></div></div></section>
+</main>
+<section class="ig" aria-labelledby="ig-h">
+  <div class="ig-head">
+    <div><p class="kick"><span>Follow us on Instagram</span></p><h2 id="ig-h"><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener">@glazstudios</a></h2></div>
+    <a class="cta ghost out" href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener">FOLLOW US</a>
+  </div>
+  <div class="ig-grid"><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener" aria-label="Open our Instagram"><img loading="lazy" decoding="async" src="media/work/gal-01.jpg" alt=""><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="#fff"/></svg></a><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener" aria-label="Open our Instagram"><img loading="lazy" decoding="async" src="media/work/gal-15.jpg" alt=""><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="#fff"/></svg></a><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener" aria-label="Open our Instagram"><img loading="lazy" decoding="async" src="media/work/gal-02.jpg" alt=""><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="#fff"/></svg></a><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener" aria-label="Open our Instagram"><img loading="lazy" decoding="async" src="media/work/gal-10.jpg" alt=""><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="#fff"/></svg></a><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener" aria-label="Open our Instagram"><img loading="lazy" decoding="async" src="media/work/gal-13.jpg" alt=""><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="#fff"/></svg></a><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener" aria-label="Open our Instagram"><img loading="lazy" decoding="async" src="media/work/gal-05.jpg" alt=""><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="#fff"/></svg></a></div>
+</section>
+<footer class="foot">
+  <p class="fw" aria-hidden="true">GLAZ STUDIOS</p>
+  <div class="fl">
+    <nav aria-label="Footer"><a href="./">HOME</a><a href="about">ABOUT</a><a href="faq">FAQ</a><a href="book">BOOK</a></nav>
+    <nav aria-label="Contact"><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener">INSTAGRAM ↗</a><a href="mailto:info@glazstudios.com">INFO@GLAZSTUDIOS.COM</a></nav>
+    <span>© <span data-yr>2026</span> GLAZ STUDIOS · CAIRO</span>
+  </div>
+</footer>
+<script src="glaz.js" defer></script>
+<script>
+document.querySelectorAll('.qa button').forEach((b) => b.addEventListener('click', () => {
+  const qa = b.closest('.qa'), open = !qa.classList.contains('open');
+  qa.classList.toggle('open', open); b.setAttribute('aria-expanded', String(open));
+}));
+</script>
+</body>
+</html>

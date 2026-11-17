@@ -24,6 +24,7 @@
   } catch (e) {}
 })();
 </script>
+<link rel="stylesheet" href="glaz.css">
 <style>
 :root {
   color-scheme: dark;
@@ -32,7 +33,7 @@
   --gut: clamp(18px, 4vw, 64px); --ease: cubic-bezier(.16, 1, .3, 1); --wipe: cubic-bezier(.77, 0, .18, 1); --sec: clamp(96px, 14vw, 200px);
 }
 * { box-sizing: border-box; }
-html { background: var(--bg); -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+html { background: var(--bg); -webkit-text-size-adjust: 100%; scroll-behavior: smooth; overflow-x: clip; }
 body { margin: 0; background: var(--bg); color: var(--text); font: 300 17px/1.65 var(--sans); overflow-x: clip; -webkit-font-smoothing: antialiased; }
 img, video { display: block; max-width: 100%; }
 a { color: inherit; } h1, h2, h3, h4 { font-weight: 400; margin: 0; } p, ol, ul { margin: 0; }
@@ -206,25 +207,11 @@ main { position: relative; z-index: 2; background: var(--bg); box-shadow: 0 -60p
 /* ---------- 04 Moments: sideways as you scroll ---------- */
 .hz { position: relative; }
 .hz-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: clamp(26px, 4vh, 46px); }
-.hz-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; padding: 0 var(--gut); }
-.hz-head .h2 { font-size: clamp(38px, 5vw, 76px); margin-top: 16px; }
-.hz-count { font: 500 13px/1 var(--cond); letter-spacing: .2em; color: var(--warm); white-space: nowrap; padding-bottom: 10px; }
 .hz-track { display: flex; gap: var(--hg); padding: 0 var(--gut); width: max-content; will-change: transform; }
 .hz-card { width: var(--cw); flex: none; }
 .hz-card .shot { height: var(--ch); }
 .hz-card .shot img { width: 118%; max-width: none; margin-left: -9%; transform: translateX(var(--px, 0)); transition: none; }
-.hz-card p { display: flex; gap: 14px; margin-top: 14px; font: 500 11px/1.5 var(--cond); letter-spacing: .2em; color: var(--muted); text-transform: uppercase; }
-.hz-card p b { color: var(--warm); font-weight: 500; }
-.hz-bar { margin: 0 var(--gut); height: 1px; background: var(--line); position: relative; }
-.hz-bar i { position: absolute; left: 0; top: 0; height: 1px; width: 100%; background: var(--bright); transform-origin: left; transform: scaleX(var(--hp, 0)); }
 
-/* moments of the day rolling by */
-.ribbon { overflow: hidden; border-block: 1px solid var(--line); padding: clamp(18px, 3vw, 34px) 0; }
-.ribbon .track { display: flex; width: max-content; animation: slide 70s linear infinite; }
-.ribbon span { font: 300 clamp(44px, 7vw, 110px)/1 var(--title); white-space: nowrap; color: var(--bright); padding-right: clamp(28px, 4vw, 64px); display: inline-flex; align-items: center; gap: clamp(28px, 4vw, 64px); }
-.ribbon span:nth-child(even) { font-style: italic; color: transparent; -webkit-text-stroke: 1px rgba(216,210,199,.55); }
-.ribbon span::after { content: ''; width: 9px; height: 9px; border-radius: 50%; background: var(--warm); opacity: .7; }
-@keyframes slide { to { transform: translateX(-50%); } }
 
 /* ---------- Closing ---------- */
 .end { position: relative; min-height: 100svh; display: grid; place-content: center; justify-items: center; gap: 44px; text-align: center; overflow: hidden; padding: var(--sec) var(--gut); }
@@ -234,14 +221,7 @@ main { position: relative; z-index: 2; background: var(--bg); box-shadow: 0 -60p
 .end > * { position: relative; z-index: 2; }
 .end h2 { font: 300 clamp(60px, 11vw, 190px)/.9 var(--title); letter-spacing: -.025em; color: var(--bright); max-width: 10ch; }
 .end .note { font: 500 12px/1.4 var(--cond); letter-spacing: .3em; color: var(--muted); }
-footer { position: relative; z-index: 2; background: var(--bg); padding: clamp(60px, 8vw, 110px) var(--gut) calc(26px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); }
-.fw { font: 400 clamp(40px, 10.6vw, 200px)/.9 var(--mark); letter-spacing: .04em; white-space: nowrap; text-align: center; color: var(--bright); overflow: hidden; }
-.fl { display: flex; justify-content: space-between; align-items: center; gap: 18px 30px; flex-wrap: wrap; margin-top: clamp(40px, 6vw, 80px); padding-top: 24px; border-top: 1px solid var(--line); font: 500 12px/1.4 var(--cond); letter-spacing: .24em; color: var(--muted); }
-.fl nav { display: flex; gap: 14px 28px; flex-wrap: wrap; }
-.fl a { text-decoration: none; transition: color .3s; } .fl a:hover { color: var(--bright); }
 
-.cursor { position: fixed; left: 0; top: 0; z-index: 95; width: 86px; height: 86px; margin: -43px 0 0 -43px; border-radius: 50%; display: grid; place-items: center; pointer-events: none; background: rgba(241,235,223,.92); color: #000; font: 500 11px/1 var(--cond); letter-spacing: .24em; opacity: 0; transform: translate(-200px, -200px); scale: .4; transition: opacity .3s, scale .4s var(--ease); }
-.cursor.big { opacity: 1; scale: 1; }
 .lb { border: 0; padding: 0; margin: 0; width: 100vw; height: 100dvh; max-width: none; max-height: none; background: rgba(0,0,0,.96); color: var(--text); }
 .lb[open] { display: grid; place-items: center; } .lb::backdrop { background: transparent; }
 .lb img { max-width: 92vw; max-height: 88dvh; width: auto; height: auto; }
@@ -302,18 +282,15 @@ footer { position: relative; z-index: 2; background: var(--bg); padding: clamp(6
   .real .small { margin-left: 0; font-size: 16px; }
   .film { height: 56.25vw; }
   .film .lab { font-size: 10px; letter-spacing: .22em; }
-  .hz-head { flex-direction: column; align-items: flex-start; gap: 6px; }
-  .hz-count { padding: 0; }
   .end h2 { font-size: clamp(56px, 17vw, 90px); }
   .end .cta { width: 100%; justify-content: center; }
-  .fl { flex-direction: column; align-items: flex-start; }
   .lb img { max-width: 100vw; max-height: calc(100dvh - 150px); }
   .lb .p, .lb .n { top: auto; bottom: 24px; transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .grain, .ribbon .track, .rec::before { animation: none; }
+  .grain, .rec::before { animation: none; }
   .js [data-reveal], .js .hero .fade, .js .split .w > span, .js .tl .r, .js .nav { opacity: 1; transform: none; transition: none; }
   .slides { transform: none; } .slide.on .media { transform: none; transition: none; }
   .zoom { height: auto; } .zg-stage { position: relative; height: auto; padding: 120px 0; }
@@ -321,7 +298,7 @@ footer { position: relative; z-index: 2; background: var(--bg); padding: clamp(6
   .zg-main, .zg-title { display: none; } .zg-slot { display: none; }
   .hz { height: auto !important; } .hz-stage { position: relative; height: auto; padding: 100px 0; }
   .hz-track { width: auto; overflow-x: auto; }
-  .real .big .rw { opacity: 1; } .film { clip-path: none; } .film video { transform: none; } .ribbon { display: none; }
+  .real .big .rw { opacity: 1; } .film { clip-path: none; } .film video { transform: none; }
 }
 </style>
 </head>
@@ -333,18 +310,17 @@ footer { position: relative; z-index: 2; background: var(--bg); padding: clamp(6
 
 <header class="nav" id="nav">
   <a class="logo" href="./" aria-label="Glaz Studios, home">GLAZ STUDIOS</a>
-  <nav class="links" aria-label="Main"><a href="#work">WORK</a><a href="#film">FILM</a><a href="#moments">MOMENTS</a><a class="book" href="book">BOOK</a></nav>
+  <nav class="links" aria-label="Main"><a href="about">ABOUT</a><a href="faq">FAQ</a><a class="book" href="book">BOOK</a></nav>
   <button class="menu" id="menu" type="button" aria-expanded="false" aria-controls="sheet"><span id="menu-t">MENU</span><i aria-hidden="true"></i></button>
   <div class="sheet" id="sheet">
     <div class="bgp" id="sheet-bg"></div>
     <ol>
-      <li><a href="#work"><small>01</small>Work<em>↓</em></a></li>
-      <li><a href="#your-day"><small>02</small>Your day<em>↓</em></a></li>
-      <li><a href="#film"><small>03</small>Film<em>↓</em></a></li>
-      <li><a href="#moments"><small>04</small>Moments<em>↓</em></a></li>
+      <li><a href="./" aria-current="page"><small>01</small>Home<em>→</em></a></li>
+      <li><a href="about"><small>02</small>About us<em>→</em></a></li>
+      <li><a href="faq"><small>03</small>FAQ<em>→</em></a></li>
     </ol>
     <a class="cta" href="book">BOOK YOUR DATE</a>
-    <div class="sm"><a href="mailto:info@glazstudios.com">INFO@GLAZSTUDIOS.COM</a><span>CAIRO</span></div>
+    <div class="sm"><a href="mailto:info@glazstudios.com">INFO@GLAZSTUDIOS.COM</a><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener">INSTAGRAM ↗</a></div>
   </div>
 </header>
 
@@ -413,39 +389,40 @@ footer { position: relative; z-index: 2; background: var(--bg); padding: clamp(6
     </div>
   </section>
 
-  <div class="film" id="film" data-sec="film" data-cursor="FILM"><video id="film-v" muted loop playsinline preload="none" aria-hidden="true"></video><div class="lab"><span>FROM OUR FILMS</span><span class="tc" id="ftc">00:00:00:00</span></div></div>
+  <div class="film" id="film" data-sec="film"><video id="film-v" muted loop playsinline preload="none" aria-hidden="true"></video><div class="lab"><span>FROM OUR FILMS</span><span class="tc" id="ftc">00:00:00:00</span></div></div>
 
-  <section class="hz" id="moments" aria-labelledby="hz-h">
+  <section class="hz" id="moments" aria-label="More weddings">
     <div class="hz-stage">
-      <div class="hz-head">
-        <div><p class="kick"><span class="ch">04</span><span>Moments</span></p><h2 class="h2" id="hz-h">The whole day, start to end</h2></div>
-        <span class="hz-count" id="hz-count">01 / 08</span>
-      </div>
       <div class="hz-track" id="hz-track"></div>
-      <div class="hz-bar"><i id="hz-bar"></i></div>
     </div>
   </section>
 
-  <div class="ribbon" aria-hidden="true"><div class="track" id="ribbon-t"></div></div>
 
   <section class="end" id="book" data-sec="end book" aria-labelledby="end-h">
     <div class="bg" id="end-bg"></div>
-    <p class="kick" data-reveal><span class="ch">05</span><span>Bookings</span></p>
+    <p class="kick" data-reveal><span class="ch">04</span><span>Bookings</span></p>
     <h2 class="split" id="end-h" data-reveal data-k="end.title">Tell us your date</h2>
     <a class="cta" href="book" data-reveal style="--d:.3s" data-k="end.cta">CHECK AVAILABILITY</a>
     <p class="note" data-reveal style="--d:.4s">CAIRO, AND WHEREVER YOU CELEBRATE</p>
   </section>
 </main>
 
-<footer>
+<section class="ig" aria-labelledby="ig-h">
+  <div class="ig-head">
+    <div><p class="kick"><span>Follow us on Instagram</span></p><h2 id="ig-h"><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener">@glazstudios</a></h2></div>
+    <a class="cta ghost out" href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener">FOLLOW US</a>
+  </div>
+  <div class="ig-grid"><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener" aria-label="Open our Instagram"><img loading="lazy" decoding="async" src="media/work/gal-01.jpg" alt=""><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="#fff"/></svg></a><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener" aria-label="Open our Instagram"><img loading="lazy" decoding="async" src="media/work/gal-15.jpg" alt=""><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="#fff"/></svg></a><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener" aria-label="Open our Instagram"><img loading="lazy" decoding="async" src="media/work/gal-02.jpg" alt=""><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="#fff"/></svg></a><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener" aria-label="Open our Instagram"><img loading="lazy" decoding="async" src="media/work/gal-10.jpg" alt=""><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="#fff"/></svg></a><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener" aria-label="Open our Instagram"><img loading="lazy" decoding="async" src="media/work/gal-13.jpg" alt=""><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="#fff"/></svg></a><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener" aria-label="Open our Instagram"><img loading="lazy" decoding="async" src="media/work/gal-05.jpg" alt=""><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="#fff"/></svg></a></div>
+</section>
+<footer class="foot">
   <p class="fw" aria-hidden="true">GLAZ STUDIOS</p>
   <div class="fl">
-    <nav aria-label="Footer"><a href="#work">WORK</a><a href="#your-day">YOUR DAY</a><a href="#film">FILM</a><a href="book">BOOK</a><a href="mailto:info@glazstudios.com">INFO@GLAZSTUDIOS.COM</a></nav>
-    <span>© <span id="yr">2026</span> GLAZ STUDIOS · CAIRO</span>
+    <nav aria-label="Footer"><a href="./">HOME</a><a href="about">ABOUT</a><a href="faq">FAQ</a><a href="book">BOOK</a></nav>
+    <nav aria-label="Contact"><a href="https://www.instagram.com/glazstudios/" target="_blank" rel="noopener">INSTAGRAM ↗</a><a href="mailto:info@glazstudios.com">INFO@GLAZSTUDIOS.COM</a></nav>
+    <span>© <span data-yr>2026</span> GLAZ STUDIOS · CAIRO</span>
   </div>
 </footer>
 
-<div class="cursor" id="cursor" aria-hidden="true"></div>
 <dialog class="lb" id="lb" aria-label="Photo"><span class="ct" id="lb-ct"></span><img id="lb-img" alt=""><button class="x" id="lb-x" type="button">CLOSE</button><button class="p" id="lb-p" type="button" aria-label="Previous photo">‹</button><button class="n" id="lb-n" type="button" aria-label="Next photo">›</button></dialog>
 
 <script>
@@ -467,7 +444,7 @@ footer { position: relative; z-index: 2; background: var(--bg); padding: clamp(6
   const merge = (a, b) => { if (!isObj(b)) return a; for (const k in b) { if (isObj(b[k]) && isObj(a[k])) merge(a[k], b[k]); else if (b[k] != null) a[k] = b[k]; } return a; };
   const isVid = (p) => /\.(mp4|webm|mov)(\?|$)/i.test(p || '');
   const url = (s) => `url("${String(s).replace(/"/g, '%22')}")`;
-  $('#yr').textContent = new Date().getFullYear();
+  $$('[data-yr]').forEach((el) => { el.textContent = new Date().getFullYear(); });
 
   // =========================================================
   // Starting content. The dashboard's Website page edits these;
@@ -494,7 +471,6 @@ footer { position: relative; z-index: 2; background: var(--bg); padding: clamp(6
     work: { photos: WORK.map(([f, alt]) => ({ src: `media/work/${f}.jpg`, alt })), film: 'media/site/packages-bg.mp4', filmPoster: 'media/site/packages-bg-start.jpg' },
     end: { image: 'media/work/gal-09.jpg' },
   };
-  const MOMENTS = ['Getting ready', 'First look', 'Ceremony', 'Entrance', 'First dance', 'Father and daughter', 'Cake', 'The last song'];
   $$('[data-k]').forEach((el) => setP(DEFAULT, el.dataset.k, el.textContent.trim()));
 
   function tidy(c) {
@@ -600,7 +576,7 @@ footer { position: relative; z-index: 2; background: var(--bg); padding: clamp(6
   // =========================================================
   let photos = [], tiles = [], slot = null, zl = null;
   const zoomSec = $('#work'), stage = $('#zg-stage'), grid = $('#zg-grid'), zMain = $('#zg-main'), zTitle = $('#zg-title'), zNote = $('#zg-note');
-  const shot = (p, i, lazy = true) => `<button class="shot" type="button" data-i="${i}" data-cursor="VIEW" aria-label="${esc(p.alt || 'Open photo')}"><img ${lazy ? 'loading="lazy" ' : ''}decoding="async" src="${esc(p.src)}" alt="${esc(p.alt || '')}"></button>`;
+  const shot = (p, i, lazy = true) => `<button class="shot" type="button" data-i="${i}" aria-label="${esc(p.alt || 'Open photo')}"><img ${lazy ? 'loading="lazy" ' : ''}decoding="async" src="${esc(p.src)}" alt="${esc(p.alt || '')}"></button>`;
   const pick = (i) => (photos.length ? photos[((i % photos.length) + photos.length) % photos.length] : null);
   function drawWork() {
     photos = (C.work?.photos || []).filter((p) => p && p.src);
@@ -620,9 +596,8 @@ footer { position: relative; z-index: 2; background: var(--bg); padding: clamp(6
     $('#drift').innerHTML = Array.from({ length: dc }, (_, c) => `<div class="dc" data-dir="${c % 2 ? 1 : -1}">${Array.from({ length: 5 }, (_, r) => { const p = pick(c * 5 + r + 3); return p ? `<img loading="lazy" decoding="async" src="${esc(p.src)}" alt="">` : ''; }).join('')}</div>`).join('');
     // moments, sideways
     const start = phone ? 12 : 12, count = Math.min(8, photos.length);
-    $('#hz-track').innerHTML = Array.from({ length: count }, (_, n) => { const i = (start + n) % photos.length, p = photos[i]; return `<div class="hz-card">${shot(p, i)}<p><b>${pad(n + 1)}</b><span>${esc(MOMENTS[n] || '')}</span></p></div>`; }).join('');
+    $('#hz-track').innerHTML = Array.from({ length: count }, (_, n) => { const i = (start + n) % photos.length, p = photos[i]; return `<div class="hz-card">${shot(p, i)}</div>`; }).join('');
     $('#moments').style.display = count ? '' : 'none';
-    $('#ribbon-t').innerHTML = [...MOMENTS, ...MOMENTS].map((m) => `<span>${esc(m)}</span>`).join('');
     // film
     const fv = $('#film-v');
     $('#film').style.display = C.work?.film ? '' : 'none';
@@ -684,7 +659,7 @@ footer { position: relative; z-index: 2; background: var(--bg); padding: clamp(6
   let lastY = scrollY, ticking = false, hzLen = 0;
   function layoutHz() {
     const phone = phoneMQ.matches, vh = innerHeight;
-    const ch = phone ? Math.min(vh * .5, 440) : Math.min(vh * .58, 620), cw = ch * .8, hg = phone ? 14 : 26;
+    const ch = phone ? Math.min(vh * .62, 520) : Math.min(vh * .74, 760), cw = ch * .8, hg = phone ? 14 : 26;
     hzTrack.style.setProperty('--ch', `${ch}px`); hzTrack.style.setProperty('--cw', `${cw}px`); hzTrack.style.setProperty('--hg', `${hg}px`);
     hzLen = Math.max(0, hzTrack.scrollWidth - innerWidth);
     hzSec.style.height = still ? '' : `${vh + hzLen}px`;
@@ -702,11 +677,13 @@ footer { position: relative; z-index: 2; background: var(--bg); padding: clamp(6
     const zr = zoomSec.getBoundingClientRect();
     if (zl && slot && zr.top < vh && zr.bottom > 0) {
       const p = clamp(-zr.top / (zr.height - stage.clientHeight));
-      const e = ease(clamp((p - .1) / .58));
+      const e = ease(clamp((p - .06) / .5));
+      const sl = $('.zg-slot', grid), sr0 = stage.getBoundingClientRect();
+      if (sl) { const r = sl.getBoundingClientRect(); slot = { x: r.left - sr0.left, y: r.top - sr0.top, w: r.width, h: r.height }; zl = { W: stage.clientWidth, H: stage.clientHeight }; }
       const L = (a, b) => a + (b - a) * e;
       Object.assign(zMain.style, { left: `${L(0, slot.x)}px`, top: `${L(0, slot.y)}px`, width: `${L(zl.W, slot.w)}px`, height: `${L(zl.H, slot.h)}px` });
       zMain.style.setProperty('--dim', String(.4 * (1 - e)));
-      tiles.forEach((t) => { const l = clamp((e - t.d * .35) / .65), k = 1 - l; t.el.style.transform = `translate3d(${t.dx * k * 1.25}px, ${t.dy * k * 1.25 + k * 80}px, 0) scale(${.7 + .3 * l})`; t.el.style.opacity = String(l); });
+      tiles.forEach((t) => { const l = clamp((e - t.d * .35) / .65), k = 1 - l; t.el.style.transform = l >= 1 ? 'none' : `translate3d(${t.dx * k * 1.25}px, ${t.dy * k * 1.25 + k * 80}px, 0) scale(${.7 + .3 * l})`; t.el.style.opacity = String(l); });
       zTitle.style.opacity = String(1 - clamp(e * 2.6)); zTitle.style.transform = `translateY(${-e * 60}px) scale(${1 - e * .1})`;
       zNote.style.opacity = String(clamp((p - .72) / .14));
     }
@@ -731,9 +708,7 @@ footer { position: relative; z-index: 2; background: var(--bg); padding: clamp(6
     if (hr.top < vh && hr.bottom > 0 && hzLen) {
       const p = clamp(-hr.top / (hr.height - vh));
       hzTrack.style.transform = `translate3d(${-p * hzLen}px, 0, 0)`;
-      $('#hz-bar').style.setProperty('--hp', p);
       const cards = $$('.hz-card', hzTrack);
-      $('#hz-count').textContent = `${pad(Math.min(cards.length, Math.floor(p * cards.length) + 1))} / ${pad(cards.length)}`;
       cards.forEach((c) => { const r = c.getBoundingClientRect(); const o = (r.left + r.width / 2 - innerWidth / 2) / innerWidth; c.style.setProperty('--px', `${-o * 7}%`); });
     }
   }
@@ -741,13 +716,6 @@ footer { position: relative; z-index: 2; background: var(--bg); padding: clamp(6
   addEventListener('scroll', onScroll, { passive: true });
   let rt = 0; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { layout(); layoutHz(); onScroll(); }, 120); });
 
-  // cursor label over photos and films
-  if (fine && !still) {
-    const cu = $('#cursor'); let x = -200, y = -200, cx = x, cy = y, raf = 0;
-    const loop = () => { cx += (x - cx) * .22; cy += (y - cy) * .22; cu.style.transform = `translate(${cx}px, ${cy}px)`; raf = Math.abs(x - cx) + Math.abs(y - cy) > .3 ? requestAnimationFrame(loop) : 0; };
-    addEventListener('mousemove', (e) => { x = e.clientX; y = e.clientY; const t = e.target.closest('[data-cursor]'); cu.classList.toggle('big', !!t); if (t) cu.textContent = t.dataset.cursor; if (!raf) raf = requestAnimationFrame(loop); }, { passive: true });
-    document.addEventListener('mouseleave', () => cu.classList.remove('big'));
-  }
 
   // phone menu
   const menu = $('#menu');

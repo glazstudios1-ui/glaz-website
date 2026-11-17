@@ -174,7 +174,7 @@ a { color: inherit; }
     </section>
 
     <section class="notes">
-      <p>A 30% deposit secures your date. The date is confirmed once the deposit is received.</p>
+      <p>A 50% deposit secures your date. The date is confirmed once the deposit is received.</p>
       <p>Your highlight is ready on the wedding day. Everything else is delivered 25 days after.</p>
       <p>Events outside Cairo include a transportation fee, based on the location.</p>
       <p>Items marked “on request” are priced for your event. We confirm them with you after you book.</p>
@@ -216,7 +216,7 @@ let ITEMS = [], PICKS = {};
 
 // Example data, only for the design preview (no database)
 const DEMO_DATA = {
-  extra_hour_price: 2000, deposit_pct: 0.3,
+  extra_hour_price: 2000, deposit_pct: 0.5,
   packages: [4, 8, 12].flatMap((h, i) => [
     { name: `Photography — ${h} Hours`, price: [10000, 15000, 20000][i], hours: h, cameras: h > 4 ? 2 : 1 },
     { name: `Cinematography — ${h} Hours`, price: [10000, 15000, 20000][i], hours: h, cameras: h > 4 ? 2 : 1 }]),
