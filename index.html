@@ -521,17 +521,24 @@ footer { position: relative; z-index: 2; background: var(--bg); padding: clamp(6
   // HERO — films and photos, one after the other
   // =========================================================
   const hero = $('#hero'), slidesEl = $('#slides'), segsEl = $('#segs');
-  const SLIDE_MS = 6500;
+  const PHOTO_MS = 6000, RATE = .75;
+  const slideMs = (n) => { const s = list[n]; if (!s) return PHOTO_MS; if (s.secs) return s.secs; if (s.type === 'image') return PHOTO_MS; const v = vidOf(n); return v && v.duration ? clamp(v.duration / RATE * 1000, 3500, 15000) : 6500; };
   let list = [], si = 0, elapsed = 0, playing = !still, heroKey = '', heroSeen = true, last = 0;
   function heroList() {
     const phone = phoneMQ.matches;
     return (C.hero?.clips || []).map((c) => {
       if (!c) return null;
       const img = c.image || (c.video && !isVid(c.video) ? c.video : '');
-      if (img) return { type: 'image', src: phone ? (c.mobileImage || (c.mobile && !isVid(c.mobile) ? c.mobile : '') || img) : img };
+      const secs = Number(c.seconds) >= 2 ? Number(c.seconds) * 1000 : 0;
+      const focus = (phone ? c.mobileFocus || c.focus : c.focus) || '';
+      // a phone version can be a photo or a film, whatever the computer slide is
+      const phoneVid = phone && c.mobile && isVid(c.mobile) && !/^media\/site\//.test(c.mobile);
+      const phoneImg = phone && (c.mobileImage || (c.mobile && !isVid(c.mobile) ? c.mobile : ''));
+      if (phoneImg) return { type: 'image', src: phoneImg, focus, secs };
+      if (phoneVid) return { type: 'video', src: c.mobile, poster: c.mobilePoster || '', tall: true, focus, secs };
+      if (img) return { type: 'image', src: img, focus, secs };
       if (!c.video) return null;
-      const tall = phone && c.mobile && isVid(c.mobile) && !/^media\/site\//.test(c.mobile);
-      return { type: 'video', src: tall ? c.mobile : c.video, poster: (tall ? c.mobilePoster : c.poster) || '', tall };
+      return { type: 'video', src: c.video, poster: c.poster || '', tall: false, focus, secs };
     }).filter((s) => s && s.src);
   }
   function drawHero() {
@@ -539,15 +546,16 @@ footer { position: relative; z-index: 2; background: var(--bg); padding: clamp(6
     const key = JSON.stringify(list);
     if (key === heroKey) return;
     heroKey = key;
+    const fp = (s) => (/^\d{1,3}(\.\d+)?% \d{1,3}(\.\d+)?%$/.test(s.focus || '') ? ` style="object-position:${s.focus}"` : '');
     slidesEl.innerHTML = list.map((s, i) => `<div class="slide${s.type === 'video' ? ' v' : ''}${s.tall ? ' tall' : ''}" aria-hidden="true"><div class="media">${s.type === 'video'
-      ? `<video muted playsinline loop preload="none" data-src="${esc(s.src)}"${s.poster ? ` poster="${esc(s.poster)}"` : ''}></video>`
-      : `<img src="${esc(s.src)}" alt=""${i > 1 ? ' loading="lazy"' : ''} decoding="async">`}</div></div>`).join('');
+      ? `<video muted playsinline loop preload="none" data-src="${esc(s.src)}"${s.poster ? ` poster="${esc(s.poster)}"` : ''}${fp(s)}></video>`
+      : `<img src="${esc(s.src)}" alt=""${i > 1 ? ' loading="lazy"' : ''} decoding="async"${fp(s)}>`}</div></div>`).join('');
     segsEl.innerHTML = list.length > 1 ? list.map((_, i) => `<button class="seg" type="button" data-g="${i}" aria-label="Show slide ${i + 1}"><i></i></button>`).join('') : '';
     $('#pause').hidden = list.length < 2;
     si = 0; show(0, true);
   }
   const vidOf = (n) => $$('.slide', slidesEl)[n]?.querySelector('video');
-  const warm = (v) => { if (v && !v.getAttribute('src') && v.dataset.src) { v.src = v.dataset.src; v.preload = 'auto'; v.addEventListener('loadedmetadata', () => { v.playbackRate = .75; }, { once: true }); } };
+  const warm = (v) => { if (v && !v.getAttribute('src') && v.dataset.src) { v.src = v.dataset.src; v.preload = 'auto'; v.addEventListener('loadedmetadata', () => { v.playbackRate = RATE; }, { once: true }); } };
   function show(n, instant) {
     const els = $$('.slide', slidesEl); if (!els.length) return;
     const prev = els[si]; si = (n + els.length) % els.length; const cur = els[si];
@@ -566,8 +574,9 @@ footer { position: relative; z-index: 2; background: var(--bg); padding: clamp(6
     const dt = last ? Math.min(100, t - last) : 0; last = t;
     if (playing && heroSeen && !document.hidden && list.length > 1) {
       elapsed += dt;
-      const bar = $$('.seg i', segsEl)[si]; if (bar) bar.style.width = `${clamp(elapsed / SLIDE_MS) * 100}%`;
-      if (elapsed >= SLIDE_MS) show(si + 1);
+      const ms = slideMs(si);
+      const bar = $$('.seg i', segsEl)[si]; if (bar) bar.style.width = `${clamp(elapsed / ms) * 100}%`;
+      if (elapsed >= ms) show(si + 1);
     }
     requestAnimationFrame(tick);
   }
