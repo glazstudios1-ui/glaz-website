@@ -25,7 +25,10 @@ a { color: inherit; }
 
 /* ---------- One grainy black & white photo behind the whole page ---------- */
 .bg { position: fixed; inset: 0; z-index: -1; background: radial-gradient(120% 90% at 55% 45%, #8d8d8b 0%, #5d5d5b 45%, #2b2b2a 100%); }
-.bg video, .bg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; filter: grayscale(1) contrast(1.05) brightness(.82); }
+.bg video, .bg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--fx, 50% 50%); filter: grayscale(1) contrast(1.05) brightness(.82); opacity: 0; transition: opacity .9s ease; }
+.bg .in { opacity: 1; }
+.bg.color video, .bg.color img { filter: contrast(1.02) brightness(.8); }
+@media (max-width: 760px) { .bg video, .bg img { object-position: var(--fxm, var(--fx, 50% 50%)); } }
 .bg::before { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(0,0,0,.42) 0%, rgba(0,0,0,.12) 38%, rgba(0,0,0,.52) 100%); }
 .bg::after { content: ''; position: absolute; inset: 0; z-index: 2; opacity: .22; mix-blend-mode: overlay; pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
@@ -131,20 +134,15 @@ a { color: inherit; }
 </head>
 <body>
 
-<!-- Background, always shown in black & white with grain:
-     - video: media/site/packages-bg.mp4 (short, no sound, loops) + media/site/packages-bg-start.jpg (its first frame)
-     - photo: media/site/packages-bg.jpg — used when there is no packages-bg.mp4 -->
-<div class="bg" id="bg" aria-hidden="true">
-  <video id="bgv" autoplay muted loop playsinline preload="auto" poster="/media/site/packages-bg-start.jpg" disablepictureinpicture>
-    <source src="/media/site/packages-bg.mp4" type="video/mp4">
-  </video>
-</div>
+<!-- Background: set in Dashboard → Packages → Packages page (photo or short film, focus, black & white).
+     Until something is chosen there it uses media/site/packages-bg.mp4 (or packages-bg.jpg). -->
+<div class="bg" id="bg" aria-hidden="true"></div>
 
 <header class="cover">
-  <h1>Our Packages</h1>
+  <h1 id="ttl">Our Packages</h1>
   <div class="low" id="low">
-    <p class="caps lead">Choose the coverage for your day, add what you need, and book. Every package is built around you.</p>
-    <p class="caps sig">( Glaz Studios )</p>
+    <p class="caps lead" id="lead">Choose the coverage for your day, add what you need, and book. Every package is built around you.</p>
+    <p class="caps sig" id="sig">( Glaz Studios )</p>
   </div>
 </header>
 
@@ -173,12 +171,7 @@ a { color: inherit; }
       <ul class="extras" id="rec"></ul>
     </section>
 
-    <section class="notes">
-      <p>A 50% deposit secures your date. The date is confirmed once the deposit is received.</p>
-      <p>Your highlight is ready on the wedding day. Everything else is delivered 25 days after.</p>
-      <p>Events outside Cairo include a transportation fee, based on the location.</p>
-      <p>Items marked “on request” are priced for your event. We confirm them with you after you book.</p>
-    </section>
+    <section class="notes" id="notes"></section>
   </div>
 </main>
 
@@ -196,6 +189,23 @@ import * as CFG from '../config.js';
 const CONTACT = 'mailto:info@glazstudios.com';   // put your WhatsApp link here later, e.g. https://wa.me/2010XXXXXXXX
 let DEPOSIT_PCT = 0.30;   // from Dashboard → Settings
 const SHOW_PHOTO_PLACEHOLDER = false;   // design preview only
+const PREVIEW = new URLSearchParams(location.search).has('preview');   // shown inside Dashboard → Packages while editing
+const EDITORS = /^https:\/\/(glaz-dashboard[\w-]*\.vercel\.app|dashboard\.glazstudios\.com)$|^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
+
+// What the page says and shows. Changed in Dashboard → Packages → Packages page.
+const PAGE_DEFAULT = {
+  bg: '/media/site/packages-bg.mp4', poster: '/media/site/packages-bg-start.jpg', fallback: '/media/site/packages-bg.jpg',
+  focus: '50% 50%', mobileFocus: '', bw: true,
+  title: 'Our Packages',
+  lead: 'Choose the coverage for your day, add what you need, and book. Every package is built around you.',
+  sig: '( Glaz Studios )',
+  notes: [
+    'Your highlight is ready on the wedding day. Everything else is delivered 25 days after.',
+    'Events outside Cairo include a transportation fee, based on the location.',
+    'Items marked “on request” are priced for your event. We confirm them with you after you book.',
+  ],
+};
+let PAGE = { ...PAGE_DEFAULT };
 
 const $ = (id) => document.getElementById(id);
 const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -241,6 +251,7 @@ const DEMO_DATA = {
 
 function load(d) {
   if (d.deposit_pct != null) DEPOSIT_PCT = Number(d.deposit_pct);
+  COVERAGE.photo.hours = {}; COVERAGE.cinema.hours = {}; BOTH.hours = {};
   const esc_ = (t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   for (const p of d.packages || []) {
     if (p.price == null) continue;
@@ -257,6 +268,7 @@ function load(d) {
     ITEMS.push({ key: e.key, sec: e.section, pick: e.group_name || null, name: e.name, sub: e.group_name ? '' : e.description,
                  price: e.price == null ? null : Number(e.price), max: e.max_qty || 1, needs: e.needs, photo: e.photo_url, show: true });
   }
+  drawNotes();
   ITEMS.filter((i) => i.photo).forEach((i) => { const im = new Image(); im.onload = () => { i.photoOk = true; if (!$('builder').hidden) draw(); }; im.src = i.photo; });
 }
 
@@ -373,13 +385,47 @@ document.addEventListener('click', (e) => {
 // Show the total bar once the client reaches the packages
 new IntersectionObserver(([en]) => $('bar').classList.toggle('show', en.isIntersecting || en.boundingClientRect.top < 0), { threshold: 0 }).observe($('start'));
 
-// Background video: a little slower, so it feels calm. Paused for people who turn off motion.
-const bgv = $('bgv');
-bgv.querySelector('source').addEventListener('error', () => {   // no video uploaded: show the photo
-  const im = new Image(); im.alt = ''; im.onload = () => bgv.replaceWith(im); im.src = '/media/site/packages-bg.jpg';
-});
-bgv.playbackRate = 0.75; bgv.addEventListener('loadedmetadata', () => { bgv.playbackRate = 0.75; });
-if (matchMedia('(prefers-reduced-motion: reduce)').matches) { bgv.removeAttribute('autoplay'); bgv.pause(); }
+// ---- The page's own words and background ----
+function drawNotes() {
+  const pct = Math.round(DEPOSIT_PCT * 100);
+  const notes = (Array.isArray(PAGE.notes) ? PAGE.notes : []).map((n) => String(n).trim()).filter(Boolean);
+  $('notes').innerHTML = `<p>A ${pct}% deposit secures your date. The date is confirmed once the deposit is received.</p>` + notes.map((n) => `<p>${esc(n)}</p>`).join('');
+}
+const isVideo = (u) => /\.(mp4|webm|mov|m4v)(\?|$)/i.test(u || '');
+let bgKey = '';
+function setBg(p) {
+  const box = $('bg');
+  box.style.setProperty('--fx', p.focus || '50% 50%');
+  if (p.mobileFocus) box.style.setProperty('--fxm', p.mobileFocus); else box.style.removeProperty('--fxm');
+  box.classList.toggle('color', p.bw === false);
+  const key = `${p.bg}|${p.poster || ''}`;
+  if (key === bgKey) return;
+  bgKey = key;
+  const show = (el) => { box.querySelectorAll('video,img').forEach((o) => { if (o !== el) setTimeout(() => o.remove(), 900); }); requestAnimationFrame(() => el.classList.add('in')); };
+  const photo = (src) => { const im = new Image(); im.alt = ''; im.onload = () => { box.appendChild(im); show(im); }; im.src = src; };
+  if (!p.bg) return photo(PAGE_DEFAULT.fallback);
+  if (!isVideo(p.bg)) return photo(p.bg);
+  // A film: a little slower, so it feels calm. Paused for people who turn off motion.
+  const v = document.createElement('video');
+  Object.assign(v, { muted: true, loop: true, playsInline: true, autoplay: true, preload: 'auto' });
+  v.setAttribute('playsinline', ''); v.setAttribute('disablepictureinpicture', '');
+  if (p.poster) v.poster = p.poster;
+  v.addEventListener('loadeddata', () => { v.playbackRate = 0.75; show(v); }, { once: true });
+  v.addEventListener('error', () => { v.remove(); photo(p.poster || p.fallback || PAGE_DEFAULT.fallback); }, { once: true });
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) v.autoplay = false;
+  v.src = p.bg; box.appendChild(v);
+  if (p.poster) { const im = new Image(); im.onload = () => { if (!v.classList.contains('in')) { v.classList.add('in'); } }; im.src = p.poster; }
+}
+function applyPage(c) {
+  PAGE = { ...PAGE_DEFAULT };
+  if (c && typeof c === 'object') for (const [k, v] of Object.entries(c)) if (v != null && v !== '') PAGE[k] = v;
+  if (c && c.bg) { PAGE.fallback = ''; if (!c.poster) PAGE.poster = ''; }   // their own background: no starting photo behind it
+  $('ttl').textContent = PAGE.title;
+  $('lead').textContent = PAGE.lead;
+  $('sig').textContent = PAGE.sig; $('sig').hidden = !PAGE.sig;
+  drawNotes();
+  setBg(PAGE);
+}
 
 
 // One id per phone/browser. A link opens on up to 5 of them; you see each one in Dashboard → Packages.
@@ -413,23 +459,53 @@ function lock(title, text) {
 
 function open(client, expires) {
   state.client = client;
+  $('low').querySelectorAll('.for, .until, .scroll').forEach((el) => el.remove());
   const until = expires ? new Date(expires).toLocaleDateString('en-GB', { day: 'numeric', month: 'long' }) : '';
   $('low').insertAdjacentHTML('beforeend',
     `${client?.name ? `<p class="for">Prepared for ${esc(client.name)}</p>` : ''}
-     ${until ? `<p class="caps" style="font-size:10px;margin:6px 0 0;opacity:.8">This link is yours only · valid until ${esc(until)}</p>` : ''}
+     ${until ? `<p class="caps until" style="font-size:10px;margin:6px 0 0;opacity:.8">This link is yours only · valid until ${esc(until)}</p>` : ''}
      <a class="scroll" href="#start">See the packages</a>`);
   $('builder').hidden = false;
   draw();
 }
 
+// Inside the dashboard: show exactly what is being edited, without opening a real link (no device is used up)
+function startPreview() {
+  let shown = false;
+  const go = (part) => {
+    const el = { prices: $('start'), add: $('extras'), rec: $('recStep'), notes: $('notes') }[part];
+    if (part === 'top') scrollTo({ top: 0, behavior: 'smooth' });
+    else if (el && !el.hidden) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+  addEventListener('message', (e) => {
+    if (!EDITORS.test(e.origin) || !e.data || e.data.type !== 'glaz-pkg') return;
+    const m = e.data;
+    if (m.data) load(m.data);
+    applyPage(m.page);
+    open({ name: m.client || 'Nour & Karim' }, new Date(Date.now() + 7 * 864e5));
+    if (m.scroll) go(m.scroll);
+    shown = true;
+  });
+  // links do not leave the preview
+  document.addEventListener('click', (e) => { const a = e.target.closest('a[href]'); if (a && !a.getAttribute('href').startsWith('#')) e.preventDefault(); }, true);
+  parent.postMessage({ type: 'glaz-pkg-ready' }, '*');
+  setTimeout(() => { if (!shown) { load(DEMO_DATA); applyPage(null); open({ name: 'Nour & Karim' }, null); } }, 4000);   // opened on its own
+}
+
 (async () => {
   const key = CFG.SUPABASE_KEY || '';
   const token = new URLSearchParams(location.search).get('k') || '';
-  if (!key || key.startsWith('PASTE_')) { $('demo').hidden = false; load(DEMO_DATA); return open({ name: '' }, null); }   // design preview only
+  if (PREVIEW) return startPreview();
+  if (!key || key.startsWith('PASTE_')) { $('demo').hidden = false; applyPage(null); load(DEMO_DATA); return open({ name: '' }, null); }   // design preview only
+  const sb = createClient(CFG.SUPABASE_URL, key);
+  // The page's words and background (Dashboard → Packages). Wait a moment for them, then go on with the defaults.
+  const look = sb.from('package_page').select('content').eq('id', 1).maybeSingle().then((r) => r.data?.content || null, () => null);
+  let looked = false;
+  look.then((c) => { looked = true; applyPage(c); });
+  setTimeout(() => { if (!looked) applyPage(null); }, 1500);
   if (!token) return lock('This page is private', 'It opens only from the link we send you. Message us and we will send you your own link.');
   state.token = token;
   try {
-    const sb = createClient(CFG.SUPABASE_URL, key);
     const { data: res, error } = await sb.rpc('open_package_link', { p_token: token, p_device: deviceId(), p_label: deviceLabel() });
     if (error) throw error;
     if (!res?.ok) {
