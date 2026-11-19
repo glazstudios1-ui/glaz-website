@@ -334,6 +334,7 @@ const label = (i) => (!i.pick || i.name.startsWith(i.pick) ? i.name : `${i.pick}
 function draw() {
   $('choice').innerHTML = Object.entries(SVCS).filter(([k]) => hoursOf(k).length).map(([k, s]) =>
     `<button type="button" data-svc="${k}" aria-pressed="${k === state.svc}"><b>${esc(s.title)}</b><span>${esc(s.sub)}</span></button>`).join('');
+  if (!hoursOf(state.svc).length) { const first = Object.keys(SVCS).find((k) => hoursOf(k).length); if (!first) { $('hours').innerHTML = ''; $('inside').innerHTML = ''; return; } state.svc = first; }   // that coverage is hidden
   const avail = hoursOf(state.svc);
   if (!avail.includes(state.hours)) state.hours = avail[Math.min(1, avail.length - 1)];
   const now = slot(state.svc, state.hours);
