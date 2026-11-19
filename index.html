@@ -198,7 +198,7 @@ main { background: var(--paper); box-shadow: 0 -60px 120px rgba(0,0,0,.6); }
 .d-title .l1 i { font-style: italic; }
 .d-title .l2 { font: 400 clamp(84px, 12vw, 200px)/.84 var(--disp); letter-spacing: -.02em; display: block; }
 .d-intro .wm.g1 { left: 8%; top: 32%; } .d-intro .wm.g2 { right: 6%; bottom: 20%; }
-.d-intro .float { right: var(--gut); top: 18%; width: clamp(110px, 11vw, 190px); }
+.d-intro .float, .d-cov .float { left: var(--x); top: var(--y); width: var(--w); }
 /* frames */
 .strip { display: grid; gap: 10px; padding: 0 10px; }
 .strip figure { margin: 0; height: min(56vw, 92vh); overflow: hidden; position: relative; background: #111; }
@@ -226,7 +226,6 @@ main { background: var(--paper); box-shadow: 0 -60px 120px rgba(0,0,0,.6); }
 .d-cov ol { list-style: none; padding: 0; margin: 26px 0 30px; display: grid; gap: 4px; counter-reset: c; }
 .d-cov li { counter-increment: c; font: 400 clamp(26px, 2.4vw, 36px)/1.25 var(--script); color: var(--ink); }
 .d-cov li::before { content: counter(c, decimal-leading-zero) '.'; font: 500 11px/1 var(--sans); letter-spacing: .1em; color: var(--soft); margin-right: 10px; vertical-align: middle; }
-.d-cov .float { right: var(--gut); top: 9%; width: clamp(90px, 8vw, 140px); }
 /* doors */
 .doors { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 var(--gut) clamp(90px, 12vw, 170px); }
 .door { position: relative; aspect-ratio: 4 / 5; overflow: hidden; display: block; text-decoration: none; color: #F4F1EC; }
@@ -255,7 +254,7 @@ main { background: var(--paper); box-shadow: 0 -60px 120px rgba(0,0,0,.6); }
 .paper-ig .fl a:hover { color: var(--ink); }
 @media (max-width: 760px) {
   .d-intro { min-height: 86svh; padding-top: 90px; }
-  .d-intro .float { top: 92px; right: var(--gut); width: 84px; }
+  .d-intro .float, .d-cov .float { left: var(--mx); top: var(--my); width: var(--mw); }
   .d-intro .lbl { top: 96px; max-width: 22ch; }
   .d-title { margin-top: 90px; }
   .d-title .l1 { font-size: 15vw; } .d-title .l2 { font-size: 24vw; }
@@ -264,7 +263,7 @@ main { background: var(--paper); box-shadow: 0 -60px 120px rgba(0,0,0,.6); }
   .collage { height: 262vw; margin: 0 10px; }
   .collage figure { left: var(--mx); top: var(--my); width: var(--mw); }
   .collage figure:nth-child(8) { display: none; }
-  .d-cov { grid-template-columns: 1fr; } .d-cov .pic { max-width: 78%; } .d-cov .float { top: 4%; }
+  .d-cov { grid-template-columns: 1fr; } .d-cov .pic { max-width: 78%; }
   .doors { grid-template-columns: 1fr; gap: 10px; }
   .d-end .txt { left: var(--gut); max-width: none; }
 }
@@ -354,7 +353,7 @@ main { background: var(--paper); box-shadow: 0 -60px 120px rgba(0,0,0,.6); }
     <h1 class="split" data-k="hero.title" style="--d:.6s">Your day, as it happened.</h1>
     <div class="lower fade" style="--d:1.2s">
       <p data-k="hero.line">Your whole wedding day, from getting ready to the last song.</p>
-      <a class="cta" href="book" data-k="hero.cta">CHECK YOUR DATE</a>
+      <a class="cta" href="book" data-link="hero" data-k="hero.cta">CHECK YOUR DATE</a>
     </div>
   </div>
   <div class="bars fade" style="--d:1.5s"><span class="cnt" id="cnt">01 / 04</span><div class="segs" id="segs"></div><button class="pause" id="pause" type="button" aria-pressed="false" aria-label="Pause the slideshow"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M6 4h4v16H6zM14 4h4v16h-4z"/><path class="i-play" d="M7 4l13 8-13 8z"/></svg></button></div>
@@ -365,7 +364,7 @@ main { background: var(--paper); box-shadow: 0 -60px 120px rgba(0,0,0,.6); }
     <p class="lbl" data-reveal><span data-k="d.label1">Wedding photography &amp; film</span><span data-k="d.label2">Cairo, and wherever you celebrate</span></p>
     <span class="wm g1" data-drift="-1" data-k="d.wm1" aria-hidden="true">Real days</span><span class="wm g2" data-drift="1" data-k="d.wm2" aria-hidden="true">forever</span>
     <h2 class="d-title" id="d-title" data-reveal><span class="l1"><span data-k="d.t1">STORIES</span> <i data-k="d.t2">made from</i></span><span class="l2" data-k="d.t3">REAL DAYS</span></h2>
-    <figure class="float" data-speed="-.14"><img data-img="d.float1" src="media/work/gal-08.jpg" alt=""></figure>
+    <figure class="float" data-box="f1" data-speed="-.14" style="--x:85%;--y:18%;--w:11%;--mx:74%;--my:12%;--mw:22%"><img data-img="d.float1" src="media/work/gal-08.jpg" alt=""></figure>
   </section>
 
   <section class="strip" data-sec="frames" aria-label="From our weddings">
@@ -380,7 +379,7 @@ main { background: var(--paper); box-shadow: 0 -60px 120px rgba(0,0,0,.6); }
       <h2 class="disp" id="about-h" data-k="real.big">One team, the whole day</h2>
       <p class="sub" data-k="real.kicker">Wedding photography and film, kept as it happened</p>
       <p class="t" data-k="real.small">We photograph and film weddings as one team, from the first hour of getting ready to the last song. We don’t pose you or ask you to do it again; we keep what really happened, the people, the light and the feeling of the day.</p>
-      <a class="btn2" href="about" data-k="d.aboutBtn">About us</a>
+      <a class="btn2" href="about" data-link="about" data-k="d.aboutBtn">About us</a>
     </div>
   </section>
 
@@ -413,14 +412,14 @@ main { background: var(--paper); box-shadow: 0 -60px 120px rgba(0,0,0,.6); }
 
 
   <section class="collage" data-sec="work" aria-label="Photos">
-    <figure class="float" data-speed="-.06" style="--x:2%;--y:0%;--w:22%;--mx:0%;--my:0%;--mw:46%"><img loading="lazy" data-img="work.photos.0.src" src="media/work/gal-13.jpg" alt=""></figure>
-    <figure class="float" data-speed=".05" style="--x:30%;--y:14%;--w:16%;--mx:54%;--my:9%;--mw:40%"><img loading="lazy" data-img="work.photos.1.src" src="media/work/gal-04.jpg" alt=""></figure>
-    <figure class="float" data-speed="-.1" style="--x:56%;--y:4%;--w:26%;--mx:6%;--my:30%;--mw:62%"><img loading="lazy" data-img="work.photos.2.src" src="media/work/film-02.jpg" alt=""></figure>
-    <figure class="float" data-speed=".08" style="--x:86%;--y:20%;--w:14%;--mx:72%;--my:36%;--mw:28%"><img loading="lazy" data-img="work.photos.3.src" src="media/work/gal-02.jpg" alt=""></figure>
-    <figure class="float" data-speed=".04" style="--x:6%;--y:46%;--w:30%;--mx:22%;--my:54%;--mw:76%"><img loading="lazy" data-img="work.photos.4.src" src="media/work/reel-01.jpg" alt=""></figure>
-    <figure class="float" data-speed="-.08" style="--x:44%;--y:52%;--w:18%;--mx:0%;--my:73%;--mw:40%"><img loading="lazy" data-img="work.photos.5.src" src="media/work/gal-10.jpg" alt=""></figure>
-    <figure class="float" data-speed=".06" style="--x:68%;--y:60%;--w:30%;--mx:48%;--my:77%;--mw:52%"><img loading="lazy" data-img="work.photos.6.src" src="media/work/close-01.jpg" alt=""></figure>
-    <figure class="float" data-speed="-.05" style="--x:24%;--y:78%;--w:15%;--mx:10%;--my:84%;--mw:38%"><img loading="lazy" data-img="work.photos.7.src" src="media/work/gal-16.jpg" alt=""></figure>
+    <figure class="float" data-box="c0" data-speed="-.06" style="--x:2%;--y:0%;--w:22%;--mx:0%;--my:0%;--mw:46%"><img loading="lazy" data-img="work.photos.0.src" src="media/work/gal-13.jpg" alt=""></figure>
+    <figure class="float" data-box="c1" data-speed=".05" style="--x:30%;--y:14%;--w:16%;--mx:54%;--my:9%;--mw:40%"><img loading="lazy" data-img="work.photos.1.src" src="media/work/gal-04.jpg" alt=""></figure>
+    <figure class="float" data-box="c2" data-speed="-.1" style="--x:56%;--y:4%;--w:26%;--mx:6%;--my:30%;--mw:62%"><img loading="lazy" data-img="work.photos.2.src" src="media/work/film-02.jpg" alt=""></figure>
+    <figure class="float" data-box="c3" data-speed=".08" style="--x:86%;--y:20%;--w:14%;--mx:72%;--my:36%;--mw:28%"><img loading="lazy" data-img="work.photos.3.src" src="media/work/gal-02.jpg" alt=""></figure>
+    <figure class="float" data-box="c4" data-speed=".04" style="--x:6%;--y:46%;--w:30%;--mx:22%;--my:54%;--mw:76%"><img loading="lazy" data-img="work.photos.4.src" src="media/work/reel-01.jpg" alt=""></figure>
+    <figure class="float" data-box="c5" data-speed="-.08" style="--x:44%;--y:52%;--w:18%;--mx:0%;--my:73%;--mw:40%"><img loading="lazy" data-img="work.photos.5.src" src="media/work/gal-10.jpg" alt=""></figure>
+    <figure class="float" data-box="c6" data-speed=".06" style="--x:68%;--y:60%;--w:30%;--mx:48%;--my:77%;--mw:52%"><img loading="lazy" data-img="work.photos.6.src" src="media/work/close-01.jpg" alt=""></figure>
+    <figure class="float" data-box="c7" data-speed="-.05" style="--x:24%;--y:78%;--w:15%;--mx:10%;--my:84%;--mw:38%"><img loading="lazy" data-img="work.photos.7.src" src="media/work/gal-16.jpg" alt=""></figure>
   </section>
 
   <section class="d-cov" data-sec="coverage" aria-labelledby="cov-h">
@@ -429,19 +428,19 @@ main { background: var(--paper); box-shadow: 0 -60px 120px rgba(0,0,0,.6); }
       <h2 class="disp" id="cov-h" data-k="d.covTitle">Choose your coverage</h2>
       <p class="sub" data-k="d.covSub">Real, not staged · from start to end</p>
       <ol><li data-k="d.cov.0">Photography</li><li data-k="d.cov.1">Cinematography</li><li data-k="d.cov.2">Full coverage in 4K</li><li data-k="d.cov.3">Media coverage</li><li data-k="d.cov.4">Photo booth</li></ol>
-      <a class="btn2" href="book" data-k="d.covBtn">Book your date</a>
+      <a class="btn2" href="book" data-link="cov" data-k="d.covBtn">Book your date</a>
     </div>
-    <figure class="float" data-speed="-.1"><img loading="lazy" data-img="d.float2" src="media/work/gal-19.jpg" alt=""></figure>
+    <figure class="float" data-box="f2" data-speed="-.1" style="--x:88%;--y:9%;--w:8%;--mx:72%;--my:4%;--mw:23%"><img loading="lazy" data-img="d.float2" src="media/work/gal-19.jpg" alt=""></figure>
   </section>
 
   <section class="doors" data-sec="doors" aria-label="More about us">
-    <a class="door" href="about" data-reveal><img loading="lazy" data-img="d.door1Img" src="media/work/gal-17.jpg" alt=""><span class="wm" data-k="d.door1Wm" aria-hidden="true">Story</span><div><h3 data-k="d.door1Title">Made to be felt</h3><p class="sub" data-k="d.door1Sub">Who we are and how we work</p><span class="btn2" data-k="d.door1Btn">About us</span></div></a>
-    <a class="door" href="faq" data-reveal style="--d:.1s"><img loading="lazy" data-img="d.door2Img" src="media/work/gal-09.jpg" alt=""><span class="wm" data-k="d.door2Wm" aria-hidden="true">Answers</span><div><h3 data-k="d.door2Title">Before you book</h3><p class="sub" data-k="d.door2Sub">Deposit, delivery, planning your day</p><span class="btn2" data-k="d.door2Btn">Questions</span></div></a>
+    <a class="door" href="about" data-link="door1" data-reveal><img loading="lazy" data-img="d.door1Img" src="media/work/gal-17.jpg" alt=""><span class="wm" data-k="d.door1Wm" aria-hidden="true">Story</span><div><h3 data-k="d.door1Title">Made to be felt</h3><p class="sub" data-k="d.door1Sub">Who we are and how we work</p><span class="btn2" data-k="d.door1Btn">About us</span></div></a>
+    <a class="door" href="faq" data-link="door2" data-reveal style="--d:.1s"><img loading="lazy" data-img="d.door2Img" src="media/work/gal-09.jpg" alt=""><span class="wm" data-k="d.door2Wm" aria-hidden="true">Answers</span><div><h3 data-k="d.door2Title">Before you book</h3><p class="sub" data-k="d.door2Sub">Deposit, delivery, planning your day</p><span class="btn2" data-k="d.door2Btn">Questions</span></div></a>
   </section>
 
   <section class="d-end" data-sec="end book" aria-labelledby="end-h">
     <img loading="lazy" data-img="end.image" src="media/work/gal-11.jpg" alt="" data-in>
-    <div class="txt"><h2 id="end-h" data-k="end.title">A day you’ll live twice</h2><p data-k="d.endText">Once on the day, and again every time you open your gallery.</p><a class="btn2" href="book" data-k="end.cta">Check your date</a></div>
+    <div class="txt"><h2 id="end-h" data-k="end.title">A day you’ll live twice</h2><p data-k="d.endText">Once on the day, and again every time you open your gallery.</p><a class="btn2" href="book" data-link="end" data-k="end.cta">Check your date</a></div>
   </section>
 </main>
 
@@ -496,6 +495,10 @@ main { background: var(--paper); box-shadow: 0 -60px 120px rgba(0,0,0,.6); }
   $$('[data-k]').forEach((el) => setP(DEFAULT, el.dataset.k, el.textContent.trim()));
   $$('[data-img]').forEach((el) => setP(DEFAULT, el.dataset.img, el.getAttribute('src')));
   $$('[data-media]').forEach((el) => { const m = el.querySelector('img,video'); setP(DEFAULT, el.dataset.media, m.getAttribute('src')); });
+  // where buttons lead, and where the floating photos sit (computer: x y w, phone: mx my mw)
+  DEFAULT.links = {}; $$('[data-link]').forEach((el) => { DEFAULT.links[el.dataset.link] = el.getAttribute('href'); });
+  $$('[data-box]').forEach((el) => { el.dataset.def = el.getAttribute('style') || ''; });
+  const EDIT = { on: false, after: null };   // turned on only inside the dashboard (edit.js)
 
   function tidy(c) {
     // The old starting films (films only) give way to the new mix of films and photos
@@ -509,7 +512,7 @@ main { background: var(--paper); box-shadow: 0 -60px 120px rgba(0,0,0,.6); }
 
   // ---------- words and pictures ----------
   function drawTexts() {
-    $$('[data-k]').forEach((el) => { const v = getP(C, el.dataset.k); if (typeof v === 'string' && v.trim()) el.textContent = v; });
+    $$('[data-k]').forEach((el) => { const v = getP(C, el.dataset.k), d = getP(DEFAULT, el.dataset.k); const t = typeof v === 'string' && v.trim() ? v : typeof d === 'string' ? d : null; if (t != null && el.textContent !== t) el.textContent = t; });
     $$('.split').forEach((el) => { el.innerHTML = el.textContent.trim().split(/\s+/).map((w, i) => `<span class="w"><span style="--i:${i}">${esc(w)}</span></span>`).join(' '); });
   }
   function drawPictures() {
@@ -530,6 +533,26 @@ main { background: var(--paper); box-shadow: 0 -60px 120px rgba(0,0,0,.6); }
       if (isVid(v) && !still) el.play().catch(() => {});
     });
     const sb = $('#sheet-bg'); const first = getP(C, 'work.photos.0.src'); if (sb && first) sb.style.backgroundImage = url(first);
+  }
+  const POS = /^-?\d{1,3}(\.\d+)?%$/, FOCUS = /^\d{1,3}(\.\d+)?% \d{1,3}(\.\d+)?%$/;
+  const okHref = (h) => typeof h === 'string' && !/^\s*javascript:/i.test(h) && /^(https?:\/\/|mailto:|tel:|\/|#|[\w-]+(\.html)?(#[\w-]*)?$)/i.test(h.trim());
+  function drawLayout() {
+    const phone = phoneMQ.matches, box = isObj(C.box) ? C.box : {}, focus = isObj(C.focus) ? C.focus : {}, links = isObj(C.links) ? C.links : {};
+    $$('[data-box]').forEach((el) => {
+      el.setAttribute('style', el.dataset.def); el.dataset.ty = 0;
+      const b = box[el.dataset.box];
+      if (isObj(b)) ['x', 'y', 'w', 'mx', 'my', 'mw'].forEach((k) => { if (POS.test(b[k] || '')) el.style.setProperty('--' + k, b[k]); });
+    });
+    $$('[data-img], [data-media]').forEach((el) => {
+      const m = el.matches('img, video') ? el : el.querySelector('img, video'); if (!m) return;
+      const f = focus[el.dataset.img || el.dataset.media], v = isObj(f) ? (phone ? f.m || f.d : f.d) : '';
+      m.style.objectPosition = FOCUS.test(v || '') ? v : '';
+    });
+    $$('[data-link]').forEach((a) => {
+      const h = okHref(links[a.dataset.link]) ? links[a.dataset.link].trim() : DEFAULT.links[a.dataset.link];
+      a.setAttribute('href', h);
+      if (/^https?:/i.test(h)) { a.target = '_blank'; a.rel = 'noopener'; } else { a.removeAttribute('target'); a.removeAttribute('rel'); }
+    });
   }
 
   // =========================================================
@@ -642,9 +665,9 @@ main { background: var(--paper); box-shadow: 0 -60px 120px rgba(0,0,0,.6); }
       if (sr.top < vh && sr.bottom > 0) { steps.classList.add('live'); let best = 0, bd = 1e9; const lis = $$('li', steps); lis.forEach((li, i) => { const r = li.getBoundingClientRect(); const d = Math.abs(r.top + r.height / 2 - vh * .5); if (d < bd) { bd = d; best = i; } }); lis.forEach((li, i) => li.classList.toggle('act', i === best)); }
     } else steps.classList.remove('live');
     // photos float at different speeds
-    $$('[data-speed]').forEach((el) => { const r = el.parentElement.getBoundingClientRect(); if (r.bottom < -200 || r.top > vh + 200) return; const o = el.getBoundingClientRect().top - (parseFloat(el.dataset.ty) || 0) + el.offsetHeight / 2 - vh / 2; const ty = -o * Number(el.dataset.speed) * (phone ? .45 : 1); el.dataset.ty = ty; el.style.transform = `translate3d(0, ${ty}px, 0)`; });
+    $$('[data-speed]').forEach((el) => { if (EDIT.on) { el.style.transform = ''; el.dataset.ty = 0; return; } const r = el.parentElement.getBoundingClientRect(); if (r.bottom < -200 || r.top > vh + 200) return; const o = el.getBoundingClientRect().top - (parseFloat(el.dataset.ty) || 0) + el.offsetHeight / 2 - vh / 2; const ty = -o * Number(el.dataset.speed) * (phone ? .45 : 1); el.dataset.ty = ty; el.style.transform = `translate3d(0, ${ty}px, 0)`; });
     // pictures move slowly inside their frames
-    $$('[data-in]').forEach((el) => { const r = el.parentElement.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return; const p = (r.top + r.height / 2 - vh / 2) / vh; el.style.transform = `translate3d(0, ${p * -8}%, 0)`; });
+    $$('[data-in]').forEach((el) => { if (EDIT.on) { el.style.transform = ''; return; } const r = el.parentElement.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return; const p = (r.top + r.height / 2 - vh / 2) / vh; el.style.transform = `translate3d(0, ${p * -8}%, 0)`; });
     // handwriting drifts sideways
     $$('[data-drift]').forEach((el) => { const r = el.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return; el.style.transform = `translateX(${(r.top - vh / 2) * .08 * Number(el.dataset.drift)}px)`; });
   }
@@ -674,10 +697,11 @@ main { background: var(--paper); box-shadow: 0 -60px 120px rgba(0,0,0,.6); }
   addEventListener('pageshow', (e) => { if (e.persisted) root.classList.remove('leaving'); });
 
   function render() {
-    drawTexts(); drawPictures(); drawHero();
+    drawTexts(); drawPictures(); drawLayout(); drawHero();
     watchReveals();
     if (PREVIEW || still) $$('[data-reveal], .split').forEach((el) => el.classList.add('in'));
     frame();
+    if (EDIT.on && EDIT.after) EDIT.after();
   }
   phoneMQ.addEventListener('change', () => { heroKey = ''; render(); });
 
@@ -708,6 +732,9 @@ main { background: var(--paper); box-shadow: 0 -60px 120px rgba(0,0,0,.6); }
       if (!ALLOWED.test(e.origin)) return;
       const d = e.data || {};
       if (d.type === 'glaz-content') { C = tidy(merge(clone(DEFAULT), d.content || {})); render(); }
+      // Dashboard → Website: click and type on the page itself
+      if (d.type === 'glaz-edit' && !EDIT.on) import('./edit.js').then((m) => m.default({ EDIT, phoneMQ, drawTexts, origin: e.origin })).catch(() => {});
+      if (d.type === 'glaz-select' && EDIT.select) EDIT.select(d.sel || null);
       if (d.type === 'glaz-scroll' && d.section) document.querySelector(`[data-sec~="${String(d.section).replace(/[^\w-]/g, '')}"]`)?.scrollIntoView({ behavior: 'smooth' });
     });
   }
